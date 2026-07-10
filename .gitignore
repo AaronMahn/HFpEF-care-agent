@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.care_agent_settings.json
+.env
+*.tmp
+*.log
+# never publish raw patient data
+data/basic_data_full*.xlsx
+*_private*
+

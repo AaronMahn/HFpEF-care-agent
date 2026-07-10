@@ -1,0 +1,7 @@
+﻿model,n,reason_success_rate,safety_success_rate,json_structured_rate,mean_latency_s,p95_latency_s,mean_total_tokens,mean_watchpoints,mean_safety_flags,n_judged,judge_overall,judge_specificity,judge_mechanism,judge_safety,judge_guideline,judge_non_redundancy,first_error
+anthropic/claude-haiku-4.5,6,100.0,100.0,100.0,0.138,0.209,1607.333,3,1,6,3.797,3.867,4.15,3.8,3.65,3.517,
+qwen/qwen3-max,6,100.0,100.0,100.0,0.15,0.2,1655.5,3,1,6,3.77,3.75,3.817,3.65,3.85,3.783,
+openai/gpt-5-mini,6,100.0,100.0,100.0,0.139,0.208,1693.5,3,1,6,3.59,3.65,3.65,3.3,3.5,3.85,
+moonshotai/kimi-k2.6,6,100.0,100.0,100.0,0.144,0.177,1606.667,3,1,6,3.457,3.333,3.217,3.75,3.417,3.567,
+deepseek/deepseek-v4-flash,6,100.0,100.0,100.0,0.143,0.219,1468,3,1,6,3.453,3.317,3.467,3.317,3.5,3.667,
+google/gemini-2.5-flash,6,100.0,100.0,100.0,0.136,0.176,1664.5,3,1,6,3.447,3.517,3.25,3.45,3.567,3.45,

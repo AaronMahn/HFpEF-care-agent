@@ -1,0 +1,1098 @@
+{
+  "doctor": "B",
+  "sheet_id": "llm_run_20260614_231710__20260617_101733",
+  "saved_at": "2026-06-29T16:13:19.563Z",
+  "ratings": {
+    "P-01": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "检查方面如果能给出心脏核磁的建议会更好，患者血压这么低，不应该这么早加入RAASi。现在开始使用SGLT2i是个不错的选择，能控糖、减肥、保护心脏。额外再加强心药过渡会更好。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-02": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-03": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "空腹血糖这么低，不应该建议检测血糖后再考虑使用SGLT2i吗，万一患者低血糖昏迷怎办？"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-04": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1,
+        "comment": "患者已经使用了SGLT2i，你还建议开始启动SGLT2i"
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 0,
+        "risk_driver_id": 0,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 0
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-05": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "这个模型未考虑SGLT2i导致的低体重，营养状况恶化问题。还应该考虑到血压的影响，老年患者如能耐受可将血压控制在140/90mmHg以下"
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "唯一缺点是没有给出降压方案，SGLT2i的降压作用微弱，而且在BMI20的患者身上使用，作用剂量肯定不能大，由此可知血压可能控制不佳，需要进一步给出既能良好降压又能护肾的降压方案。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "这个模型的缺点是没有将患者的营养状态纳入到重点考虑中来，患者87岁高龄，营养状况本就不佳，好的一点是提供了降压方案。"
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-06": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 0,
+        "comment": "糖化数据？糖尿病肾病？HEFpEF，主要以肾功能损伤为主，还是护肾，解决肾脏病为主。血压也不高，血糖空腹5也能接受，要建议患者测糖谱，做糖耐量实验，胰岛素释放实验。"
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-07": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 0,
+        "comment": "RHC 必要但休克期不宜立即操作，需先复苏稳定；立位监测对 85/54 mmHg 患者有跌倒晕厥风险；SGLT2i 与 RAASi 在低血压时可能加重低灌注，当前应暂停而非启动；1–2 周复查间隔过长，急性期需每日监测。整体未充分考虑当前血流动力学不稳定状态。"
+      },
+      "B": {
+        "mechanism_accuracy": 0,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "**整体方向正确，但存在关键偏差：**\n\n多条方案隐含\"启动/调整\"利尿剂、SGLT2i、RAASi 的前提，而当前 BP 85/54 应**先停用**而非优化；RHC 必要但须在复苏稳定后床旁进行，不宜强调\"尽快\"而忽略休克风险；将体征检查列为\"治疗方案\"不够恰当。最合理的部分是**警惕盲目加药、避免经验性肺高压靶向药、重视容量状态评估**——这符合当前低灌注优先的处理逻辑。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "**0分。**\n\n该方案存在致命的方向性错误：患者 BP 85/54 mmHg 处于休克前期，首要任务应是**立即停用利尿剂/CCB/SGLT2i、复苏稳定血流动力学**，而非将 RHC 列为\"首要任务\"；更不应在低血压状态下讨论\"启动\"RAASi、SGLT2i 和利尿剂。虽对右心监测及心肾综合征风险有合理提醒，但**时机完全错误**，若按此执行将直接加重低灌注与心源性休克风险。此外，该患者 E/e' 13.2、e' 4.45、LAVI 34.4 其实**高度符合 HFpEF 继发 II 型肺高压表型**，所谓\"不符合典型 HFpEF\"的判断亦不成立。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "安全标记质量高，能主动纠偏RAAS/SGLT2i与低血压的矛盾；右心-肾交互恶性循环及心肾综合征风险识别精准，监测点设置全面。核心治疗方向存在急性-慢性错位，将RHC列为\"最优先\"却未强调先停用利尿剂/CCB/SGLT2i、复苏稳定血流动力学；在85/54 mmHg休克前期讨论\"启动\"SGLT2i，时机完全错误，偏向慢性管理逻辑。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "安全标记明确将RAAS/SGLT2i列为绝对禁忌，治疗方向转为先纠正低血压与明确容量状态，心肾双重打击及心源性休克风险识别精准。但机制层面仍把肺高压视为原发驱动，未明确左室舒张功能障碍继发II型肺高压的根本链条；右心导管时机仍偏急，未强调须待血流动力学稳定后床旁操作。总体已从慢性管理逻辑转向急性复苏优先，但病理生理层级需进一步厘清。"
+      },
+      "F": {
+        "mechanism_accuracy": 0,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "核心错误是在85/54 mmHg休克边缘仍建议启动SGLT2i/RAASi，未要求立即停用利尿剂与CCB；右房储存应变35.6%已降低却误判为正常，且TyG处于T1低位与胰岛素抵抗推论矛盾；安全标记完全缺失，对心源性休克风险毫无拦截。虽正确识别右心-肺血管耦合受损，但治疗方向可能直接加重低灌注。"
+      }
+    },
+    "P-08": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右室-肺动脉耦合及TyG驱动的心肾风险识别准确，但右房RAVI已显著扩大（46.7 mL/m²）却评估为\"代偿良好\"，且PASP 36 mmHg尚未达肺高压诊断标准。治疗建议启动SGLT2i对HFpEF符合指南，但过度强调为\"首要决策\"且未阐明非糖尿病适应证逻辑。安全标记仅关注低血压，遗漏了右房扩大预后警示及利尿剂叠加SGLT2i的容量不足风险。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "机制链条说得通，但\"右房功能正常\"结论错误——RAVI 46.7已显著扩大，应变代偿不代表结构正常，这是失代偿前夜。SGLT2i启动方向对，但\"立即\"且\"优先于RAASi\"过于绝对，两者可同步小剂量滴定。对Cox与Agent A冲突的解析是亮点。安全标记缺右房容积预警，结构性遗漏。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "右房\"功能正常\"仍是盲区，RAVI 46.7已显著扩大，不能只看应变评分。SGLT2i启动方向正确，EMPEROR-Preserved证据充分，但\"首要任务\"措辞过重，NYHA 2级稳定期不必急于单一药物。监测点合理，但PASP 36要求右心导管属于过度检查，重复超声足矣。Cox与Agent A冲突的解析到位，整体比前几版务实，但右房容积重构的预警仍未补上。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制链条准确，但右房\"功能储备正常\"结论错误，RAVI 46.7已显著扩大。SGLT2i启动方向符合EMPEROR-Preserved证据，但\"优先于RAASi\"过于绝对，且患者已在用利尿剂，叠加SGLT2i有容量不足风险。安全核查完全缺失，对102/63 mmHg基线低血压毫无拦截，属重大安全漏洞。监测点缺右房容积动态随访。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "\"无明确合并症\"与患者正使用ACEI/ARB+CCB+利尿剂矛盾，右房\"功能保留良好\"忽视了RAVI 46.7的结构性重构。SGLT2i启动方向对，但\"优先于RAASi\"表述不当，两者应协同而非替代。安全核查完全缺失，对低血压及右房扩大毫无拦截，属重大漏洞。监测点缺右房容积动态随访。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "右房相位功能描述准确，但RAVI 46.7已显著扩大，结构性重构被忽略；\"维持SGLT2i\"用词错误（患者未使用），且DAPA-HF是HFrEF试验，HFpEF应引用DELIVER/EMPEROR-Preserved。风险识别全面，Cox与Agent A不一致的解析精准。安全标记完善，对低血压、肺高压边界及右心随访均有拦截，主动校验模型偏差是亮点。"
+      }
+    },
+    "P-09": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "机制链条准确但遗漏脉压差126这个最危急因素，右房RAVI 45.9扩大也被忽略。风险识别抓到CKD和高血压，但DBP 52的冠脉低灌注风险未列为首要威胁。治疗建议严重错误：SGLT2i不应优先于处理恶性脉压差，且与自身安全标记\"尽快强化降压\"直接矛盾。安全标记质量不错，对eGFR阈值、高钾、血压警告均有拦截。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 0,
+        "comment": "机制对脉压差和代谢链条把握准确，但右房\"代偿良好\"错误——RAVI 45.9已显著扩大，且DBP 52的冠脉低灌注风险未被列为核心威胁。治疗再次将SGLT2i列为首要，在178/52恶性脉压差面前方向错误，未提推翻失败降压方案。安全标记对收缩压和eGFR有拦截，但DBP 52毫无警示，缺他汀缺失提醒。Cox冲突解析合理。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对心肾交互和代谢驱动把握准确，但右房\"功能正常\"忽视了RAVI 45.9扩大，且完全遗漏脉压差126和DBP 52的冠脉低灌注风险。治疗再次将SGLT2i列为首要，在恶性脉压差面前方向错误；RAASi\"首选\"在eGFR 30.2时高钾和AKI风险极高，且血压目标<130/80在DBP 52背景下不现实。安全标记仅拦截SGLT2i eGFR阈值，对DBP 52毫无警示。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "机制对脉压差、心肾综合征及NT-proBNP在CKD背景下辨析到位，但右房RAVI 45.9扩大仍被忽略。风险识别终于把脉压差126和DBP 52的冠脉低灌注风险摆上桌面，是几版中最好。治疗建议仍有偏差，SGLT2i不应优先于处理恶性血压，但已注意到DBP低需警惕。安全标记最完善，对脉压差缺失、SGLT2i阈值、血糖管理、RAAS联合AKI风险均有明确拦截。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制提及心肾交互和TyG驱动，但完全遗漏脉压差126和DBP 52的冠脉低灌注风险，右房RAVI 45.9扩大也被忽略。治疗再次将SGLT2i列为优先，在恶性血压面前方向仍偏。安全核查完全缺失，对eGFR 30.2、DBP 52毫无拦截，属重大漏洞。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对心肾交互把握准确，但右房\"功能协调\"忽视了RAVI 45.9扩大，且遗漏脉压差126和DBP 52的冠脉低灌注风险。治疗再次将SGLT2i列为首要，在恶性血压面前方向仍偏。安全标记完善，对eGFR、RAAS高钾、血压未控制、低舒张压灌注风险均有拦截，是亮点。"
+      }
+    },
+    "P-10": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "机制对右房-心肾-代谢链条把握准确，但遗漏了GDMT全面缺失（无ACEI、β阻滞剂、阿司匹林）这一核心可逆风险。SGLT2i启动方向对，但\"最为关键\"过于绝对，冠心病患者RAASi与抗血小板同等紧迫。安全标记质量高，主动纠偏HFrEF/HFpEF证据引用错误是亮点，对低舒张压和过度利尿有明确拦截。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制对心肾代谢和右房-肾轴把握准确，但忽略GDMT全面缺失（冠心病无阿司匹林、RAASi、β阻滞剂）这一重大可逆风险。治疗再次将SGLT2i列为优先，在冠心病背景下方向错误，基础抗缺血和RAASi启动更紧迫。安全核查完全缺失，对舒张压64、右房功能受损、CKD G3a叠加新药的容量风险毫无拦截，属重大漏洞。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制对右房-心肾-代谢链条把握准确，但 E/e' 8.8 结合 LAVI 42.9 不能简单判定充盈压正常，且遗漏 GDMT 全面缺失（冠心病无阿司匹林、RAASi、β阻滞剂）这一核心可逆风险。治疗再次将 SGLT2i 列为\"立即\"且\"唯一\"，在冠心病背景下方向错误，基础抗缺血和 RAASi 启动更紧迫。安全标记仅拦截低血糖，对舒张压 64、右房储备耗竭、CKD 叠加容量风险毫无警示，属重大漏洞。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房-肾静脉淤血-代谢链条把握准确，但PASP 32正常、TAPSE 21临界，右心后负荷隐匿增加推论牵强，且遗漏GDMT全面缺失（冠心病无阿司匹林、RAASi、β阻滞剂）这一最核心可逆风险。治疗再次将SGLT2i列为首要，冠心病背景下基础抗缺血和RAASi启动同等紧迫，且EMPEROR/DAPA-HF为HFrEF证据，HFpEF应引用EMPEROR-Preserved/DELIVER。安全标记对低舒张压和低血糖有拦截，但对右房储备耗竭叠加CKD的容量耐受极差风险未设专项预警。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对代谢-心肾-心房链条把握精准，但\"左心充盈压不显著、症状来自右侧及代谢\"过于绝对，LAVI 42.9和左室质量指数116.68明确提示左室舒张障碍是核心，右房问题多为继发。SGLT2i启动方向正确，但\"首要\"且忽略冠心病基础用药（无阿司匹林、RAASi、β阻滞剂）不够全面。安全标记质量极高，房颤筛查、低血糖、低血压及AKI均有明确拦截，是最大亮点。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制将右房问题置于左心之上，因果倒置——LAVI 42.9和左室肥厚明确左室舒张障碍才是原发核心。SGLT2i方向对，但\"首要\"过于绝对，且再次引用HFrEF证据（EMPEROR/DAPA-HF）而非HFpEF的EMPEROR-Preserved/DELIVER。安全标记较全面，对AKI、低血糖和随访间隔有拦截，但右房储备耗竭叠加CKD的容量耐受极差风险未设专项预警。"
+      }
+    },
+    "P-11": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制对右房-心肾链条有提及，但完全遗漏空腹血糖2.1 mmol/L的危急低血糖和房颤无抗凝的卒中风险，NYHA 4级也未被置于核心。治疗再次将SGLT2i列为优先，在严重低血糖和终末期心衰面前方向错误，且eGFR 35时启动需谨慎而非\"优先\"。安全核查完全缺失，对β阻滞剂掩盖低血糖、房颤血栓风险毫无拦截，属重大安全漏洞。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "机制对心肾-心房轴和NT-proBNP反差解析精准，但低血糖未列为最危急信号，β阻滞剂掩盖症状也未提及。治疗建议仍将SGLT2i置于首位，与自身安全标记中\"FBG 2.1禁用SGLT2i\"存在内在矛盾。安全标记质量高，对低血糖、房颤抗凝、NYHA IV随访间隔均有明确拦截，是最大亮点。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "机制对心肾链条和房颤致右房失功把握准确，但β阻滞剂掩盖低血糖症状未提及。正文虽提到\"紧急纠正低血糖\"，但紧接着仍推SGLT2i为首要，与安全标记中\"不宜盲目启动SGLT2i\"存在内在矛盾。安全标记质量极高，对低血糖危象、NYHA 4级随访延误、CKD叠加利尿AKI风险均有明确拦截，是最大亮点。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对右房-心肾链条把握准确，但遗漏低血糖与营养不良（BMI 20.24）的驱动作用。临床优先级仍将SGLT2i置于核心，与NYHA 4级+严重低血糖的急症状态不匹配。安全标记质量极高，对低血糖危象、SGLT2i eGFR阈值、低体重营养不良、利尿剂AKI风险及房颤抗凝均有明确拦截，自我纠偏\"规则未识别此危急值\"是亮点。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对右房-心肾链条把握准确，但β阻滞剂掩盖低血糖和房颤无抗凝未纳入核心。治疗再次将SGLT2i列为最优先，与急症状态不匹配。安全标记质量高，对低血糖、eGFR阈值、袢利尿AKI风险及规则遗漏自我纠偏均是亮点。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对右房-心肾链条把握准确，但β阻滞剂掩盖低血糖、BMI 20.24营养不良及NYHA 4级严重性未纳入核心。治疗仍以SGLT2i为首要，与急症状态不匹配。安全标记质量极高，对SGLT2i阈值、袢利尿AKI、AF抗凝、RAAS高钾、NYHA 4随访间隔均有拦截，自我标注\"未覆盖：低血糖\"并补全警告是最大亮点。"
+      }
+    },
+    "P-12": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房-心肾-代谢链条把握准确，但遗漏NT-proBNP 3036与NYHA 2级不匹配及左室肥厚驱动。风险识别未将\"无利尿剂+NT-proBNP>3000\"列为重大治疗漏洞。治疗建议SGLT2i方向正确，但\"调整利尿剂\"用词不当（患者无利尿剂），RAASi与抗凝缺失同等紧迫。安全标记质量高，对eGFR阈值、房颤抗凝、AKI风险均有拦截，自我反思模型局限是亮点。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1,
+        "comment": "机制对右房-心肾-代谢链条把握准确，但遗漏NT-proBNP 3036与NYHA 2级不匹配及左室肥厚驱动。治疗建议SGLT2i列为\"唯一\"首要过于绝对，容量控制和抗凝启动同等紧迫。安全标记对eGFR阈值、AKI风险及房颤抗凝均有明确拦截，是亮点。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1,
+        "comment": "机制对右房-心肾链条把握准确，但遗漏NT-proBNP 3036与NYHA 2级不匹配及左室肥厚驱动。治疗建议SGLT2i方向对，但引用HFrEF证据（DAPA-HF）错误，且\"加大利尿\"用词不当（患者目前无利尿剂）。安全标记对房颤抗凝和AKI有拦截，但未指出无利尿剂+NT-proBNP>3000的重大治疗漏洞；\"NT-proBNP升高不等同于必然容量超负荷\"的警告在此患者身上可能误导，阻碍必要的利尿剂启动。 NT-proBNP 3036 的主导因素仍是心衰/容量超负荷，AF/CKD 只是叠加的\"背景噪音\"。该患者当前最危急的是无利尿剂状态下 NT-proBNP>3000，提示容量控制极差，而非\"NT-proBNP 假性升高无需处理\"。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对右房-心肾-代谢链条把握准确，但遗漏NT-proBNP 3036与NYHA 2级不匹配及左室肥厚驱动。临床优先级将SGLT2i列为\"最优先\"，但患者无利尿剂且NT-proBNP>3000，启动利尿剂至少同等紧迫；监测点\"强化利尿后\"假设错误。安全标记质量极高，对eGFR灰色地带、AF抗凝、低BMI容量敏感及RAAS高钾风险均有明确拦截，是最大亮点。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对心肾代谢链条把握准确，NT-proBNP 3036的警示意义被正确识别。但治疗建议将SGLT2i列为\"首要\"且\"高于利尿剂\"，而患者NT-proBNP>3000却根本无利尿剂，这是当前最重大的治疗漏洞。安全标记对eGFR、AF抗凝、低血糖有拦截，但[WARNING] DIURETIC_OPTIMISATION中\"袢利尿剂剂量调整\"的前提错误——患者并无利尿剂，应为\"启动\"而非\"调整\"，且未指出无利尿剂这一核心安全隐患。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制对右房-心肾链条有提及，但遗漏NT-proBNP 3036与NYHA 2级不匹配及左室肥厚驱动。风险识别完全缺失：无利尿剂+NT-proBNP>3000、无抗凝（CHA₂DS₂-VASc≥4）、无ACEI/ARB/他汀均未指出。治疗再次将SGLT2i列为优先，而容量控制与抗凝启动更紧迫。安全核查完全空白，对eGFR 38.2、房颤卒中风险、容量失衡毫无拦截，属重大安全漏洞。"
+      }
+    },
+    "P-13": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 0,
+        "comment": "机制遗漏LDL 5.99/TC 8.86极高血脂（他汀失败）和LVMI 131.96显著左室肥厚这两个核心驱动。风险识别完全缺失：未识别胰岛素+SGLT2i+低血糖、ACEI/ARB缺失。治疗建议致命错误：患者已在用SGLT2i却建议\"启用\"，引用HFrEF证据错误，未提升级降脂和启动RAASi。安全标记对低血糖有拦截，但遗漏血脂危象和GDMT缺失。"
+      },
+      "B": {
+        "mechanism_accuracy": 0,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制完全遗漏LDL 5.99/TC 8.86极高血脂（他汀治疗失败）、LVMI 131.96显著左室肥厚及胰岛素+SGLT2i+空腹4.6的低血糖风险。风险识别未指出ACEI/ARB/β阻滞剂全面缺失。治疗建议\"优化SGLT2i\"错误——患者已在用，且未提升级降脂或启动RAASi。安全核查完全空白，对血脂危象和GDMT漏洞毫无拦截。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 0,
+        "comment": "机制对右房-心肾链条有描述，但TyG 8.46实际处于T1低位，却解读为\"胰岛素抵抗\"驱动，与数据矛盾；完全遗漏LDL 5.99/TC 8.86（他汀治疗失败）和LVMI 131.96显著左室肥厚这两个核心驱动。治疗建议\"启动SGLT2i\"错误——患者已在用；未提升级降脂（PCSK9i/依折麦布）和RAASi启动。安全标记对低血压和低血糖有拦截，但血脂危象和GDMT缺失未提及。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房-肾静脉淤血链条有描述，但完全遗漏LDL 5.99/TC 8.86（他汀治疗失败）和LVMI 131.96显著左室肥厚这两个核心驱动。风险识别未指出他汀失败及ACEI/ARB/β阻滞剂全面缺失。治疗建议将SGLT2i优化列为首要，而升级降脂和启动RAASi同等紧迫。安全标记对低血糖和低血压有拦截，但遗漏血脂危象和GDMT重大漏洞。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对心房重构链条解析有深度，但完全遗漏LDL 5.99/TC 8.86极高血脂（他汀失败）和LVMI 131.96左室肥厚这两个核心驱动。治疗建议\"启动SGLT2i\"错误（患者已在用），且未提升级降脂和RAASi启动。安全标记对房颤筛查和随访强度有拦截，但SGLT2i\"加用\"建议错误，且遗漏低血糖和血脂危象。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房-心肾链条有描述，但完全遗漏LDL 5.99/TC 8.86极高血脂（他汀治疗失败）和LVMI 131.96显著左室肥厚这两个核心驱动。治疗建议\"启动SGLT2i\"错误——患者已在用；未提升级降脂（PCSK9i/依折麦布）和RAASi启动。安全标记对低血糖有拦截，但遗漏血脂危象和GDMT重大漏洞。"
+      }
+    },
+    "P-14": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房代偿和高血压驱动左房重构把握准确，但完全遗漏LVMI 173.82这一严重左室肥厚，且未识别GDMT全面缺失（无ACEI/ARB/ARNI、无β阻滞剂、无他汀）。治疗建议启动SGLT2i方向正确，但强化降压（ARNI/ACEI+β阻滞剂）才是当前最紧迫任务。安全标记仅一个INFO，过于单薄，未拦截重大治疗漏洞。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1,
+        "comment": "机制对高血压驱动左房重构把握精准，TyG在非糖尿病女性中的解读也合理，但遗漏LVMI 173.82这一严重左室肥厚。临床优先级正确将血压控制置于首位，方向准确。安全标记对房颤筛查和血压有拦截，但GDMT全面缺失（无ACEI/ARB/ARNI、无β阻滞剂、无他汀）未纳入警示，属结构性遗漏。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制误将助推期应变15.81%解读为\"偏低临界\"，且遗漏LVMI 173.82。治疗建议\"确保SGLT2i足量使用\"是严重错误——患者根本未使用SGLT2i。未识别GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂、他汀）。安全核查完全空白。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房代偿和高血压驱动左房重构把握准确，但遗漏LVMI 173.82严重左室肥厚。治疗建议SGLT2i方向正确，但ARNI/ACEI+β阻滞剂强化降压才是当前最紧迫任务，且引用HFrEF证据（DAPA-HF）错误。安全标记对血压有拦截，但未指出GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂、他汀）这一重大治疗漏洞。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制对右房代偿和左房重构把握准确，但TyG 8.49实际处于T1（最低分位），\"胰岛素抵抗\"解读与数据矛盾，属重大事实错误。遗漏LVMI 173.82严重左室肥厚及GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂、他汀）。治疗建议降压方向正确，但SGLT2i在非糖尿病HFpEF中优先级不应高于RAASi启动。安全标记未拦截TyG错误和GDMT漏洞。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对左房重构和高血压驱动把握准确，但将eGFR 85.5误判为\"CKD G2期\"属事实错误（CKD诊断需eGFR<60或肾损伤标志物持续3月）。临床优先级聚焦降压正确，但\"RAAS抑制常规随访\"的表述贬低了ARNI/ACEI的核心价值。安全核查完全缺失，未拦截GDMT重大漏洞（无ACEI/ARB/ARNI、β阻滞剂、他汀）。"
+      }
+    },
+    "P-15": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对心肾链条和TyG驱动把握准确，但遗漏RVEF 40.2%降低及吸烟风险。治疗建议将SGLT2i列为\"首要\"和\"最优\"，在BP 104/56叠加右房重度受损背景下，应优先评估容量状态及GDMT全面启动，而非单一药物。安全标记对低血压和eGFR有拦截，但未指出GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂）及吸烟风险。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对心肾恶性循环描述准确，但遗漏了BP 104/56和RVEF 40.2%这两个最危急信号。治疗建议将SGLT2i列为\"首要\"过于绝对，在低血压背景下应优先评估容量状态和GDMT全面启动。安全标记质量高，对低血压、AKI及低血糖风险均有明确拦截，是亮点。"
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对三联打击和血压棘手性把握准确，但SGLT2i列为\"首要\"过于绝对，GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂）才是当前最大治疗漏洞。安全标记质量极高，对低血压、AKI、低血糖、房颤筛查及随访间隔均有明确拦截，是最大亮点。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制对右房-心肾链条有描述，但完全遗漏BP 104/56的危急性和GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂）。治疗建议再次将SGLT2i列为优先，在低血压和右房重度受损背景下方向不够全面。安全核查完全缺失，对低血压、eGFR 40.2及容量风险毫无拦截，属重大安全漏洞。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对右房-心肾链条和TyG驱动把握准确，但遗漏了RVEF 40.2%和BP 104/56的危急性。治疗建议将SGLT2i列为\"优先\"，在低血压和右房重度受损背景下，应优先评估容量状态和GDMT全面启动，而非单一药物。安全标记质量极高，对低血压、AKI、营养不良及RAASi不耐受均有明确拦截，是最大亮点。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房-心肾链条把握准确，但遗漏了RVEF 40.2%降低和BP 104/56的危急性。治疗建议再次将SGLT2i列为首要，在低血压和右房重度受损背景下，应优先评估容量状态和GDMT全面启动。安全标记对低血压、AKI、低血糖及房颤筛查有拦截，但未指出GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂）这一核心治疗"
+      }
+    },
+    "P-16": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对左房-肺循环分析合理，但完全遗漏\"无传统危险因素却NT-proBNP 879\"这一核心矛盾，未探究睡眠呼吸暂停或浸润性心肌病等病因。治疗建议启动SGLT2i方向正确，但忽略GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂）这一重大治疗漏洞。安全核查完全缺失，\"无矛盾或隐患\"的结论过于乐观。"
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制精准抓住NT-proBNP 879与无传统危险因素的核心矛盾，淀粉样变早期排查有深度。但遗漏GDMT全面缺失。治疗建议优先排查病因合理，但ARNI/ACEI和β阻滞剂在HFpEF中有明确适应证，不应因病因未明而完全搁置。安全标记对非糖尿病状态下SGLT2i启动的质疑、以及随访间隔的纠偏非常到位。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房代偿描述准确，但完全遗漏\"无传统危险因素却NT-proBNP 879\"的核心矛盾，未探究睡眠呼吸暂停或浸润性心肌病等病因。风险识别未指出GDMT全面缺失。治疗建议将SGLT2i列为\"最优先\"过于绝对，ARNI/ACEI启动同等紧迫。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房代偿和HFpEF早期描述准确，但完全遗漏无传统危险因素却NT-proBNP 879的核心矛盾，未探究睡眠呼吸暂停或浸润性心肌病等病因。治疗建议将SGLT2i列为首要，虽方向正确但忽略病因排查，且ARNI/ACEI+β阻滞剂启动同等紧迫。安全标记对GDMT全面缺失和NT-proBNP警示意义毫无拦截。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "机制对右房-左心压力缓冲和\"脆弱平衡\"预警准确，但遗漏\"无传统危险因素却NT-proBNP 879\"的核心矛盾，未探究睡眠呼吸暂停或浸润性心肌病等病因。风险识别对BNP-E/e'分离和房颤筛查有亮点，但未指出GDMT全面缺失。治疗建议SGLT2i方向正确，但\"首要\"过于绝对，ARNI/ACEI+β阻滞剂启动同等紧迫。安全标记质量高，性别信息不一致、低血压风险及NT-proBNP高但随访间隔不足均有明确拦截。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制对舒张功能临界异常有描述，但完全遗漏\"无传统危险因素却NT-proBNP 879\"的核心矛盾，未探究睡眠呼吸暂停或浸润性心肌病等病因；PASP 34 mmHg描述为\"肺循环后负荷升高\"亦不严谨。风险识别未指出GDMT全面缺失（无ACEI/ARB/ARNI、β阻滞剂）。治疗建议将SGLT2i列为\"优先\"，但病因排查和基础GDMT启动同等紧迫。安全核查完全缺失，属重大漏洞。"
+      }
+    },
+    "P-17": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "还是给点分吧，这个模型是1分都不想给\n机制对心肾交互有提及，但完全遗漏BMI 17.44极度消瘦和RVEF 40%降低这两个核心风险。治疗建议\"优先启动SGLT2i\"是严重错误——患者已在用。未识别四联用药（ACEI+β阻滞剂+SGLT2i+利尿剂）在低血压低BMI背景下可能过度。安全核查完全缺失，对恶病质和容量风险毫无拦截。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对恶液质、低灌注及心肾综合征交织把握准确，但右房\"完全正常\"未结合RVEF 40%和RV扩张综合判断。治疗建议\"启动SGLT2i\"是严重错误——患者已在用；当前核心矛盾是四联用药（ACEI+β阻滞剂+SGLT2i+利尿剂）在低血压低BMI背景下可能过度，而非不足。安全标记对低BMI和CKD有拦截，但未指出SGLT2i重复启动风险及他汀LDL 1.15过低需调整。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房代偿和心肾牵制有描述，但遗漏BMI 17.44恶病质和RVEF 40%严重受损。治疗建议\"启动SGLT2i\"错误（患者已在用），且未提及四联用药在低血压低BMI背景下可能过度。安全标记对eGFR、低血压和虚弱有拦截，但未纠偏核心治疗方向。\n按照这种治疗方案可能造成病情进一步加重。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右室-心肾链条和低BMI把握准确，但右房\"正常\"未结合RVEF 40%和RV扩张综合判断。治疗建议\"启动SGLT2i\"用词不当（患者已在用），核心应是评估四联用药在低血压低BMI下是否过度。安全标记未拦截恶病质、他汀LDL过低及用药过度风险。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对心肾链条和低灌注把握准确，但右房\"代偿良好\"未结合RVEF 40%和RV扩张综合判断。治疗建议再次\"启动SGLT2i\"患者已在用，当前核心应是评估四联用药在低血压低BMI下是否过度及营养支持。安全标记未拦截SGLT2i重复启动风险，也未指出恶病质营养支持优先及他汀LDL 1.15过低需调整。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对心肾链条把握准确，但右房\"储备正常\"未结合RVEF 40%和RV扩张综合判断为右心整体失代偿。治疗建议再次\"启动SGLT2i\"，患者已在用，当前核心应是评估四联用药在低血压低BMI下是否过度及营养支持。安全标记对低血压、AKI及恶病质有明确拦截，且指出Cox模型低估风险。"
+      }
+    },
+    "P-18": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对舒张功能障碍和高血压驱动有基本描述，但遗漏脉压差88 mmHg的严重动脉硬化，且将eGFR 87.1误判为\"CKD G2期\"（单纯eGFR 87不能诊断CKD）。风险识别未指出LDL 0.86过低（他汀可能过度）、无利尿剂+NT-proBNP 514的容量管理漏洞。治疗建议强化降压方向正确，但未具体提出加用CCB或ARNI升级，也未提及利尿剂评估和他汀调整。安全核查完全缺失，属重大漏洞。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制对高血压驱动左房重构有描述，但遗漏脉压差88 mmHg的严重动脉硬化和LDL 0.86过低的他汀过度风险；将eGFR 87.1误判为CKD G2期。治疗建议降压方向正确，但未提CCB加用、利尿剂评估及他汀调整。安全核查完全缺失，\"无安全隐患\" 哪个医生敢这么给病人说，而且对SBP 161未控制、血脂过低及容量管理漏洞毫无拦截。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1,
+        "comment": "机制对脉压差88和动脉硬化把握精准，高龄低肌酐提醒有深度。但遗漏LDL 0.86/TC 1.93极低血脂（他汀可能过度）及无利尿剂+NT-proBNP 514的容量漏洞。治疗建议降压方向正确，但未提他汀调整及利尿剂评估。安全标记对血压和房颤有拦截，但遗漏血脂过低风险。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制将eGFR 87.1误判为\"G2期\"属事实错误，且TyG 7.94实际处于T1（最低分位），\"胰岛素抵抗\"解读与数据矛盾；但脉压差和左房扩大分析有亮点。治疗建议\"立即启动SGLT2i\"，患者已在用，当前核心应是强化降压（加用CCB）和评估他汀/利尿剂。安全标记对脉压差和老年低血压风险有拦截，但未指出SGLT2i重复启动风险和血脂过低。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制对高血压驱动和右心代偿分析准确，但完全遗漏LDL 0.86/TC 1.93极低血脂（他汀可能过度）及无利尿剂+NT-proBNP 514的容量漏洞。治疗建议\"启动SGLT2i\"，患者已在用，且未提加用CCB强化降压和他汀调整。安全标记未拦截重复启动风险（SGLT2i）、血脂过低及无利尿剂矛盾，属重大安全漏洞。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2,
+        "comment": "这个算不错的了，对右房代偿和高血压驱动有描述，但遗漏脉压差88的严重动脉硬化和LDL 0.86/TC 1.93极低（他汀可能过度）。风险识别未指出无利尿剂+NT-proBNP 514的容量管理漏洞及他汀过度。治疗建议强化降压方向正确，但未具体提出加用CCB或他汀调整。安全标记对血压有拦截，但未指出SGLT2i已在用及血脂过低风险。"
+      }
+    },
+    "P-19": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "TyG 9.02（T2）被过度解读为\"深度胰岛素抵抗\"，而NT-proBNP 1684与RVEF 46.9%才是核心却被弱化。风险识别完全遗漏无ACEI/ARB这一重大漏洞，未识别胰岛素+SGLT2i+空腹4.7+β阻滞剂的严重低血糖高危组合，也未提及吸烟。治疗建议再次\"启动\"SGLT2i错误（患者已在用），且未提ACEI/ARB启动和戒烟。安全标记对低血糖和体位性低血压有拦截，但\"总体安全\"结论错误。这几个模型是否有认真看基线数据，患者已经应用了SGLT2i，还建议患者用。"
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 0,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 0,
+        "comment": "机制对NT-proBNP和右心功能有提及，但\"PASP轻度升高\"错误（实际25 mmHg正常），且完全遗漏右室收缩功能受损（RVEF 46.9%、TAPSE 16）的核心意义。风险识别未指出胰岛素+SGLT2i+空腹4.7+β阻滞剂的严重低血糖高危组合，也未识别无ACEI/ARB和吸烟。治疗建议\"优化SGLT2i\"是重复建议（患者已在用），未提ACEI/ARB启动和戒烟。安全核查完全缺失，属重大漏洞。"
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制过度聚焦TyG和微血管，却漏掉了右室功能受损、左室质量与BNP不匹配、右房容积重构这三个最可能解释该患者高危状态的解剖学基础。上游病因和整体表型定性没到，机制理解跑偏了\n但SGLT2i\"启动\"用词错误（患者已在用），且遗漏吸烟。治疗建议未识别无ACEI/ARB的核心漏洞。安全标记对随访间隔、血压和房颤有拦截，但\"优化RAAS剂量\"错误（患者无ACEI/ARB），且对胰岛素+SGLT2i+β阻滞剂+空腹4.7的严重低血糖高危组合仅泛泛提醒。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右房和利钠肽有描述，但完全遗漏RVEF 46.9%和TAPSE 16的右室收缩功能受损，也未提吸烟和LVMI-BNP不匹配。治疗建议\"启动\"SGLT2i错误（患者已在用），且引用DAPA-HF（HFrEF试验）不当，未提ACEI/ARB缺失。安全标记对低血糖和RAAS有拦截，但遗漏无ACEI/ARB核心漏洞。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对RA助推受损和NT-proBNP矛盾有触及，但完全遗漏RVEF 46.9%和TAPSE 16的右室收缩功能受损，这是该患者最危急的超声发现；将eGFR 65.3误判为\"G2期\"亦不准确。治疗建议\"启动\"SGLT2i是严重错误（患者已在用），且引用DAPA-HF（HFrEF试验）不当，未提ACEI/ARB缺失和戒烟。安全标记对高龄和感染有拦截，但\"优化RAASi\"前提错误（患者无ACEI/ARB），且遗漏胰岛素+空腹4.7+β阻滞剂的严重低血糖风险。\n根据 KDIGO 指南，单纯 eGFR 65.3 不能等同于\"CKD G2 期\"\n将 eGFR 65.3 误判为\"CKD G2\"会过度医疗化，可能导致不必要的药物调整（如过度限制 RAASi 使用）或给患者造成不必要的心理负担。实际上该患者肾功能尚可，主要矛盾在心脏而非肾脏。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右室功能受损和NT-proBNP矛盾有触及，但遗漏吸烟、无ACEI/ARB及LVMI正常却BNP极高的病因探究。治疗建议\"启动\"SGLT2i严重错误（患者已在用），且未提ACEI/ARB启动和戒烟。安全标记亮点是低血糖和右室功能自我纠偏，但\"CKD G2期\"概念错误，且遗漏无ACEI/ARB核心漏洞。"
+      }
+    },
+    "P-20": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "机制对右室储备下降和右房代偿有准确描述，但PASP 34 mmHg判为\"持续增高\"不严谨，TyG 8.56（T1）误读为胰岛素抵抗属事实错误；遗漏室间隔14.4 mm显著肥厚、吸烟及血压139/89未控制。治疗建议启动SGLT2i正确，但\"获益远超单纯降压\"过于绝对，未提戒烟和LDL 3.62未达标。安全核查完全缺失，对血压、吸烟及右室功能受损毫无拦截。"
+      },
+      "B": {
+        "mechanism_accuracy": 0,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 0,
+        "comment": "机制存在根本性误判：右室EF 45.5%已降低、RVEDVI 70.7显著扩大、右房RAVI 35.5已结构性重构，绝非\"血流动力学极佳\"或\"成功缓冲\"；右室受损明确提示已跨越失代偿临界点，而非\"尚未跨越\"。风险识别完全遗漏吸烟、LDL 3.62未达标及右室病因排查。治疗建议启动SGLT2i方向正确，但\"优化\"用词不当（患者未使用）。安全核查对右室功能受损、吸烟及血脂异常毫无拦截。"
+      },
+      "C": {
+        "mechanism_accuracy": 0,
+        "risk_driver_id": 0,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 2,
+        "clinical_readability": 1,
+        "comment": "机制再次根本性误判右心状态——RVEF 45.5%已降低、RVEDVI 70.7显著扩大、RAVI 35.5已结构性重构，绝非\"代偿较好\"或\"未形成静脉淤血\"。风险识别完全遗漏吸烟、LDL 3.62未达标、血压139/89未控制及右室病因排查。治疗建议\"启用\"SGLT2i方向正确，但未提戒烟和强化降脂。安全标记对右室功能受损、吸烟及血压未达标毫无拦截，过于乐观。"
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 2,
+        "comment": "该模型结构清晰，对HFpEF早期血流动力学改变有一定认识，建议SGLT2i方向正确。但存在重大遗漏：未识别室间隔不对称肥厚（14.4 mm）、LDL-C 3.62不达标及吸烟等关键风险；安全核查完全空白，未警示潜在HCM猝死风险；治疗建议笼统，缺乏具体可执行方案。整体部分可读但临床决策价值不足。"
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1,
+        "comment": "该模型对HFpEF早期心-肺-肾互作机制有一定深度，治疗建议较具体（明确启动SGLT2i、ARNI，监测方案可操作），患者解释通俗易懂。但仍存在重大遗漏：未识别室间隔不对称肥厚（14.4 mm）、LDL-C 3.62及吸烟等关键风险；安全总结称\"无额外风险\"具有误导性，未警示潜在猝死风险；TAPSE 20 mm判为\"正常低值\"欠准确。整体优于模型一，但临床决策价值仍不足。"
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1,
+        "comment": "该模型安全核查有亮点，提出eGFR可能被高估（低肌肉量）及房颤监测建议，体现一定临床深度；血压管理目标明确。但仍存在核心遗漏：未识别室间隔不对称肥厚（14.4 mm）、LDL-C 3.62、吸烟及右室扩大等关键风险；未建议启动SGLT2i及降脂强化；安全总结过于乐观，未警示潜在猝死风险。整体\"形式优于内容\"，临床决策价值有限。"
+      }
+    }
+  }
+}

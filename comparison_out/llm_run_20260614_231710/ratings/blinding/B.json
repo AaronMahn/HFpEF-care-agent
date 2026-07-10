@@ -1,0 +1,309 @@
+{
+  "doctor": "B",
+  "sheet_id": "llm_run_20260614_231710__20260617_101733",
+  "seed": 42,
+  "patient_display_order": [
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05",
+    "P-06",
+    "P-07",
+    "P-08",
+    "P-09",
+    "P-10",
+    "P-11",
+    "P-12",
+    "P-13",
+    "P-14",
+    "P-15",
+    "P-16",
+    "P-17",
+    "P-18",
+    "P-19",
+    "P-20"
+  ],
+  "per_patient": [
+    {
+      "doctor": "B",
+      "display_pid": "P-01",
+      "real_pid": "BENCH-MOD-01",
+      "integrated_tier": "MODERATE",
+      "letter_to_model": {
+        "D": "anthropic/claude-opus-4.7",
+        "C": "google/gemini-3.1-pro-preview",
+        "E": "openai/gpt-5.5",
+        "A": "deepseek/deepseek-v4-pro",
+        "F": "moonshotai/kimi-k2.6",
+        "B": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-02",
+      "real_pid": "BENCH-CRIT-01",
+      "integrated_tier": "CRITICAL",
+      "letter_to_model": {
+        "E": "anthropic/claude-opus-4.7",
+        "D": "google/gemini-3.1-pro-preview",
+        "C": "openai/gpt-5.5",
+        "F": "deepseek/deepseek-v4-pro",
+        "B": "moonshotai/kimi-k2.6",
+        "A": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-03",
+      "real_pid": "BENCH-LOW-03",
+      "integrated_tier": "LOW",
+      "letter_to_model": {
+        "C": "anthropic/claude-opus-4.7",
+        "F": "google/gemini-3.1-pro-preview",
+        "D": "openai/gpt-5.5",
+        "B": "deepseek/deepseek-v4-pro",
+        "A": "moonshotai/kimi-k2.6",
+        "E": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-04",
+      "real_pid": "BENCH-CRIT-02",
+      "integrated_tier": "CRITICAL",
+      "letter_to_model": {
+        "E": "anthropic/claude-opus-4.7",
+        "C": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "A": "deepseek/deepseek-v4-pro",
+        "B": "moonshotai/kimi-k2.6",
+        "D": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-05",
+      "real_pid": "BENCH-MOD-06",
+      "integrated_tier": "HIGH",
+      "letter_to_model": {
+        "A": "anthropic/claude-opus-4.7",
+        "C": "google/gemini-3.1-pro-preview",
+        "E": "openai/gpt-5.5",
+        "D": "deepseek/deepseek-v4-pro",
+        "F": "moonshotai/kimi-k2.6",
+        "B": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-06",
+      "real_pid": "BENCH-CRIT-05",
+      "integrated_tier": "CRITICAL",
+      "letter_to_model": {
+        "E": "anthropic/claude-opus-4.7",
+        "F": "google/gemini-3.1-pro-preview",
+        "B": "openai/gpt-5.5",
+        "A": "deepseek/deepseek-v4-pro",
+        "C": "moonshotai/kimi-k2.6",
+        "D": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-07",
+      "real_pid": "BENCH-MOD-05",
+      "integrated_tier": "MODERATE",
+      "letter_to_model": {
+        "C": "anthropic/claude-opus-4.7",
+        "E": "google/gemini-3.1-pro-preview",
+        "B": "openai/gpt-5.5",
+        "A": "deepseek/deepseek-v4-pro",
+        "D": "moonshotai/kimi-k2.6",
+        "F": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-08",
+      "real_pid": "BENCH-MOD-02",
+      "integrated_tier": "MODERATE",
+      "letter_to_model": {
+        "C": "anthropic/claude-opus-4.7",
+        "A": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "D": "deepseek/deepseek-v4-pro",
+        "B": "moonshotai/kimi-k2.6",
+        "E": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-09",
+      "real_pid": "BENCH-MOD-03",
+      "integrated_tier": "MODERATE",
+      "letter_to_model": {
+        "D": "anthropic/claude-opus-4.7",
+        "B": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "C": "deepseek/deepseek-v4-pro",
+        "A": "moonshotai/kimi-k2.6",
+        "E": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-10",
+      "real_pid": "BENCH-HIGH-02",
+      "integrated_tier": "HIGH",
+      "letter_to_model": {
+        "E": "anthropic/claude-opus-4.7",
+        "D": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "C": "deepseek/deepseek-v4-pro",
+        "A": "moonshotai/kimi-k2.6",
+        "B": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-11",
+      "real_pid": "BENCH-HIGH-03",
+      "integrated_tier": "HIGH",
+      "letter_to_model": {
+        "B": "anthropic/claude-opus-4.7",
+        "C": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "D": "deepseek/deepseek-v4-pro",
+        "E": "moonshotai/kimi-k2.6",
+        "A": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-12",
+      "real_pid": "BENCH-CRIT-04",
+      "integrated_tier": "CRITICAL",
+      "letter_to_model": {
+        "E": "anthropic/claude-opus-4.7",
+        "B": "google/gemini-3.1-pro-preview",
+        "C": "openai/gpt-5.5",
+        "A": "deepseek/deepseek-v4-pro",
+        "D": "moonshotai/kimi-k2.6",
+        "F": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-13",
+      "real_pid": "BENCH-MOD-07",
+      "integrated_tier": "HIGH",
+      "letter_to_model": {
+        "E": "anthropic/claude-opus-4.7",
+        "D": "google/gemini-3.1-pro-preview",
+        "A": "openai/gpt-5.5",
+        "F": "deepseek/deepseek-v4-pro",
+        "C": "moonshotai/kimi-k2.6",
+        "B": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-14",
+      "real_pid": "BENCH-LOW-05",
+      "integrated_tier": "LOW",
+      "letter_to_model": {
+        "B": "anthropic/claude-opus-4.7",
+        "A": "google/gemini-3.1-pro-preview",
+        "D": "openai/gpt-5.5",
+        "F": "deepseek/deepseek-v4-pro",
+        "E": "moonshotai/kimi-k2.6",
+        "C": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-15",
+      "real_pid": "BENCH-CRIT-03",
+      "integrated_tier": "CRITICAL",
+      "letter_to_model": {
+        "C": "anthropic/claude-opus-4.7",
+        "A": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "B": "deepseek/deepseek-v4-pro",
+        "E": "moonshotai/kimi-k2.6",
+        "D": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-16",
+      "real_pid": "BENCH-LOW-02",
+      "integrated_tier": "LOW",
+      "letter_to_model": {
+        "B": "anthropic/claude-opus-4.7",
+        "D": "google/gemini-3.1-pro-preview",
+        "C": "openai/gpt-5.5",
+        "A": "deepseek/deepseek-v4-pro",
+        "E": "moonshotai/kimi-k2.6",
+        "F": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-17",
+      "real_pid": "BENCH-HIGH-01",
+      "integrated_tier": "HIGH",
+      "letter_to_model": {
+        "B": "anthropic/claude-opus-4.7",
+        "E": "google/gemini-3.1-pro-preview",
+        "C": "openai/gpt-5.5",
+        "D": "deepseek/deepseek-v4-pro",
+        "F": "moonshotai/kimi-k2.6",
+        "A": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-18",
+      "real_pid": "BENCH-LOW-01",
+      "integrated_tier": "LOW",
+      "letter_to_model": {
+        "C": "anthropic/claude-opus-4.7",
+        "E": "google/gemini-3.1-pro-preview",
+        "F": "openai/gpt-5.5",
+        "B": "deepseek/deepseek-v4-pro",
+        "D": "moonshotai/kimi-k2.6",
+        "A": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-19",
+      "real_pid": "BENCH-MOD-04",
+      "integrated_tier": "MODERATE",
+      "letter_to_model": {
+        "C": "anthropic/claude-opus-4.7",
+        "A": "google/gemini-3.1-pro-preview",
+        "D": "openai/gpt-5.5",
+        "E": "deepseek/deepseek-v4-pro",
+        "F": "moonshotai/kimi-k2.6",
+        "B": "qwen/qwen3-max"
+      }
+    },
+    {
+      "doctor": "B",
+      "display_pid": "P-20",
+      "real_pid": "BENCH-LOW-04",
+      "integrated_tier": "LOW",
+      "letter_to_model": {
+        "F": "anthropic/claude-opus-4.7",
+        "B": "google/gemini-3.1-pro-preview",
+        "C": "openai/gpt-5.5",
+        "E": "deepseek/deepseek-v4-pro",
+        "A": "moonshotai/kimi-k2.6",
+        "D": "qwen/qwen3-max"
+      }
+    }
+  ]
+}

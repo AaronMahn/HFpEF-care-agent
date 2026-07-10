@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CARE-Agent · LLM Output Comparison</title>
+<style>
+  body { font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+         margin:0; background:#f1f5f9; color:#0f172a; }
+  .wrap { max-width:1280px; margin:0 auto; padding:26px 20px 80px; }
+  h1 { font-size:23px; margin:0 0 4px; }
+  .sub { color:#64748b; font-size:13px; margin-bottom:14px; }
+  .chip { background:#fff; border:1px solid #e2e8f0; border-radius:20px; padding:5px 13px;
+          font-size:12px; color:#475569; margin-right:6px; }
+  .nav { font-size:12px; color:#2563eb; margin:14px 0 8px; line-height:1.9; }
+  .nav a { color:#2563eb; text-decoration:none; }
+  .pblock { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:16px 18px;
+            margin:18px 0; box-shadow:0 4px 16px rgba(15,23,42,.05); scroll-margin-top:12px; }
+  .phead { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  .pid { font-size:20px; font-weight:800; }
+  .demo { color:#64748b; font-size:13px; margin-left:12px; }
+  .tierwrap { text-align:right; }
+  .tier { font-weight:800; color:#dc2626; }
+  .cox { color:#64748b; font-size:12px; margin-left:12px; }
+  details.orig { margin:10px 0 14px; }
+  details.orig summary { cursor:pointer; font-size:12px; color:#64748b; font-weight:600; }
+  details.orig pre { background:#0f172a; color:#e2e8f0; padding:14px; border-radius:8px;
+                     white-space:pre-wrap; font-size:11.5px; line-height:1.6; overflow:auto; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:12px; }
+  .card { border:1px solid #e2e8f0; border-radius:10px; overflow:hidden; background:#fff; }
+  .chead { color:#fff; padding:8px 12px; }
+  .chead .vn { font-weight:800; font-size:14px; }
+  .chead .mn { font-size:11px; opacity:.92; margin-left:6px; }
+  .chead .meta2 { display:block; font-size:10.5px; opacity:.9; margin-top:2px; }
+  .cbody { padding:10px 12px; font-size:12.5px; }
+  .lbl { font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8;
+         font-weight:700; margin:9px 0 2px; }
+  .lbl.safety { color:#dc2626; }
+  .txt { line-height:1.55; color:#1e293b; }
+  .txt.note { font-style:italic; color:#6d28d9; }
+  .muted2 { color:#64748b; font-size:11.5px; }
+  .muted { color:#cbd5e1; }
+  ul.wp { margin:2px 0 0; padding-left:18px; }
+  ul.wp li { margin:1px 0; }
+  .flag { background:#f8fafc; border-radius:0 6px 6px 0; padding:6px 9px; margin:3px 0; font-size:12px; }
+  .flag .code { color:#64748b; font-size:10.5px; }
+  .err { background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; border-radius:6px;
+         padding:6px 9px; font-size:11.5px; margin-bottom:6px; }
+  .foot { color:#94a3b8; font-size:11px; margin-top:24px; text-align:center; }
+</style></head>
+<body><div class="wrap">
+  <h1>🫀 CARE-Agent · LLM Output Comparison</h1>
+  <div class="sub">Exact reasoning + safety-flagging outputs per flagship model · simulation study, not for clinical use</div>
+  <div><span class="chip">Generated: 20260522_060031</span><span class="chip">Patients: 3</span><span class="chip">Models: 6</span><span class="chip">Lang: en</span><span class="chip">MOCK run</span></div>
+  <div class="nav">Patients: <a href="#p0">BENCH-MOCK-01</a> · <a href="#p1">BENCH-MOCK-02</a> · <a href="#p2">BENCH-MOCK-03</a></div>
+  <section id="p0" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOCK-01</span><span class="demo">64y · Female · NYHA 2</span></div><div class="tierwrap"><span class="tier">CRITICAL</span><span class="cox">Cox 2-yr: <b>98.4%</b></span></div></div><details class="orig"><summary>Original rule-based report (no LLM)</summary><pre>CARE-Agent Risk Report — BENCH-MOCK-01
+───────────────────────────────────────────────────────
+Patient: 64-year-old female, NYHA class 2, comorbidities: CKD, hypertension.
+
+Integrated risk tier: CRITICAL
+Cox 2-year event probability: 98.4%
+
+RA function summary:
+  Reservoir 17.5% (Severely impaired) | Conduit 7.1% (Severely impaired) | Booster 10.4% (Mildly impaired)
+  Overall: Severely impaired (RA myopathy) | Composite score: 28.2/100
+  QC flags: CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+Key risk drivers:
+  • Cox model 2-yr event probability: 98.4% (CRITICAL)
+  • Agent A risk tier: CRITICAL (7 flags)
+  • RA function: Severely impaired (RA myopathy) (composite 28.2/100)
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (URGENT_CARDIOLOGY) Urgent cardiology referral — RA myopathy confirmed. Consider advanced imaging (cardiac MRI) and specialist review within 2 weeks.
+  [2] (MDT_REVIEW) Multidisciplinary team (MDT) review recommended — critical risk tier combined with severe RA dysfunction.
+  [3] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [4] (DIURETIC_OPTIMISATION) Diuretic optimisation indicated — NT-proBNP &gt;2000 pg/mL suggests persistent congestion. Review current loop diuretic dose and fluid status.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></details><div class="grid">
+<div class="card">
+  <div class="chead" style="background:#d97706">
+    <span class="vn">Claude</span>
+    <span class="mn">anthropic/claude-opus-4.7</span>
+    <span class="meta2">ok · 0.18s · 1906tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#2563eb">
+    <span class="vn">Gemini</span>
+    <span class="mn">google/gemini-3.1-pro-preview</span>
+    <span class="meta2">ok · 0.18s · 1910tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#16a34a">
+    <span class="vn">GPT</span>
+    <span class="mn">openai/gpt-5.5</span>
+    <span class="meta2">ok · 0.11s · 1348tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#7c3aed">
+    <span class="vn">DeepSeek</span>
+    <span class="mn">deepseek/deepseek-v4-pro</span>
+    <span class="meta2">ok · 0.11s · 989tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#db2777">
+    <span class="vn">Kimi</span>
+    <span class="mn">moonshotai/kimi-k2.6</span>
+    <span class="meta2">ok · 0.15s · 1622tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#0891b2">
+    <span class="vn">Qwen</span>
+    <span class="mn">qwen/qwen3-max</span>
+    <span class="meta2">ok · 0.15s · 1733tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div></div></section><section id="p1" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOCK-02</span><span class="demo">79y · Male · NYHA 3</span></div><div class="tierwrap"><span class="tier">HIGH</span><span class="cox">Cox 2-yr: <b>50.0%</b></span></div></div><details class="orig"><summary>Original rule-based report (no LLM)</summary><pre>CARE-Agent Risk Report — BENCH-MOCK-02
+───────────────────────────────────────────────────────
+Patient: 79-year-old male, NYHA class 3, comorbidities: DM, hypertension.
+
+Integrated risk tier: HIGH
+Cox 2-year event probability: 50.0%
+
+RA function summary:
+  Reservoir 43.1% (Normal) | Conduit 20.3% (Normal) | Booster 22.8% (Normal)
+  Overall: Normal | Composite score: 69.4/100
+
+Key risk drivers:
+  • Cox model 2-yr event probability: 50.0% (HIGH)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></details><div class="grid">
+<div class="card">
+  <div class="chead" style="background:#d97706">
+    <span class="vn">Claude</span>
+    <span class="mn">anthropic/claude-opus-4.7</span>
+    <span class="meta2">ok · 0.08s · 1756tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#2563eb">
+    <span class="vn">Gemini</span>
+    <span class="mn">google/gemini-3.1-pro-preview</span>
+    <span class="meta2">ok · 0.23s · 2163tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#16a34a">
+    <span class="vn">GPT</span>
+    <span class="mn">openai/gpt-5.5</span>
+    <span class="meta2">ok · 0.15s · 1506tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#7c3aed">
+    <span class="vn">DeepSeek</span>
+    <span class="mn">deepseek/deepseek-v4-pro</span>
+    <span class="meta2">ok · 0.18s · 1343tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#db2777">
+    <span class="vn">Kimi</span>
+    <span class="mn">moonshotai/kimi-k2.6</span>
+    <span class="meta2">ok · 0.16s · 1574tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#0891b2">
+    <span class="vn">Qwen</span>
+    <span class="mn">qwen/qwen3-max</span>
+    <span class="meta2">ok · 0.15s · 1453tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div></div></section><section id="p2" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOCK-03</span><span class="demo">54y · Male · NYHA 3</span></div><div class="tierwrap"><span class="tier">CRITICAL</span><span class="cox">Cox 2-yr: <b>64.8%</b></span></div></div><details class="orig"><summary>Original rule-based report (no LLM)</summary><pre>CARE-Agent Risk Report — BENCH-MOCK-03
+───────────────────────────────────────────────────────
+Patient: 54-year-old male, NYHA class 3, comorbidities: CKD, DM, hypertension.
+
+Integrated risk tier: CRITICAL
+Cox 2-year event probability: 64.8%
+
+RA function summary:
+  Reservoir 48.1% (Normal) | Conduit 24.8% (Normal) | Booster 23.3% (Normal)
+  Overall: Normal | Composite score: 77.3/100
+
+Key risk drivers:
+  • Cox model 2-yr event probability: 64.8% (CRITICAL)
+  • Agent A risk tier: CRITICAL (2 flags)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></details><div class="grid">
+<div class="card">
+  <div class="chead" style="background:#d97706">
+    <span class="vn">Claude</span>
+    <span class="mn">anthropic/claude-opus-4.7</span>
+    <span class="meta2">ok · 0.13s · 1616tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#2563eb">
+    <span class="vn">Gemini</span>
+    <span class="mn">google/gemini-3.1-pro-preview</span>
+    <span class="meta2">ok · 0.16s · 1397tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#16a34a">
+    <span class="vn">GPT</span>
+    <span class="mn">openai/gpt-5.5</span>
+    <span class="meta2">ok · 0.15s · 2224tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#7c3aed">
+    <span class="vn">DeepSeek</span>
+    <span class="mn">deepseek/deepseek-v4-pro</span>
+    <span class="meta2">ok · 0.18s · 2127tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#db2777">
+    <span class="vn">Kimi</span>
+    <span class="mn">moonshotai/kimi-k2.6</span>
+    <span class="meta2">ok · 0.21s · 2019tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="chead" style="background:#0891b2">
+    <span class="vn">Qwen</span>
+    <span class="mn">qwen/qwen3-max</span>
+    <span class="meta2">ok · 0.20s · 1295tok</span>
+  </div>
+  <div class="cbody">
+    
+    <div class="lbl">Mechanism</div><div class="txt">RA dysfunction and CKD interact to raise filling pressures...</div>
+    <div class="lbl">Clinical priority</div><div class="txt">Cardiorenal optimisation takes precedence.</div>
+    <div class="lbl">Watchpoints</div><ul class='wp'><li>eGFR trend</li><li>NT-proBNP</li><li>volume status</li></ul>
+    <div class="lbl">Patient note</div><div class="txt note">Your heart&#x27;s right side and kidneys need close monitoring.</div>
+    <div class="lbl">Model caveat</div><div class="txt muted2">Imputed Cox features reduce certainty for this patient.</div>
+    <div class="lbl safety">Safety flags</div><div class="flag" style="border-left:3px solid #d97706"><b style="color:#d97706">CAUTION</b> <span class="code">DIURETIC_OPTIMISATION</span><br>AKI risk with aggressive diuresis in CKD.</div>
+    <div class="lbl">Safety summary</div><div class="txt">Recommendations broadly appropriate; watch renal function.</div>
+  </div>
+</div></div></section>
+  <div class="foot">Generated by compare_llm_outputs.py</div>
+</div></body></html>

@@ -1,0 +1,357 @@
+{
+  "meta": {
+    "timestamp": "2026-07-09 11:46",
+    "n_doctors": 3,
+    "n_patients": 20,
+    "n_models": 6,
+    "n_total_ratings": 360,
+    "preset": "research",
+    "weights": {
+      "quality": 0.7,
+      "speed": 0.15,
+      "economy": 0.15
+    },
+    "latency_ref_s": 120.0,
+    "tokens_ref": 10000
+  },
+  "irr": {
+    "mechanism_accuracy": {
+      "icc_2k": 0.082,
+      "mean_spearman": 0.01,
+      "label_en": "Mechanism accuracy",
+      "label_zh": "机制解释准确性",
+      "n_subjects": 120,
+      "n_raters": 3
+    },
+    "risk_driver_id": {
+      "icc_2k": 0.138,
+      "mean_spearman": 0.116,
+      "label_en": "Risk driver identification",
+      "label_zh": "风险驱动因素识别",
+      "n_subjects": 120,
+      "n_raters": 3
+    },
+    "treatment_rationale": {
+      "icc_2k": -0.051,
+      "mean_spearman": -0.044,
+      "label_en": "Treatment rationale",
+      "label_zh": "治疗建议合理性",
+      "n_subjects": 120,
+      "n_raters": 3
+    },
+    "safety_flag_quality": {
+      "icc_2k": 0.366,
+      "mean_spearman": 0.143,
+      "label_en": "Safety-flag quality",
+      "label_zh": "安全标记质量",
+      "n_subjects": 120,
+      "n_raters": 3
+    },
+    "hallucination": {
+      "icc_2k": 0.089,
+      "mean_spearman": 0.018,
+      "label_en": "Hallucination (reverse)",
+      "label_zh": "幻觉/错误推断",
+      "n_subjects": 120,
+      "n_raters": 3
+    },
+    "clinical_readability": {
+      "icc_2k": 0.206,
+      "mean_spearman": 0.113,
+      "label_en": "Clinical readability",
+      "label_zh": "临床可读性",
+      "n_subjects": 120,
+      "n_raters": 3
+    }
+  },
+  "summary": [
+    {
+      "model": "anthropic/claude-opus-4.7",
+      "vendor": "Claude",
+      "n_ratings": 60,
+      "composite": 6.694,
+      "quality_score": 0.869,
+      "speed_score": 0.696,
+      "economy_score": 0.551,
+      "total_mark": 0.796,
+      "marks_by_preset": {
+        "research": {
+          "quality": 0.869,
+          "speed": 0.696,
+          "economy": 0.551,
+          "total": 0.796
+        },
+        "bedside": {
+          "quality": 0.869,
+          "speed": 0.696,
+          "economy": 0.551,
+          "total": 0.768
+        },
+        "economy": {
+          "quality": 0.869,
+          "speed": 0.696,
+          "economy": 0.551,
+          "total": 0.739
+        }
+      },
+      "dim_means": {
+        "mechanism_accuracy": 1.8,
+        "risk_driver_id": 1.783,
+        "treatment_rationale": 1.617,
+        "safety_flag_quality": 1.667,
+        "hallucination": 0.2,
+        "clinical_readability": 1.75
+      },
+      "dim_sds": {
+        "mechanism_accuracy": 0.4,
+        "risk_driver_id": 0.451,
+        "treatment_rationale": 0.608,
+        "safety_flag_quality": 0.506,
+        "hallucination": 0.44,
+        "clinical_readability": 0.433
+      },
+      "latency_s_mean": 36.44,
+      "tokens_mean": 4485.0
+    },
+    {
+      "model": "openai/gpt-5.5",
+      "vendor": "GPT",
+      "n_ratings": 60,
+      "composite": 6.118,
+      "quality_score": 0.812,
+      "speed_score": 0.68,
+      "economy_score": 0.587,
+      "total_mark": 0.758,
+      "marks_by_preset": {
+        "research": {
+          "quality": 0.812,
+          "speed": 0.68,
+          "economy": 0.587,
+          "total": 0.758
+        },
+        "bedside": {
+          "quality": 0.812,
+          "speed": 0.68,
+          "economy": 0.587,
+          "total": 0.737
+        },
+        "economy": {
+          "quality": 0.812,
+          "speed": 0.68,
+          "economy": 0.587,
+          "total": 0.718
+        }
+      },
+      "dim_means": {
+        "mechanism_accuracy": 1.567,
+        "risk_driver_id": 1.583,
+        "treatment_rationale": 1.617,
+        "safety_flag_quality": 1.667,
+        "hallucination": 0.283,
+        "clinical_readability": 1.567
+      },
+      "dim_sds": {
+        "mechanism_accuracy": 0.559,
+        "risk_driver_id": 0.586,
+        "treatment_rationale": 0.608,
+        "safety_flag_quality": 0.506,
+        "hallucination": 0.486,
+        "clinical_readability": 0.528
+      },
+      "latency_s_mean": 38.4,
+      "tokens_mean": 4130
+    },
+    {
+      "model": "deepseek/deepseek-v4-pro",
+      "vendor": "DeepSeek",
+      "n_ratings": 60,
+      "composite": 5.466,
+      "quality_score": 0.747,
+      "speed_score": 0.636,
+      "economy_score": 0.596,
+      "total_mark": 0.707,
+      "marks_by_preset": {
+        "research": {
+          "quality": 0.747,
+          "speed": 0.636,
+          "economy": 0.596,
+          "total": 0.707
+        },
+        "bedside": {
+          "quality": 0.747,
+          "speed": 0.636,
+          "economy": 0.596,
+          "total": 0.687
+        },
+        "economy": {
+          "quality": 0.747,
+          "speed": 0.636,
+          "economy": 0.596,
+          "total": 0.679
+        }
+      },
+      "dim_means": {
+        "mechanism_accuracy": 1.633,
+        "risk_driver_id": 1.55,
+        "treatment_rationale": 1.467,
+        "safety_flag_quality": 1.2,
+        "hallucination": 0.4,
+        "clinical_readability": 1.483
+      },
+      "dim_sds": {
+        "mechanism_accuracy": 0.482,
+        "risk_driver_id": 0.617,
+        "treatment_rationale": 0.67,
+        "safety_flag_quality": 0.792,
+        "hallucination": 0.611,
+        "clinical_readability": 0.591
+      },
+      "latency_s_mean": 43.65,
+      "tokens_mean": 4042.0
+    },
+    {
+      "model": "google/gemini-3.1-pro-preview",
+      "vendor": "Gemini",
+      "n_ratings": 60,
+      "composite": 5.909,
+      "quality_score": 0.791,
+      "speed_score": 0.613,
+      "economy_score": 0.347,
+      "total_mark": 0.698,
+      "marks_by_preset": {
+        "research": {
+          "quality": 0.791,
+          "speed": 0.613,
+          "economy": 0.347,
+          "total": 0.698
+        },
+        "bedside": {
+          "quality": 0.791,
+          "speed": 0.613,
+          "economy": 0.347,
+          "total": 0.675
+        },
+        "economy": {
+          "quality": 0.791,
+          "speed": 0.613,
+          "economy": 0.347,
+          "total": 0.622
+        }
+      },
+      "dim_means": {
+        "mechanism_accuracy": 1.633,
+        "risk_driver_id": 1.6,
+        "treatment_rationale": 1.55,
+        "safety_flag_quality": 1.4,
+        "hallucination": 0.317,
+        "clinical_readability": 1.6
+      },
+      "dim_sds": {
+        "mechanism_accuracy": 0.515,
+        "risk_driver_id": 0.638,
+        "treatment_rationale": 0.644,
+        "safety_flag_quality": 0.611,
+        "hallucination": 0.532,
+        "clinical_readability": 0.554
+      },
+      "latency_s_mean": 46.45,
+      "tokens_mean": 6530.0
+    },
+    {
+      "model": "qwen/qwen3-max",
+      "vendor": "Qwen",
+      "n_ratings": 60,
+      "composite": 4.047,
+      "quality_score": 0.605,
+      "speed_score": 0.926,
+      "economy_score": 0.862,
+      "total_mark": 0.691,
+      "marks_by_preset": {
+        "research": {
+          "quality": 0.605,
+          "speed": 0.926,
+          "economy": 0.862,
+          "total": 0.691
+        },
+        "bedside": {
+          "quality": 0.605,
+          "speed": 0.926,
+          "economy": 0.862,
+          "total": 0.759
+        },
+        "economy": {
+          "quality": 0.605,
+          "speed": 0.926,
+          "economy": 0.862,
+          "total": 0.746
+        }
+      },
+      "dim_means": {
+        "mechanism_accuracy": 1.367,
+        "risk_driver_id": 1.267,
+        "treatment_rationale": 1.283,
+        "safety_flag_quality": 0.85,
+        "hallucination": 0.7,
+        "clinical_readability": 1.167
+      },
+      "dim_sds": {
+        "mechanism_accuracy": 0.576,
+        "risk_driver_id": 0.793,
+        "treatment_rationale": 0.798,
+        "safety_flag_quality": 0.891,
+        "hallucination": 0.823,
+        "clinical_readability": 0.778
+      },
+      "latency_s_mean": 8.92,
+      "tokens_mean": 1383.0
+    },
+    {
+      "model": "moonshotai/kimi-k2.6",
+      "vendor": "Kimi",
+      "n_ratings": 60,
+      "composite": 6.379,
+      "quality_score": 0.838,
+      "speed_score": 0.0,
+      "economy_score": 0.015,
+      "total_mark": 0.589,
+      "marks_by_preset": {
+        "research": {
+          "quality": 0.838,
+          "speed": 0.0,
+          "economy": 0.015,
+          "total": 0.589
+        },
+        "bedside": {
+          "quality": 0.838,
+          "speed": 0.0,
+          "economy": 0.015,
+          "total": 0.42
+        },
+        "economy": {
+          "quality": 0.838,
+          "speed": 0.0,
+          "economy": 0.015,
+          "total": 0.424
+        }
+      },
+      "dim_means": {
+        "mechanism_accuracy": 1.733,
+        "risk_driver_id": 1.7,
+        "treatment_rationale": 1.533,
+        "safety_flag_quality": 1.633,
+        "hallucination": 0.3,
+        "clinical_readability": 1.75
+      },
+      "dim_sds": {
+        "mechanism_accuracy": 0.442,
+        "risk_driver_id": 0.557,
+        "treatment_rationale": 0.645,
+        "safety_flag_quality": 0.576,
+        "hallucination": 0.557,
+        "clinical_readability": 0.47
+      },
+      "latency_s_mean": 312.85,
+      "tokens_mean": 9848.0
+    }
+  ]
+}

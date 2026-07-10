@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CARE-Agent · Stratified Clinical Reports / 分层临床报告</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#1f2330; --muted:#5a6072; --line:#e3e0d8;
+    --accent:#7a3e1d; --accent-soft:#f0e6db;
+    --font-zh:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",system-ui,sans-serif;
+    --font-en:"Charter","Iowan Old Style","Source Serif Pro",Georgia,serif;
+    --font-mono:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--fg)}
+  body{font-family:var(--font-en);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+  body.lang-zh{font-family:var(--font-zh);line-height:1.75}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px}
+  header.bar{
+    position:sticky;top:0;z-index:10;background:rgba(251,250,247,.95);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;font-family:var(--font-en);
+  }
+  body.lang-zh header.bar{font-family:var(--font-zh)}
+  .title{font-weight:600}
+  .title small{color:var(--muted);font-weight:400;margin-left:.5em}
+  .lang-toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
+  .lang-toggle button{border:0;background:transparent;padding:6px 16px;cursor:pointer;font:inherit;font-size:13px;color:var(--muted)}
+  .lang-toggle button.active{background:var(--accent);color:#fff}
+  h1{font-size:26px;margin:.4em 0 .2em}
+  h2.tier-h{font-size:18px;margin:1.8em 0 .6em;padding:8px 14px;border-radius:8px}
+  .chips{margin:8px 0 4px}
+  .chip{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12px;color:var(--muted);margin-right:6px}
+  .alert{background:#fff4cf;border-left:4px solid #b15a14;padding:10px 14px;border-radius:6px;margin:14px 0;font-size:14px;color:#3a2614}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0;font-size:13px}
+  .toc a{color:var(--accent);text-decoration:none;margin-right:10px;display:inline-block;padding:2px 8px;border-radius:4px}
+  .toc a:hover{background:var(--accent-soft)}
+  .pblock{background:#fff;border:1px solid var(--line);border-radius:12px;margin:16px 0;overflow:hidden;box-shadow:0 2px 10px rgba(15,23,42,.03);scroll-margin-top:80px}
+  .phead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .pid{font-size:20px;font-weight:700}
+  .demo{color:var(--muted);font-size:13px;margin-left:10px}
+  .tier-pill{display:inline-block;padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em}
+  .cox{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin-left:10px}
+  .cox b{color:var(--fg);font-size:14px}
+  .pbody{padding:16px 18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:14px}
+  .kv{background:#fafaf6;border-radius:6px;padding:7px 10px;font-size:12px}
+  .kv .k{color:var(--muted);display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .kv .v{font-family:var(--font-mono);font-weight:600}
+  .drivers,.actions{margin:10px 0}
+  .drivers .h,.actions .h{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  .drivers ul,.actions ul{margin:.2em 0;padding-left:1.4em}
+  .drivers li,.actions li{margin:.15em 0;font-size:13px}
+  pre.summary{background:#0f172a;color:#e6e6e6;padding:14px 16px;border-radius:8px;white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:12px;line-height:1.55;overflow-x:auto;margin:8px 0 0}
+  body.lang-zh pre.summary{font-family:"PingFang SC","Microsoft YaHei",var(--font-mono);font-size:12.5px}
+  footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+  /* language visibility — :not(body) prevents hiding the body */
+  :not(body).lang-en, :not(body).lang-zh { display:none }
+  body.lang-en .lang-en { display:block }
+  body.lang-zh .lang-zh { display:block }
+  body.lang-en span.lang-en { display:inline }
+  body.lang-zh span.lang-zh { display:inline }
+</style>
+</head>
+<body class="lang-zh">
+
+<header class="bar">
+  <div class="title">
+    <span class="lang-en">CARE-Agent · Stratified Clinical Reports</span>
+    <span class="lang-zh">CARE-Agent · 分层临床报告</span>
+    <small>20260614_231710</small>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-en" type="button">English</button>
+    <button id="btn-zh" type="button">中文</button>
+  </div>
+</header>
+
+<div class="wrap">
+<h1><span class="lang-en">CARE-Agent · Stratified Clinical Reports</span><span class="lang-zh">CARE-Agent · 分层临床报告</span></h1><div class="lang-en" style="color:var(--muted);font-size:13px">Deterministic rule-based reports — no LLM. Stratified by integrated risk tier.</div><div class="lang-zh" style="color:var(--muted);font-size:13px">基于规则的确定性临床报告（未启用 LLM），按"综合风险等级"分层。</div><div class="chips"><span class="chip">20260614_231710</span><span class="chip"><span class="lang-en">20 patients</span><span class="lang-zh">20 例患者</span></span><span class="chip"><span class="lang-en">Target: 5 per tier</span><span class="lang-zh">目标：每层 5 例</span></span><span class="chip"><span class="lang-en">Cohort size: 395</span><span class="lang-zh">总队列：395 例</span></span></div><div class="toc"><span class="lang-en"><b>LOW</b>:</span><span class="lang-zh"><b>低危</b>：</span><a href="#p0">BENCH-LOW-01</a> <a href="#p1">BENCH-LOW-02</a> <a href="#p2">BENCH-LOW-03</a> <a href="#p3">BENCH-LOW-04</a> <a href="#p4">BENCH-LOW-05</a> &nbsp; <span class="lang-en"><b>MODERATE</b>:</span><span class="lang-zh"><b>中危</b>：</span><a href="#p5">BENCH-MOD-01</a> <a href="#p6">BENCH-MOD-02</a> <a href="#p7">BENCH-MOD-03</a> <a href="#p8">BENCH-MOD-04</a> <a href="#p9">BENCH-MOD-05</a> &nbsp; <span class="lang-en"><b>HIGH</b>:</span><span class="lang-zh"><b>高危</b>：</span><a href="#p10">BENCH-HIGH-01</a> <a href="#p11">BENCH-MOD-06</a> <a href="#p12">BENCH-MOD-07</a> <a href="#p13">BENCH-HIGH-02</a> <a href="#p14">BENCH-HIGH-03</a> &nbsp; <span class="lang-en"><b>CRITICAL</b>:</span><span class="lang-zh"><b>极高危</b>：</span><a href="#p15">BENCH-CRIT-01</a> <a href="#p16">BENCH-CRIT-02</a> <a href="#p17">BENCH-CRIT-03</a> <a href="#p18">BENCH-CRIT-04</a> <a href="#p19">BENCH-CRIT-05</a></div><h2 class="tier-h" style="color:#1b6a4a;background:#dff0e6"><span class="lang-en">LOW · 5 patient(s)</span><span class="lang-zh">低危 · 5 例</span></h2><section id="p0" class="pblock"><div class="phead"><div><span class="pid">BENCH-LOW-01</span><span class="demo lang-en">76y · Female · NYHA 2</span><span class="demo lang-zh">76 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#1b6a4a;background:#dff0e6"><span class="lang-en">LOW</span><span class="lang-zh">低危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>3.0%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 3.0% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：3.0%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">87.1 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">514 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.94</span></div><div class="kv"><span class="k">PASP</span><span class="v">19.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">59.9 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.5 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">55.8 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">36.6 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">19.2 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">89.3 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">—</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-LOW-01
+───────────────────────────────────────────────────────
+Patient: 76-year-old female, NYHA class 2, comorbidities: hypertension.
+
+Integrated risk tier: LOW
+Cox 18-month event probability: 3.0%
+
+RA function summary:
+  Reservoir 55.8% (Normal) | Conduit 36.6% (Normal) | Booster 19.2% (Normal)
+  Overall: Normal | Composite score: 89.3/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 3.0% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">87.1 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">514 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.94</span></div><div class="kv"><span class="k">PASP</span><span class="v">19.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">59.9 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.5 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">55.8 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">36.6 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">19.2 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">89.3 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">无</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-LOW-01
+──────────────────────────────────────────────────
+患者信息：76 岁，性别：女，NYHA 心功能分级：2 级
+合并症：高血压
+
+▌综合风险等级：低危
+▌Cox 模型 18 个月事件概率：3.0%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：55.8%（正常）
+  管道期应变：36.6%（正常）
+  助推期应变：19.2%（正常）
+  整体 RA 功能：正常　综合评分：89.3/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：87.1 mL/min/1.73m²　肌酐：50 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：514 pg/mL
+  LVEF：59.5%　LAVI：42.6 mL/m²　E/e&#x27;：9.4
+  PASP：19 mmHg　RVEF：59.9%　TAPSE：22 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：3.0%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p1" class="pblock"><div class="phead"><div><span class="pid">BENCH-LOW-02</span><span class="demo lang-en">63y · Male · NYHA 2</span><span class="demo lang-zh">63 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#1b6a4a;background:#dff0e6"><span class="lang-en">LOW</span><span class="lang-zh">低危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>4.9%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 4.9% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：4.9%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">108.4 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">879 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.57</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">49.1 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">53.1 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">51.7 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">36.1 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">15.6 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">82.6 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">—</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-LOW-02
+───────────────────────────────────────────────────────
+Patient: 63-year-old male, NYHA class 2, comorbidities: no major comorbidities flagged.
+
+Integrated risk tier: LOW
+Cox 18-month event probability: 4.9%
+
+RA function summary:
+  Reservoir 51.7% (Normal) | Conduit 36.1% (Normal) | Booster 15.6% (Normal)
+  Overall: Normal | Composite score: 82.6/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 4.9% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">108.4 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">879 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.57</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">49.1 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">53.1 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">51.7 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">36.1 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">15.6 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">82.6 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">无</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-LOW-02
+──────────────────────────────────────────────────
+患者信息：63 岁，性别：男，NYHA 心功能分级：2 级
+合并症：无主要合并症
+
+▌综合风险等级：低危
+▌Cox 模型 18 个月事件概率：4.9%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：51.7%（正常）
+  管道期应变：36.1%（正常）
+  助推期应变：15.6%（正常）
+  整体 RA 功能：正常　综合评分：82.6/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：108.4 mL/min/1.73m²　肌酐：48 μmol/L　慢性肾病分期：G1 (≥90)
+  NT-proBNP：879 pg/mL
+  LVEF：53.1%　LAVI：35.8 mL/m²　E/e&#x27;：9.7
+  PASP：34 mmHg　RVEF：49.1%　TAPSE：23 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：4.9%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p2" class="pblock"><div class="phead"><div><span class="pid">BENCH-LOW-03</span><span class="demo lang-en">46y · Male · NYHA 2</span><span class="demo lang-zh">46 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#1b6a4a;background:#dff0e6"><span class="lang-en">LOW</span><span class="lang-zh">低危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>5.3%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 5.3% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：5.3%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">89.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">344 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.60</span></div><div class="kv"><span class="k">PASP</span><span class="v">21.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">46.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">54.2 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">50.1 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">33.0 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">17.1 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">80.2 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">—</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-LOW-03
+───────────────────────────────────────────────────────
+Patient: 46-year-old male, NYHA class 2, comorbidities: no major comorbidities flagged.
+
+Integrated risk tier: LOW
+Cox 18-month event probability: 5.3%
+
+RA function summary:
+  Reservoir 50.1% (Normal) | Conduit 33.0% (Normal) | Booster 17.1% (Normal)
+  Overall: Normal | Composite score: 80.2/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 5.3% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">89.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">344 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.60</span></div><div class="kv"><span class="k">PASP</span><span class="v">21.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">46.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">54.2 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">50.1 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">33.0 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">17.1 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">80.2 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">无</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-LOW-03
+──────────────────────────────────────────────────
+患者信息：46 岁，性别：男，NYHA 心功能分级：2 级
+合并症：无主要合并症
+
+▌综合风险等级：低危
+▌Cox 模型 18 个月事件概率：5.3%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：50.1%（正常）
+  管道期应变：33.0%（正常）
+  助推期应变：17.1%（正常）
+  整体 RA 功能：正常　综合评分：80.2/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：89.2 mL/min/1.73m²　肌酐：103 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：344 pg/mL
+  LVEF：54.2%　LAVI：40.9 mL/m²　E/e&#x27;：10.0
+  PASP：21 mmHg　RVEF：46.4%　TAPSE：18 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：5.3%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p3" class="pblock"><div class="phead"><div><span class="pid">BENCH-LOW-04</span><span class="demo lang-en">71y · Female · NYHA 2</span><span class="demo lang-zh">71 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#1b6a4a;background:#dff0e6"><span class="lang-en">LOW</span><span class="lang-zh">低危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>6.6%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 6.6% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：6.6%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">110.6 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">362 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.56</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">45.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.9 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">47.3 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">31.3 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">16.0 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">75.7 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">—</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-LOW-04
+───────────────────────────────────────────────────────
+Patient: 71-year-old female, NYHA class 2, comorbidities: hypertension.
+
+Integrated risk tier: LOW
+Cox 18-month event probability: 6.6%
+
+RA function summary:
+  Reservoir 47.3% (Normal) | Conduit 31.3% (Normal) | Booster 16.0% (Normal)
+  Overall: Normal | Composite score: 75.7/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 6.6% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">110.6 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">362 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.56</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">45.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.9 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">47.3 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">31.3 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">16.0 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">75.7 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">无</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-LOW-04
+──────────────────────────────────────────────────
+患者信息：71 岁，性别：女，NYHA 心功能分级：2 级
+合并症：高血压
+
+▌综合风险等级：低危
+▌Cox 模型 18 个月事件概率：6.6%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：47.3%（正常）
+  管道期应变：31.3%（正常）
+  助推期应变：16.0%（正常）
+  整体 RA 功能：正常　综合评分：75.7/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：110.6 mL/min/1.73m²　肌酐：47 μmol/L　慢性肾病分期：G1 (≥90)
+  NT-proBNP：362 pg/mL
+  LVEF：59.9%　LAVI：39.2 mL/m²　E/e&#x27;：10.3
+  PASP：34 mmHg　RVEF：45.5%　TAPSE：20 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：6.6%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p4" class="pblock"><div class="phead"><div><span class="pid">BENCH-LOW-05</span><span class="demo lang-en">57y · Female · NYHA 2</span><span class="demo lang-zh">57 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#1b6a4a;background:#dff0e6"><span class="lang-en">LOW</span><span class="lang-zh">低危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>6.9%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 6.9% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：6.9%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">85.5 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">428 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.49</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">53.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">56.3 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">42.7 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">26.9 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">15.8 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">68.4 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">—</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-LOW-05
+───────────────────────────────────────────────────────
+Patient: 57-year-old female, NYHA class 2, comorbidities: no major comorbidities flagged.
+
+Integrated risk tier: LOW
+Cox 18-month event probability: 6.9%
+
+RA function summary:
+  Reservoir 42.7% (Normal) | Conduit 26.9% (Normal) | Booster 15.8% (Normal)
+  Overall: Normal | Composite score: 68.4/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 6.9% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">85.5 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">428 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.49</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">53.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">56.3 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">42.7 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">26.9 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">15.8 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">68.4 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">无</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-LOW-05
+──────────────────────────────────────────────────
+患者信息：57 岁，性别：女，NYHA 心功能分级：2 级
+合并症：无主要合并症
+
+▌综合风险等级：低危
+▌Cox 模型 18 个月事件概率：6.9%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：42.7%（正常）
+  管道期应变：26.9%（正常）
+  助推期应变：15.8%（正常）
+  整体 RA 功能：正常　综合评分：68.4/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：85.5 mL/min/1.73m²　肌酐：79 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：428 pg/mL
+  LVEF：56.3%　LAVI：52.4 mL/m²　E/e&#x27;：9.7
+  PASP：34 mmHg　RVEF：53.5%　TAPSE：18 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：6.9%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><h2 class="tier-h" style="color:#8a6a00;background:#fff4cf"><span class="lang-en">MODERATE · 5 patient(s)</span><span class="lang-zh">中危 · 5 例</span></h2><section id="p5" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-01</span><span class="demo lang-en">77y · Male · NYHA 2</span><span class="demo lang-zh">77 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#8a6a00;background:#fff4cf"><span class="lang-en">MODERATE</span><span class="lang-zh">中危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>2.9%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 2.9% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：2.9%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">51.1 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">422 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.53</span></div><div class="kv"><span class="k">PASP</span><span class="v">28.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">55.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.2 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">54.9 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">36.1 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">18.8 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">87.9 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3a (45–59), DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-01
+───────────────────────────────────────────────────────
+Patient: 77-year-old male, NYHA class 2, comorbidities: CKD, DM, hypertension.
+
+Integrated risk tier: MODERATE
+Cox 18-month event probability: 2.9%
+
+RA function summary:
+  Reservoir 54.9% (Normal) | Conduit 36.1% (Normal) | Booster 18.8% (Normal)
+  Overall: Normal | Composite score: 87.9/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 2.9% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">51.1 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">422 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.53</span></div><div class="kv"><span class="k">PASP</span><span class="v">28.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">55.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.2 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">54.9 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">36.1 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">18.8 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">87.9 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3a (45–59)）, 糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-01
+──────────────────────────────────────────────────
+患者信息：77 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G3a (45–59)期）、2型糖尿病、高血压
+
+▌综合风险等级：中危
+▌Cox 模型 18 个月事件概率：2.9%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：54.9%（正常）
+  管道期应变：36.1%（正常）
+  助推期应变：18.8%（正常）
+  整体 RA 功能：正常　综合评分：87.9/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：51.1 mL/min/1.73m²　肌酐：116 μmol/L　慢性肾病分期：G3a (45–59)
+  NT-proBNP：422 pg/mL
+  LVEF：59.2%　LAVI：39.2 mL/m²　E/e&#x27;：15.7
+  PASP：28 mmHg　RVEF：55.4%　TAPSE：16 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：2.9%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p6" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-02</span><span class="demo lang-en">57y · Female · NYHA 2</span><span class="demo lang-zh">57 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#8a6a00;background:#fff4cf"><span class="lang-en">MODERATE</span><span class="lang-zh">中危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>5.6%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 5.6% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：5.6%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">85.8 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">635 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.23</span></div><div class="kv"><span class="k">PASP</span><span class="v">36.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">57.3 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">52.9 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">44.9 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">22.3 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">22.6 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">72.2 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">—</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-02
+───────────────────────────────────────────────────────
+Patient: 57-year-old female, NYHA class 2, comorbidities: no major comorbidities flagged.
+
+Integrated risk tier: MODERATE
+Cox 18-month event probability: 5.6%
+
+RA function summary:
+  Reservoir 44.9% (Normal) | Conduit 22.3% (Normal) | Booster 22.6% (Normal)
+  Overall: Normal | Composite score: 72.2/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 5.6% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">85.8 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">635 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.23</span></div><div class="kv"><span class="k">PASP</span><span class="v">36.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">57.3 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">52.9 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">44.9 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">22.3 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">22.6 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">72.2 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">无</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-02
+──────────────────────────────────────────────────
+患者信息：57 岁，性别：女，NYHA 心功能分级：2 级
+合并症：无主要合并症
+
+▌综合风险等级：中危
+▌Cox 模型 18 个月事件概率：5.6%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：44.9%（正常）
+  管道期应变：22.3%（正常）
+  助推期应变：22.6%（正常）
+  整体 RA 功能：正常　综合评分：72.2/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：85.8 mL/min/1.73m²　肌酐：79 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：635 pg/mL
+  LVEF：52.9%　LAVI：38.6 mL/m²　E/e&#x27;：12.8
+  PASP：36 mmHg　RVEF：57.3%　TAPSE：16 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：5.6%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p7" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-03</span><span class="demo lang-en">47y · Male · NYHA 2</span><span class="demo lang-zh">47 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#8a6a00;background:#fff4cf"><span class="lang-en">MODERATE</span><span class="lang-zh">中危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>7.4%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 7.4% (LOW)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：7.4%（低危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">30.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">681 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.16</span></div><div class="kv"><span class="k">PASP</span><span class="v">25.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">48.8 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">56.6 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">44.3 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">24.1 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">20.2 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">71.2 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3b (30–44)</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-03
+───────────────────────────────────────────────────────
+Patient: 47-year-old male, NYHA class 2, comorbidities: CKD, hypertension.
+
+Integrated risk tier: MODERATE
+Cox 18-month event probability: 7.4%
+
+RA function summary:
+  Reservoir 44.3% (Normal) | Conduit 24.1% (Normal) | Booster 20.2% (Normal)
+  Overall: Normal | Composite score: 71.2/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 7.4% (LOW)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">30.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">681 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.16</span></div><div class="kv"><span class="k">PASP</span><span class="v">25.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">48.8 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">56.6 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">44.3 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">24.1 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">20.2 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">71.2 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3b (30–44)）</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-03
+──────────────────────────────────────────────────
+患者信息：47 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G3b (30–44)期）、高血压
+
+▌综合风险等级：中危
+▌Cox 模型 18 个月事件概率：7.4%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：44.3%（正常）
+  管道期应变：24.1%（正常）
+  助推期应变：20.2%（正常）
+  整体 RA 功能：正常　综合评分：71.2/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：30.2 mL/min/1.73m²　肌酐：213 μmol/L　慢性肾病分期：G3b (30–44)
+  NT-proBNP：681 pg/mL
+  LVEF：56.6%　LAVI：34.0 mL/m²　E/e&#x27;：13.2
+  PASP：25 mmHg　RVEF：48.8%　TAPSE：25 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：7.4%（低危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p8" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-04</span><span class="demo lang-en">88y · Female · NYHA 2</span><span class="demo lang-zh">88 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#8a6a00;background:#fff4cf"><span class="lang-en">MODERATE</span><span class="lang-zh">中危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>9.3%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 9.3% (MODERATE)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：9.3%（中危）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">65.3 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">1685 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.02</span></div><div class="kv"><span class="k">PASP</span><span class="v">25.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">46.9 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.1 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">44.3 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">32.1 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">12.2 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">70.8 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-04
+───────────────────────────────────────────────────────
+Patient: 88-year-old female, NYHA class 2, comorbidities: DM, hypertension.
+
+Integrated risk tier: MODERATE
+Cox 18-month event probability: 9.3%
+
+RA function summary:
+  Reservoir 44.3% (Normal) | Conduit 32.1% (Normal) | Booster 12.2% (Mildly impaired)
+  Overall: Normal | Composite score: 70.8/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 9.3% (MODERATE)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">65.3 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">1685 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.02</span></div><div class="kv"><span class="k">PASP</span><span class="v">25.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">46.9 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.1 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">44.3 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">32.1 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">12.2 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">70.8 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-04
+──────────────────────────────────────────────────
+患者信息：88 岁，性别：女，NYHA 心功能分级：2 级
+合并症：2型糖尿病、高血压
+
+▌综合风险等级：中危
+▌Cox 模型 18 个月事件概率：9.3%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：44.3%（正常）
+  管道期应变：32.1%（正常）
+  助推期应变：12.2%（轻度受损）
+  整体 RA 功能：正常　综合评分：70.8/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：65.3 mL/min/1.73m²　肌酐：93 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：1685 pg/mL
+  LVEF：60.1%　LAVI：37.1 mL/m²　E/e&#x27;：7.2
+  PASP：25 mmHg　RVEF：46.9%　TAPSE：16 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：9.3%（中危）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p9" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-05</span><span class="demo lang-en">41y · Male · NYHA 3</span><span class="demo lang-zh">41 岁 · 男 · NYHA 3 级</span></div><div><span class="tier-pill" style="color:#8a6a00;background:#fff4cf"><span class="lang-en">MODERATE</span><span class="lang-zh">中危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>12.0%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 12.0% (MODERATE)</li><li>RA function: Mildly impaired (composite 57.2/100)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：12.0%（中危）</li><li>RA 功能：轻度受损（综合评分 57.2/100）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>PULM_HTN_WORKUP</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">80.8 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">538 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.56</span></div><div class="kv"><span class="k">PASP</span><span class="v">57.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">43.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.2 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">35.6 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">18.1 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">17.5 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">57.2 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Mildly impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-05
+───────────────────────────────────────────────────────
+Patient: 41-year-old male, NYHA class 3, comorbidities: DM, hypertension.
+
+Integrated risk tier: MODERATE
+Cox 18-month event probability: 12.0%
+
+RA function summary:
+  Reservoir 35.6% (Normal) | Conduit 18.1% (Normal) | Booster 17.5% (Normal)
+  Overall: Mildly impaired | Composite score: 57.2/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 12.0% (MODERATE)
+  • RA function: Mildly impaired (composite 57.2/100)
+
+Recommended actions:
+  [1] (PULM_HTN_WORKUP) Pulmonary hypertension workup — PASP &gt;50 mmHg. Right heart catheterisation consideration; pulmonology/cardiology review.
+  [2] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">80.8 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">538 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.56</span></div><div class="kv"><span class="k">PASP</span><span class="v">57.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">43.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.2 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">35.6 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">18.1 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">17.5 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">57.2 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Mildly impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-05
+──────────────────────────────────────────────────
+患者信息：41 岁，性别：男，NYHA 心功能分级：3 级
+合并症：2型糖尿病、高血压
+
+▌综合风险等级：中危
+▌Cox 模型 18 个月事件概率：12.0%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：35.6%（正常）
+  管道期应变：18.1%（正常）
+  助推期应变：17.5%（正常）
+  整体 RA 功能：轻度受损　综合评分：57.2/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：80.8 mL/min/1.73m²　肌酐：103 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：538 pg/mL
+  LVEF：60.2%　LAVI：34.4 mL/m²　E/e&#x27;：13.2
+  PASP：57 mmHg　RVEF：43.4%　TAPSE：13 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：12.0%（中危）
+  • RA 功能：轻度受损（综合评分 57.2/100）
+
+──── 推荐临床行动方案 ────
+  [1] 肺动脉高压进一步检查 — PASP &gt; 50 mmHg，考虑毛细血管后性肺动脉高压。建议右心导管检查明确血流动力学分型；呼吸科／心脏科联合会诊。
+  [2] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><h2 class="tier-h" style="color:#b15a14;background:#fde9d4"><span class="lang-en">HIGH · 5 patient(s)</span><span class="lang-zh">高危 · 5 例</span></h2><section id="p10" class="pblock"><div class="phead"><div><span class="pid">BENCH-HIGH-01</span><span class="demo lang-en">75y · Male · NYHA 2</span><span class="demo lang-zh">75 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b15a14;background:#fde9d4"><span class="lang-en">HIGH</span><span class="lang-zh">高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>3.8%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 3.8% (LOW)</li><li>Agent A risk tier: HIGH (3 flags)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：3.8%（低危）</li><li>Agent A 风险层级：高危（3 项标记）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">42.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">648 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.19</span></div><div class="kv"><span class="k">PASP</span><span class="v">32.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">40.0 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.9 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">62.3 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">46.9 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">15.4 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">92.3 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3b (30–44)</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-HIGH-01
+───────────────────────────────────────────────────────
+Patient: 75-year-old male, NYHA class 2, comorbidities: CKD, hypertension.
+
+Integrated risk tier: HIGH
+Cox 18-month event probability: 3.8%
+
+RA function summary:
+  Reservoir 62.3% (Normal) | Conduit 46.9% (Normal) | Booster 15.4% (Normal)
+  Overall: Normal | Composite score: 92.3/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 3.8% (LOW)
+  • Agent A risk tier: HIGH (3 flags)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">42.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">648 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">7.19</span></div><div class="kv"><span class="k">PASP</span><span class="v">32.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">40.0 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">59.9 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">62.3 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">46.9 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">15.4 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">92.3 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3b (30–44)）</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-HIGH-01
+──────────────────────────────────────────────────
+患者信息：75 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G3b (30–44)期）、高血压
+
+▌综合风险等级：高危
+▌Cox 模型 18 个月事件概率：3.8%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：62.3%（正常）
+  管道期应变：46.9%（正常）
+  助推期应变：15.4%（正常）
+  整体 RA 功能：正常　综合评分：92.3/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：42.2 mL/min/1.73m²　肌酐：107 μmol/L　慢性肾病分期：G3b (30–44)
+  NT-proBNP：648 pg/mL
+  LVEF：59.9%　LAVI：40.7 mL/m²　E/e&#x27;：14.4
+  PASP：32 mmHg　RVEF：40.0%　TAPSE：22 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：3.8%（低危）
+  • Agent A 风险层级：高危（3 项标记）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p11" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-06</span><span class="demo lang-en">87y · Male · NYHA 2</span><span class="demo lang-zh">87 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b15a14;background:#fde9d4"><span class="lang-en">HIGH</span><span class="lang-zh">高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>9.7%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 9.7% (MODERATE)</li><li>RA function: Moderately impaired (composite 49.2/100)</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：9.7%（中危）</li><li>RA 功能：中度受损（综合评分 49.2/100）</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">54.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">409 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.44</span></div><div class="kv"><span class="k">PASP</span><span class="v">33.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">54.3 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">56.3 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">30.5 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">12.9 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">17.6 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">49.2 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3a (45–59)</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-06
+───────────────────────────────────────────────────────
+Patient: 87-year-old male, NYHA class 2, comorbidities: CKD, hypertension.
+
+Integrated risk tier: HIGH
+Cox 18-month event probability: 9.7%
+
+RA function summary:
+  Reservoir 30.5% (Mildly impaired) | Conduit 12.9% (Mildly impaired) | Booster 17.6% (Normal)
+  Overall: Moderately impaired | Composite score: 49.2/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 9.7% (MODERATE)
+  • RA function: Moderately impaired (composite 49.2/100)
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [2] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">54.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">409 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.44</span></div><div class="kv"><span class="k">PASP</span><span class="v">33.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">54.3 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">56.3 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">30.5 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">12.9 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">17.6 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">49.2 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3a (45–59)）</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-06
+──────────────────────────────────────────────────
+患者信息：87 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G3a (45–59)期）、高血压
+
+▌综合风险等级：高危
+▌Cox 模型 18 个月事件概率：9.7%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：30.5%（轻度受损）
+  管道期应变：12.9%（轻度受损）
+  助推期应变：17.6%（正常）
+  整体 RA 功能：中度受损　综合评分：49.2/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：54.2 mL/min/1.73m²　肌酐：104 μmol/L　慢性肾病分期：G3a (45–59)
+  NT-proBNP：409 pg/mL
+  LVEF：56.3%　LAVI：34.9 mL/m²　E/e&#x27;：10.2
+  PASP：33 mmHg　RVEF：54.3%　TAPSE：23 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：9.7%（中危）
+  • RA 功能：中度受损（综合评分 49.2/100）
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [2] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p12" class="pblock"><div class="phead"><div><span class="pid">BENCH-MOD-07</span><span class="demo lang-en">72y · Female · NYHA 2</span><span class="demo lang-zh">72 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b15a14;background:#fde9d4"><span class="lang-en">HIGH</span><span class="lang-zh">高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>12.7%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 12.7% (HIGH)</li><li>RA function: Moderately impaired (composite 47.4/100)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：12.7%（高危）</li><li>RA 功能：中度受损（综合评分 47.4/100）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">84.6 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">546 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.46</span></div><div class="kv"><span class="k">PASP</span><span class="v">26.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">52.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">54.0 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">29.5 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">15.4 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">14.1 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">47.4 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-MOD-07
+───────────────────────────────────────────────────────
+Patient: 72-year-old female, NYHA class 2, comorbidities: DM.
+
+Integrated risk tier: HIGH
+Cox 18-month event probability: 12.7%
+
+RA function summary:
+  Reservoir 29.5% (Mildly impaired) | Conduit 15.4% (Mildly impaired) | Booster 14.1% (Normal)
+  Overall: Moderately impaired | Composite score: 47.4/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 12.7% (HIGH)
+  • RA function: Moderately impaired (composite 47.4/100)
+
+Recommended actions:
+  [1] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">84.6 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">546 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.46</span></div><div class="kv"><span class="k">PASP</span><span class="v">26.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">52.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">54.0 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">29.5 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">15.4 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">14.1 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">47.4 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-MOD-07
+──────────────────────────────────────────────────
+患者信息：72 岁，性别：女，NYHA 心功能分级：2 级
+合并症：2型糖尿病
+
+▌综合风险等级：高危
+▌Cox 模型 18 个月事件概率：12.7%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：29.5%（轻度受损）
+  管道期应变：15.4%（轻度受损）
+  助推期应变：14.1%（正常）
+  整体 RA 功能：中度受损　综合评分：47.4/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：84.6 mL/min/1.73m²　肌酐：60 μmol/L　慢性肾病分期：G2 (60–89)
+  NT-proBNP：546 pg/mL
+  LVEF：54.0%　LAVI：44.0 mL/m²　E/e&#x27;：10.7
+  PASP：26 mmHg　RVEF：52.5%　TAPSE：17 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：12.7%（高危）
+  • RA 功能：中度受损（综合评分 47.4/100）
+
+──── 推荐临床行动方案 ────
+  [1] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p13" class="pblock"><div class="phead"><div><span class="pid">BENCH-HIGH-02</span><span class="demo lang-en">69y · Male · NYHA 2</span><span class="demo lang-zh">69 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b15a14;background:#fde9d4"><span class="lang-en">HIGH</span><span class="lang-zh">高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>15.4%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 15.4% (HIGH)</li><li>Agent A risk tier: HIGH (3 flags)</li><li>RA function: Moderately impaired (composite 39.6/100)</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：15.4%（高危）</li><li>Agent A 风险层级：高危（3 项标记）</li><li>RA 功能：中度受损（综合评分 39.6/100）</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>METABOLIC_INTERVENTION</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">49.9 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">368 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">10.13</span></div><div class="kv"><span class="k">PASP</span><span class="v">32.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">50.0 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">57.9 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">24.5 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">8.7 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">15.8 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">39.6 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3a (45–59), DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-HIGH-02
+───────────────────────────────────────────────────────
+Patient: 69-year-old male, NYHA class 2, comorbidities: CKD, DM, hypertension.
+
+Integrated risk tier: HIGH
+Cox 18-month event probability: 15.4%
+
+RA function summary:
+  Reservoir 24.5% (Moderately impaired) | Conduit 8.7% (Moderately impaired) | Booster 15.8% (Normal)
+  Overall: Moderately impaired | Composite score: 39.6/100
+  QC flags: CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+Key risk drivers:
+  • Cox model 18-month event probability: 15.4% (HIGH)
+  • Agent A risk tier: HIGH (3 flags)
+  • RA function: Moderately impaired (composite 39.6/100)
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [2] (METABOLIC_INTERVENTION) Metabolic intervention — elevated TyG index (insulin resistance surrogate; TyG &gt;9.5 associated with HR 2.09 for all-cause death and 2.31 for cardiovascular death in HF+CKD: Chen et al. ESC Heart Fail 2024). Lifestyle modification; consider SGLT2i (dual metabolic and cardiorenal benefit); endocrinology referral if T2DM suboptimally controlled.
+  [3] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">49.9 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">368 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">10.13</span></div><div class="kv"><span class="k">PASP</span><span class="v">32.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">50.0 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">57.9 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">24.5 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">8.7 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">15.8 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">39.6 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3a (45–59)）, 糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-HIGH-02
+──────────────────────────────────────────────────
+患者信息：69 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G3a (45–59)期）、2型糖尿病、高血压、冠状动脉疾病
+
+▌综合风险等级：高危
+▌Cox 模型 18 个月事件概率：15.4%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：24.5%（中度受损）
+  管道期应变：8.7%（中度受损）
+  助推期应变：15.8%（正常）
+  整体 RA 功能：中度受损　综合评分：39.6/100
+  RA 心肌病：阴性
+  质控标记：CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+──── 关键生化与影像指标 ────
+  eGFR：49.9 mL/min/1.73m²　肌酐：124 μmol/L　慢性肾病分期：G3a (45–59)
+  NT-proBNP：368 pg/mL
+  LVEF：57.9%　LAVI：42.9 mL/m²　E/e&#x27;：8.8
+  PASP：32 mmHg　RVEF：50.0%　TAPSE：21 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：15.4%（高危）
+  • Agent A 风险层级：高危（3 项标记）
+  • RA 功能：中度受损（综合评分 39.6/100）
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [2] 代谢干预 — TyG 指数升高，提示胰岛素抵抗。建议强化生活方式干预（饮食、运动），如合并 T2DM 且血糖控制不佳，考虑内分泌科转诊及优化降糖方案（优先 SGLT-2i）。
+  [3] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p14" class="pblock"><div class="phead"><div><span class="pid">BENCH-HIGH-03</span><span class="demo lang-en">67y · Male · NYHA 4</span><span class="demo lang-zh">67 岁 · 男 · NYHA 4 级</span></div><div><span class="tier-pill" style="color:#b15a14;background:#fde9d4"><span class="lang-en">HIGH</span><span class="lang-zh">高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>22.9%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 22.9% (HIGH)</li><li>Agent A risk tier: HIGH (3 flags)</li><li>RA function: Moderately impaired (composite 49.4/100)</li><li>AF present — booster strain unreliable</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：22.9%（高危）</li><li>Agent A 风险层级：高危（3 项标记）</li><li>RA 功能：中度受损（综合评分 49.4/100）</li><li>合并房颤 — 助推期应变不可靠，以储存期和管道期为主要参考</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>AF_RHYTHM_REVIEW</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">35.0 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">322 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.25</span></div><div class="kv"><span class="k">PASP</span><span class="v">33.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">42.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">57.1 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">30.7 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">14.8 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">15.9 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">49.4 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">AF, CKD G3b (30–44)</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-HIGH-03
+───────────────────────────────────────────────────────
+Patient: 67-year-old male, NYHA class 4, comorbidities: AF, CKD.
+
+Integrated risk tier: HIGH
+Cox 18-month event probability: 22.9%
+
+RA function summary:
+  Reservoir 30.7% (Mildly impaired) | Conduit 14.8% (Mildly impaired) | Booster 15.9% (Normal)
+  Overall: Moderately impaired | Composite score: 49.4/100
+  AF note: Patient has AF — booster strain (15.9%) reflects passive recoil rather than active atrial contraction. Reservoir and conduit phases are the reliable indicators.
+
+Key risk drivers:
+  • Cox model 18-month event probability: 22.9% (HIGH)
+  • Agent A risk tier: HIGH (3 flags)
+  • RA function: Moderately impaired (composite 49.4/100)
+  • AF present — booster strain unreliable
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [2] (AF_RHYTHM_REVIEW) AF rhythm/rate control review — atrial fibrillation with moderate-severe RA impairment. Consider rhythm control strategy; anticoagulation status review.
+  [3] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">35.0 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">322 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.25</span></div><div class="kv"><span class="k">PASP</span><span class="v">33.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">42.4 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">57.1 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">30.7 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">14.8 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">15.9 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">49.4 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">房颤, CKD（G3b (30–44)）</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-HIGH-03
+──────────────────────────────────────────────────
+患者信息：67 岁，性别：男，NYHA 心功能分级：4 级
+合并症：心房颤动、慢性肾病（G3b (30–44)期）
+
+▌综合风险等级：高危
+▌Cox 模型 18 个月事件概率：22.9%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：30.7%（轻度受损）
+  管道期应变：14.8%（轻度受损）
+  助推期应变：15.9%（正常）
+  房颤备注：Patient has AF — booster strain (15.9%) reflects passive recoil rather than active atrial contraction. Reservoir and conduit phases are the reliable indicators.
+  整体 RA 功能：中度受损　综合评分：49.4/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：35.0 mL/min/1.73m²　肌酐：168 μmol/L　慢性肾病分期：G3b (30–44)
+  NT-proBNP：322 pg/mL
+  LVEF：57.1%　LAVI：44.1 mL/m²　E/e&#x27;：9.0
+  PASP：33 mmHg　RVEF：42.4%　TAPSE：16 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：22.9%（高危）
+  • Agent A 风险层级：高危（3 项标记）
+  • RA 功能：中度受损（综合评分 49.4/100）
+  • 合并房颤 — 助推期应变不可靠，以储存期和管道期为主要参考
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [2] 房颤心律／心率控制方案评估 — 心房颤动合并中重度 RA 功能受损。考虑节律控制策略（如复律或消融），复查抗凝治疗方案（CHA₂DS₂-VASc评分）。
+  [3] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><h2 class="tier-h" style="color:#b71d3b;background:#fde2e7"><span class="lang-en">CRITICAL · 5 patient(s)</span><span class="lang-zh">极高危 · 5 例</span></h2><section id="p15" class="pblock"><div class="phead"><div><span class="pid">BENCH-CRIT-01</span><span class="demo lang-en">64y · Male · NYHA 2</span><span class="demo lang-zh">64 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b71d3b;background:#fde2e7"><span class="lang-en">CRITICAL</span><span class="lang-zh">极高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>4.8%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 4.8% (LOW)</li><li>Agent A risk tier: CRITICAL (2 flags)</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：4.8%（低危）</li><li>Agent A 风险层级：极高危（2 项标记）</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>PULM_HTN_WORKUP</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">24.0 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">240 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.25</span></div><div class="kv"><span class="k">PASP</span><span class="v">54.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">48.0 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.5 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">49.8 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">19.7 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">30.1 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">76.3 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Normal</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G4 (15–29), DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-CRIT-01
+───────────────────────────────────────────────────────
+Patient: 64-year-old male, NYHA class 2, comorbidities: CKD, DM.
+
+Integrated risk tier: CRITICAL
+Cox 18-month event probability: 4.8%
+
+RA function summary:
+  Reservoir 49.8% (Normal) | Conduit 19.7% (Normal) | Booster 30.1% (Normal)
+  Overall: Normal | Composite score: 76.3/100
+
+Key risk drivers:
+  • Cox model 18-month event probability: 4.8% (LOW)
+  • Agent A risk tier: CRITICAL (2 flags)
+
+Recommended actions:
+  [1] (PULM_HTN_WORKUP) Pulmonary hypertension workup — PASP &gt;50 mmHg. Right heart catheterisation consideration; pulmonology/cardiology review.
+  [2] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">24.0 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">240 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.25</span></div><div class="kv"><span class="k">PASP</span><span class="v">54.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">48.0 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.5 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">49.8 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">19.7 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">30.1 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">76.3 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Normal</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G4 (15–29)）, 糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-CRIT-01
+──────────────────────────────────────────────────
+患者信息：64 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G4 (15–29)期）、2型糖尿病
+
+▌综合风险等级：极高危
+▌Cox 模型 18 个月事件概率：4.8%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：49.8%（正常）
+  管道期应变：19.7%（正常）
+  助推期应变：30.1%（正常）
+  整体 RA 功能：正常　综合评分：76.3/100
+  RA 心肌病：阴性
+
+──── 关键生化与影像指标 ────
+  eGFR：24.0 mL/min/1.73m²　肌酐：234 μmol/L　慢性肾病分期：G4 (15–29)
+  NT-proBNP：240 pg/mL
+  LVEF：60.5%　LAVI：34.8 mL/m²　E/e&#x27;：9.3
+  PASP：54 mmHg　RVEF：48.0%　TAPSE：21 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：4.8%（低危）
+  • Agent A 风险层级：极高危（2 项标记）
+
+──── 推荐临床行动方案 ────
+  [1] 肺动脉高压进一步检查 — PASP &gt; 50 mmHg，考虑毛细血管后性肺动脉高压。建议右心导管检查明确血流动力学分型；呼吸科／心脏科联合会诊。
+  [2] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p16" class="pblock"><div class="phead"><div><span class="pid">BENCH-CRIT-02</span><span class="demo lang-en">87y · Male · NYHA 3</span><span class="demo lang-zh">87 岁 · 男 · NYHA 3 级</span></div><div><span class="tier-pill" style="color:#b71d3b;background:#fde2e7"><span class="lang-en">CRITICAL</span><span class="lang-zh">极高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>19.4%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 19.4% (HIGH)</li><li>Agent A risk tier: CRITICAL (5 flags)</li><li>RA function: Moderately impaired (composite 35.6/100)</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：19.4%（高危）</li><li>Agent A 风险层级：极高危（5 项标记）</li><li>RA 功能：中度受损（综合评分 35.6/100）</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>PULM_HTN_WORKUP</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">38.0 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">1697 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.90</span></div><div class="kv"><span class="k">PASP</span><span class="v">72.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">49.7 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">50.0 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">21.9 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">4.3 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">17.6 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">35.6 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3b (30–44), DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-CRIT-02
+───────────────────────────────────────────────────────
+Patient: 87-year-old male, NYHA class 3, comorbidities: CKD, DM, hypertension.
+
+Integrated risk tier: CRITICAL
+Cox 18-month event probability: 19.4%
+
+RA function summary:
+  Reservoir 21.9% (Moderately impaired) | Conduit 4.3% (Severely impaired) | Booster 17.6% (Normal)
+  Overall: Moderately impaired | Composite score: 35.6/100
+  QC flags: CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+Key risk drivers:
+  • Cox model 18-month event probability: 19.4% (HIGH)
+  • Agent A risk tier: CRITICAL (5 flags)
+  • RA function: Moderately impaired (composite 35.6/100)
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [2] (PULM_HTN_WORKUP) Pulmonary hypertension workup — PASP &gt;50 mmHg. Right heart catheterisation consideration; pulmonology/cardiology review.
+  [3] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">38.0 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">1697 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">8.90</span></div><div class="kv"><span class="k">PASP</span><span class="v">72.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">49.7 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">50.0 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">21.9 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">4.3 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">17.6 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">35.6 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3b (30–44)）, 糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-CRIT-02
+──────────────────────────────────────────────────
+患者信息：87 岁，性别：男，NYHA 心功能分级：3 级
+合并症：慢性肾病（G3b (30–44)期）、2型糖尿病、高血压、冠状动脉疾病
+
+▌综合风险等级：极高危
+▌Cox 模型 18 个月事件概率：19.4%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：21.9%（中度受损）
+  管道期应变：4.3%（重度受损）
+  助推期应变：17.6%（正常）
+  整体 RA 功能：中度受损　综合评分：35.6/100
+  RA 心肌病：阴性
+  质控标记：CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+──── 关键生化与影像指标 ────
+  eGFR：38.0 mL/min/1.73m²　肌酐：140 μmol/L　慢性肾病分期：G3b (30–44)
+  NT-proBNP：1697 pg/mL
+  LVEF：50.0%　LAVI：40.6 mL/m²　E/e&#x27;：15.1
+  PASP：72 mmHg　RVEF：49.7%　TAPSE：19 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：19.4%（高危）
+  • Agent A 风险层级：极高危（5 项标记）
+  • RA 功能：中度受损（综合评分 35.6/100）
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [2] 肺动脉高压进一步检查 — PASP &gt; 50 mmHg，考虑毛细血管后性肺动脉高压。建议右心导管检查明确血流动力学分型；呼吸科／心脏科联合会诊。
+  [3] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p17" class="pblock"><div class="phead"><div><span class="pid">BENCH-CRIT-03</span><span class="demo lang-en">71y · Male · NYHA 2</span><span class="demo lang-zh">71 岁 · 男 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b71d3b;background:#fde2e7"><span class="lang-en">CRITICAL</span><span class="lang-zh">极高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>25.7%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 25.7% (CRITICAL)</li><li>Agent A risk tier: CRITICAL (6 flags)</li><li>RA function: Severely impaired (composite 33.9/100)</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：25.7%（极高危）</li><li>Agent A 风险层级：极高危（6 项标记）</li><li>RA 功能：重度受损（综合评分 33.9/100）</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>MDT_REVIEW</code></li><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>METABOLIC_INTERVENTION</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">40.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">1093 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.95</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">40.2 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.5 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">21.0 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">7.8 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">13.2 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">33.9 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Severely impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">CKD G3b (30–44), DM</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-CRIT-03
+───────────────────────────────────────────────────────
+Patient: 71-year-old male, NYHA class 2, comorbidities: CKD, DM.
+
+Integrated risk tier: CRITICAL
+Cox 18-month event probability: 25.7%
+
+RA function summary:
+  Reservoir 21.0% (Moderately impaired) | Conduit 7.8% (Severely impaired) | Booster 13.2% (Mildly impaired)
+  Overall: Severely impaired | Composite score: 33.9/100
+  QC flags: CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+Key risk drivers:
+  • Cox model 18-month event probability: 25.7% (CRITICAL)
+  • Agent A risk tier: CRITICAL (6 flags)
+  • RA function: Severely impaired (composite 33.9/100)
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (MDT_REVIEW) Multidisciplinary team (MDT) review recommended — critical risk tier combined with severe RA dysfunction.
+  [2] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [3] (METABOLIC_INTERVENTION) Metabolic intervention — elevated TyG index (insulin resistance surrogate; TyG &gt;9.5 associated with HR 2.09 for all-cause death and 2.31 for cardiovascular death in HF+CKD: Chen et al. ESC Heart Fail 2024). Lifestyle modification; consider SGLT2i (dual metabolic and cardiorenal benefit); endocrinology referral if T2DM suboptimally controlled.
+  [4] (ROUTINE_FOLLOWUP) Routine HFpEF follow-up — 3-monthly clinical review, repeat echo at 12 months, optimise RAAS and SGLT2i therapy per current guidelines.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">40.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">1093 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.95</span></div><div class="kv"><span class="k">PASP</span><span class="v">34.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">40.2 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.5 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">21.0 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">7.8 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">13.2 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">33.9 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Severely impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">CKD（G3b (30–44)）, 糖尿病</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-CRIT-03
+──────────────────────────────────────────────────
+患者信息：71 岁，性别：男，NYHA 心功能分级：2 级
+合并症：慢性肾病（G3b (30–44)期）、2型糖尿病
+
+▌综合风险等级：极高危
+▌Cox 模型 18 个月事件概率：25.7%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：21.0%（中度受损）
+  管道期应变：7.8%（重度受损）
+  助推期应变：13.2%（轻度受损）
+  整体 RA 功能：重度受损　综合评分：33.9/100
+  RA 心肌病：阴性
+  质控标记：CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+──── 关键生化与影像指标 ────
+  eGFR：40.2 mL/min/1.73m²　肌酐：146 μmol/L　慢性肾病分期：G3b (30–44)
+  NT-proBNP：1093 pg/mL
+  LVEF：60.5%　LAVI：51.4 mL/m²　E/e&#x27;：16.3
+  PASP：34 mmHg　RVEF：40.2%　TAPSE：23 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：25.7%（极高危）
+  • Agent A 风险层级：极高危（6 项标记）
+  • RA 功能：重度受损（综合评分 33.9/100）
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 多学科团队（MDT）会诊 — 极高危风险等级合并重度 RA 功能障碍，需心脏科、肾内科、影像科协同评估，制定个体化综合管理方案。
+  [2] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [3] 代谢干预 — TyG 指数升高，提示胰岛素抵抗。建议强化生活方式干预（饮食、运动），如合并 T2DM 且血糖控制不佳，考虑内分泌科转诊及优化降糖方案（优先 SGLT-2i）。
+  [4] HFpEF 常规随访 — 每 3 个月门诊复查（症状、体重、肾功能、NT-proBNP），12 个月复查超声心动图（含 RA 应变）；依现行指南优化 RAAS 及 SGLT-2i 治疗。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p18" class="pblock"><div class="phead"><div><span class="pid">BENCH-CRIT-04</span><span class="demo lang-en">71y · Female · NYHA 2</span><span class="demo lang-zh">71 岁 · 女 · NYHA 2 级</span></div><div><span class="tier-pill" style="color:#b71d3b;background:#fde2e7"><span class="lang-en">CRITICAL</span><span class="lang-zh">极高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>33.2%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 33.2% (CRITICAL)</li><li>Agent A risk tier: CRITICAL (6 flags)</li><li>RA function: Moderately impaired (composite 39.5/100)</li><li>AF present — booster strain unreliable</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：33.2%（极高危）</li><li>Agent A 风险层级：极高危（6 项标记）</li><li>RA 功能：中度受损（综合评分 39.5/100）</li><li>合并房颤 — 助推期应变不可靠，以储存期和管道期为主要参考</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>AF_RHYTHM_REVIEW</code></li><li><code>DIURETIC_OPTIMISATION</code></li><li><code>METABOLIC_INTERVENTION</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">38.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">3036 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.87</span></div><div class="kv"><span class="k">PASP</span><span class="v">36.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">50.8 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">58.0 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">24.3 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">4.2 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">20.1 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">39.5 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">AF, CKD G3b (30–44)</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-CRIT-04
+───────────────────────────────────────────────────────
+Patient: 71-year-old female, NYHA class 2, comorbidities: AF, CKD, hypertension.
+
+Integrated risk tier: CRITICAL
+Cox 18-month event probability: 33.2%
+
+RA function summary:
+  Reservoir 24.3% (Moderately impaired) | Conduit 4.2% (Severely impaired) | Booster 20.1% (Normal)
+  Overall: Moderately impaired | Composite score: 39.5/100
+  AF note: Patient has AF — booster strain (20.1%) reflects passive recoil rather than active atrial contraction. Reservoir and conduit phases are the reliable indicators.
+  QC flags: CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+Key risk drivers:
+  • Cox model 18-month event probability: 33.2% (CRITICAL)
+  • Agent A risk tier: CRITICAL (6 flags)
+  • RA function: Moderately impaired (composite 39.5/100)
+  • AF present — booster strain unreliable
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [2] (AF_RHYTHM_REVIEW) AF rhythm/rate control review — atrial fibrillation with moderate-severe RA impairment. Consider rhythm control strategy; anticoagulation status review.
+  [3] (DIURETIC_OPTIMISATION) Diuretic optimisation indicated — NT-proBNP &gt;2000 pg/mL suggests persistent congestion. Review current loop diuretic dose and fluid status.
+  [4] (METABOLIC_INTERVENTION) Metabolic intervention — elevated TyG index (insulin resistance surrogate; TyG &gt;9.5 associated with HR 2.09 for all-cause death and 2.31 for cardiovascular death in HF+CKD: Chen et al. ESC Heart Fail 2024). Lifestyle modification; consider SGLT2i (dual metabolic and cardiorenal benefit); endocrinology referral if T2DM suboptimally controlled.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">38.2 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">3036 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.87</span></div><div class="kv"><span class="k">PASP</span><span class="v">36.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">50.8 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">58.0 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">24.3 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">4.2 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">20.1 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">39.5 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Moderately impaired</span></div><div class="kv"><span class="k">合并症</span><span class="v">房颤, CKD（G3b (30–44)）</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-CRIT-04
+──────────────────────────────────────────────────
+患者信息：71 岁，性别：女，NYHA 心功能分级：2 级
+合并症：心房颤动、慢性肾病（G3b (30–44)期）、高血压
+
+▌综合风险等级：极高危
+▌Cox 模型 18 个月事件概率：33.2%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：24.3%（中度受损）
+  管道期应变：4.2%（重度受损）
+  助推期应变：20.1%（正常）
+  房颤备注：Patient has AF — booster strain (20.1%) reflects passive recoil rather than active atrial contraction. Reservoir and conduit phases are the reliable indicators.
+  整体 RA 功能：中度受损　综合评分：39.5/100
+  RA 心肌病：阴性
+  质控标记：CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+──── 关键生化与影像指标 ────
+  eGFR：38.2 mL/min/1.73m²　肌酐：119 μmol/L　慢性肾病分期：G3b (30–44)
+  NT-proBNP：3036 pg/mL
+  LVEF：58.0%　LAVI：35.9 mL/m²　E/e&#x27;：11.2
+  PASP：36 mmHg　RVEF：50.8%　TAPSE：19 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：33.2%（极高危）
+  • Agent A 风险层级：极高危（6 项标记）
+  • RA 功能：中度受损（综合评分 39.5/100）
+  • 合并房颤 — 助推期应变不可靠，以储存期和管道期为主要参考
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [2] 房颤心律／心率控制方案评估 — 心房颤动合并中重度 RA 功能受损。考虑节律控制策略（如复律或消融），复查抗凝治疗方案（CHA₂DS₂-VASc评分）。
+  [3] 利尿剂方案优化 — NT-proBNP &gt; 2000 pg/mL，提示持续容量超负荷。复查袢利尿剂剂量及给药频率，评估容量状态，必要时考虑静脉利尿治疗。
+  [4] 代谢干预 — TyG 指数升高，提示胰岛素抵抗。建议强化生活方式干预（饮食、运动），如合并 T2DM 且血糖控制不佳，考虑内分泌科转诊及优化降糖方案（优先 SGLT-2i）。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section><section id="p19" class="pblock"><div class="phead"><div><span class="pid">BENCH-CRIT-05</span><span class="demo lang-en">66y · Male · NYHA 3</span><span class="demo lang-zh">66 岁 · 男 · NYHA 3 级</span></div><div><span class="tier-pill" style="color:#b71d3b;background:#fde2e7"><span class="lang-en">CRITICAL</span><span class="lang-zh">极高危</span></span><span class="cox"><span class="lang-en">Cox 18-mo:</span><span class="lang-zh">Cox 18 个月事件概率：</span> <b>57.8%</b></span></div></div><div class="pbody"><div class="drivers"><div class="h"><span class="lang-en">Risk drivers</span><span class="lang-zh">风险驱动因素</span></div><div class="lang-en"><ul><li>Cox model 18-month event probability: 57.8% (CRITICAL)</li><li>Agent A risk tier: CRITICAL (7 flags)</li><li>RA function: Severely impaired (RA myopathy) (composite 20.4/100)</li><li>AF present — booster strain unreliable</li><li>CKD with impaired RA function — cardiorenal syndrome risk</li></ul></div><div class="lang-zh"><ul><li>Cox 模型 18 个月事件概率：57.8%（极高危）</li><li>Agent A 风险层级：极高危（7 项标记）</li><li>RA 功能：重度受损（右心房心肌病）（综合评分 20.4/100）</li><li>合并房颤 — 助推期应变不可靠，以储存期和管道期为主要参考</li><li>CKD 合并 RA 功能受损 — 心肾综合征风险</li></ul></div></div><div class="actions"><div class="h"><span class="lang-en">Recommended actions (codes, priority order)</span><span class="lang-zh">推荐行动（按优先级排序）</span></div><ul><li><code>URGENT_CARDIOLOGY</code></li><li><code>MDT_REVIEW</code></li><li><code>CARDIORENAL_MANAGEMENT</code></li><li><code>AF_RHYTHM_REVIEW</code></li><li><code>DIURETIC_OPTIMISATION</code></li><li><code>ROUTINE_FOLLOWUP</code></li></ul></div><div class="lang-en"><div class="h" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">Rule-based clinical report (no LLM)</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">23.1 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">3087 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.08</span></div><div class="kv"><span class="k">PASP</span><span class="v">36.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">41.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.8 %</span></div><div class="kv"><span class="k">RA reservoir</span><span class="v">12.5 %</span></div><div class="kv"><span class="k">RA conduit</span><span class="v">0.3 %</span></div><div class="kv"><span class="k">RA booster</span><span class="v">12.2 %</span></div><div class="kv"><span class="k">Composite</span><span class="v">20.4 /100</span></div><div class="kv"><span class="k">Overall RA</span><span class="v">Severely impaired (RA myopathy)</span></div><div class="kv"><span class="k">Comorbidities</span><span class="v">AF, CKD G4 (15–29)</span></div></div><pre class="summary">CARE-Agent Risk Report — BENCH-CRIT-05
+───────────────────────────────────────────────────────
+Patient: 66-year-old male, NYHA class 3, comorbidities: AF, CKD, hypertension.
+
+Integrated risk tier: CRITICAL
+Cox 18-month event probability: 57.8%
+
+RA function summary:
+  Reservoir 12.5% (Severely impaired) | Conduit 0.3% (Severely impaired) | Booster 12.2% (Mildly impaired)
+  Overall: Severely impaired (RA myopathy) | Composite score: 20.4/100
+  AF note: Patient has AF — booster strain (12.2%) reflects passive recoil rather than active atrial contraction. Reservoir and conduit phases are the reliable indicators.
+  QC flags: CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+Key risk drivers:
+  • Cox model 18-month event probability: 57.8% (CRITICAL)
+  • Agent A risk tier: CRITICAL (7 flags)
+  • RA function: Severely impaired (RA myopathy) (composite 20.4/100)
+  • AF present — booster strain unreliable
+  • CKD with impaired RA function — cardiorenal syndrome risk
+
+Recommended actions:
+  [1] (URGENT_CARDIOLOGY) Urgent cardiology referral — RA myopathy confirmed. Consider advanced imaging (cardiac MRI) and specialist review within 2 weeks.
+  [2] (MDT_REVIEW) Multidisciplinary team (MDT) review recommended — critical risk tier combined with severe RA dysfunction.
+  [3] (CARDIORENAL_MANAGEMENT) Cardiorenal syndrome management — CKD with impaired RA function. Optimise diuresis carefully (target euvolaemia without AKI risk); avoid nephrotoxins; nephrology co-management advised. Consider SGLT2i if eGFR ≥20 mL/min/1.73m² — cardiorenal protection demonstrated in EMPEROR-Reduced and DAPA-HF trials.
+  [4] (AF_RHYTHM_REVIEW) AF rhythm/rate control review — atrial fibrillation with moderate-severe RA impairment. Consider rhythm control strategy; anticoagulation status review.
+───────────────────────────────────────────────────────
+Generated by CARE-Agent | Simulation study — not for clinical use.</pre></div><div class="lang-zh"><div class="h" style="font-size:12px;color:var(--muted);letter-spacing:.04em;margin:14px 0 4px">规则生成的临床报告（未启用 LLM）</div><div class="grid"><div class="kv"><span class="k">eGFR</span><span class="v">23.1 mL/min/1.73m²</span></div><div class="kv"><span class="k">NT-proBNP</span><span class="v">3087 pg/mL</span></div><div class="kv"><span class="k">TyG</span><span class="v">9.08</span></div><div class="kv"><span class="k">PASP</span><span class="v">36.0 mmHg</span></div><div class="kv"><span class="k">RVEF</span><span class="v">41.5 %</span></div><div class="kv"><span class="k">LVEF</span><span class="v">60.8 %</span></div><div class="kv"><span class="k">RA 储存期</span><span class="v">12.5 %</span></div><div class="kv"><span class="k">RA 管道期</span><span class="v">0.3 %</span></div><div class="kv"><span class="k">RA 助推期</span><span class="v">12.2 %</span></div><div class="kv"><span class="k">RA 综合评分</span><span class="v">20.4 /100</span></div><div class="kv"><span class="k">整体 RA 功能</span><span class="v">Severely impaired (RA myopathy)</span></div><div class="kv"><span class="k">合并症</span><span class="v">房颤, CKD（G4 (15–29)）</span></div></div><pre class="summary">【CARE-Agent 风险评估报告】BENCH-CRIT-05
+──────────────────────────────────────────────────
+患者信息：66 岁，性别：男，NYHA 心功能分级：3 级
+合并症：心房颤动、慢性肾病（G4 (15–29)期）、高血压、冠状动脉疾病
+
+▌综合风险等级：极高危
+▌Cox 模型 18 个月事件概率：57.8%
+
+──── 右心房应变分析（Agent B） ────
+  储存期应变：12.5%（重度受损）
+  管道期应变：0.3%（重度受损）
+  助推期应变：12.2%（轻度受损）
+  房颤备注：Patient has AF — booster strain (12.2%) reflects passive recoil rather than active atrial contraction. Reservoir and conduit phases are the reliable indicators.
+  整体 RA 功能：重度受损（右心房心肌病）　综合评分：20.4/100
+  RA 心肌病：阳性
+  质控标记：CKD_CONTEXT: Impaired RA reservoir in CKD patient — volume overload and uraemic toxin-mediated oxidative stress likely driving RA remodelling. SGLT2i should be considered if eGFR ≥20 mL/min/1.73m² (EMPEROR-Reduced/DAPA-HF evidence).
+
+──── 关键生化与影像指标 ────
+  eGFR：23.1 mL/min/1.73m²　肌酐：186 μmol/L　慢性肾病分期：G4 (15–29)
+  NT-proBNP：3087 pg/mL
+  LVEF：60.8%　LAVI：35.8 mL/m²　E/e&#x27;：13.4
+  PASP：36 mmHg　RVEF：41.5%　TAPSE：21 mm
+
+──── 主要风险驱动因素 ────
+  • Cox 模型 18 个月事件概率：57.8%（极高危）
+  • Agent A 风险层级：极高危（7 项标记）
+  • RA 功能：重度受损（右心房心肌病）（综合评分 20.4/100）
+  • 合并房颤 — 助推期应变不可靠，以储存期和管道期为主要参考
+  • CKD 合并 RA 功能受损 — 心肾综合征风险
+
+──── 推荐临床行动方案 ────
+  [1] 紧急心脏科转诊 — 确认右心房心肌病。建议 2 周内完成心脏核磁共振（CMR）检查及心脏专科会诊，评估是否存在心肌炎症或浸润性病变。
+  [2] 多学科团队（MDT）会诊 — 极高危风险等级合并重度 RA 功能障碍，需心脏科、肾内科、影像科协同评估，制定个体化综合管理方案。
+  [3] 心肾综合征管理 — CKD 合并 RA 功能受损，存在心肾综合征风险。谨慎滴定利尿方案，避免肾毒性药物，建议肾内科协同管理及定期监测肾功能。
+  [4] 房颤心律／心率控制方案评估 — 心房颤动合并中重度 RA 功能受损。考虑节律控制策略（如复律或消融），复查抗凝治疗方案（CHA₂DS₂-VASc评分）。
+──────────────────────────────────────────────────
+由 CARE-Agent 生成 | 本报告为模拟研究，仅供科研参考，不作为临床诊疗依据。</pre></div></div></section>
+<footer>
+  <span class="lang-en">Generated by stratified_clinical_reports.py · simulation study, not for clinical use.</span>
+  <span class="lang-zh">由 stratified_clinical_reports.py 生成 · 模拟研究，不作为临床诊疗依据。</span>
+</footer>
+</div><!-- /wrap -->
+<script>
+(function(){
+  var KEY='careAgentStratLang';
+  var body=document.body;
+  var btnEn=document.getElementById('btn-en');
+  var btnZh=document.getElementById('btn-zh');
+  function apply(lang){
+    if(lang!=='en') lang='zh';
+    body.classList.toggle('lang-en', lang==='en');
+    body.classList.toggle('lang-zh', lang==='zh');
+    document.documentElement.setAttribute('lang', lang==='zh'?'zh-CN':'en');
+    btnEn.classList.toggle('active', lang==='en');
+    btnZh.classList.toggle('active', lang==='zh');
+    try{ localStorage.setItem(KEY,lang); }catch(e){}
+  }
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  apply(saved || 'zh');
+  btnEn.addEventListener('click', function(){ apply('en'); });
+  btnZh.addEventListener('click', function(){ apply('zh'); });
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && (e.key==='l' || e.key==='L')){
+      apply(body.classList.contains('lang-zh') ? 'en' : 'zh');
+    }
+  });
+})();
+</script>
+</body></html>

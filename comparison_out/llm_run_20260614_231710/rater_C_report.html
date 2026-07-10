@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rater C · CARE-Agent LLM Ratings</title>
+<style>
+:root{--card:#181b22;--card2:#1f232c;--line:#2a2f3a;--tx:#e7e9ee;--mut:#9aa3b2;--acc:#10a37f;}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0c0e12,#12151b);color:var(--tx);font:15px/1.55 -apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:38px 22px 70px}
+h1{font-size:26px;margin:0 0 4px} h2{font-size:19px;margin:38px 0 12px}
+.sub{color:var(--mut);margin:0 0 4px}
+.zh{display:block;font-size:11px;color:var(--mut);font-weight:400;margin-top:2px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:5px 13px;font-size:12.5px;color:var(--mut)} .chip b{color:var(--tx)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:13.5px}
+th,td{padding:10px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--card2);font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.rank{font-size:18px;text-align:center;width:44px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+td.big{font-weight:700;font-size:15px}
+.bar{height:5px;background:#262b34;border-radius:4px;margin-top:5px;overflow:hidden} .bar i{display:block;height:100%;border-radius:4px}
+.cell{text-align:right;font-variant-numeric:tabular-nums} .cell .sd{color:var(--mut);font-size:11px;margin-left:3px}
+.cell.win{background:#10a37f22}
+.note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:10px;padding:14px 18px;margin:14px 0}
+.note p{margin:6px 0;color:var(--mut);font-size:13.5px} .note h3{margin:0 0 6px;font-size:14px}
+.cgroup{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px 14px;margin:14px 0}
+.cgroup h3{font-size:16px;margin:14px 0 8px} .cnt{font-size:12px;color:var(--mut);font-weight:400;margin-left:6px}
+.cmt{border-top:1px solid var(--line);padding:9px 0}
+.cmt .tag{display:inline-block;border:1px solid;border-radius:8px;padding:1px 8px;font-size:11px;font-weight:700;margin-bottom:4px}
+.cmt p{margin:4px 0 0;font-size:13.5px;color:var(--tx)}
+.foot{color:var(--mut);font-size:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:14px}
+code{background:#22262f;padding:1px 6px;border-radius:5px;font-size:12px}
+.gloss{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px}
+.drow{display:grid;grid-template-columns:180px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line)}
+.drow:first-child{border-top:none} .drow dt{font-weight:700;font-size:13.5px;margin:0} .drow dd{margin:0;color:var(--mut);font-size:13px}
+@media(max-width:640px){.drow{grid-template-columns:1fr}}
+.nav{margin:10px 0 0;font-size:12.5px;color:var(--mut)} .nav a{color:#10a37f;text-decoration:none;margin-right:10px}
+</style></head><body><div class="wrap">
+<h1>Rater C · Single-Clinician Ratings <span class="zh" style="display:inline;margin-left:6px">C 医生单人评分</span></h1>
+<p class="sub">CARE-Agent cross-LLM benchmark · run llm_run_20260614_231710 · this page = doctor C only</p>
+<p class="nav">Other raters: <a href="rater_A_report.html">A</a><a href="rater_B_report.html">B</a><a href="rater_C_report.html">C</a> · <a href="benchmark_report.html">pooled 3-rater report →</a></p>
+<div class="meta">
+  <span class="chip">Rater <b>C</b></span>
+  <span class="chip"><b>20</b> patients</span>
+  <span class="chip"><b>6</b> models</span>
+  <span class="chip"><b>120</b> / 120 cells scored</span>
+  <span class="chip">no free-text comments</span>
+  <span class="chip">Tiers: CRITICAL 5 · HIGH 5 · LOW 5 · MODERATE 5</span>
+  <span class="chip">Saved 2026-07-09</span>
+</div>
+<div class="note"><h3>About this page</h3>
+<p>This is <b>rater C's individual view</b> — un-blinded to the real model behind each blinded letter using C's own
+blinding map. Scores are C's alone and are <b>not</b> averaged with the other raters. C recorded scores only (no free-text comments).
+See <code>benchmark_report.html</code> for the pooled 3-rater leaderboard (which also adds speed &amp; token cost).</p></div>
+<h2>1 · C's model ranking <span class="zh" style="display:inline;margin-left:6px">按 C 的综合质量分排序 (composite −2…8)</span></h2>
+<table><thead><tr><th class="rank">#</th><th>Model</th><th class="num">Composite (C)</th><th class="num">Cells</th><th class="num">Comments</th></tr></thead>
+<tbody><tr><td class="rank">🥇</td>
+          <td class="model"><span class="dot" style="background:#a259ff"></span><b>Gemini</b></td>
+          <td class="num big" style="color:#a259ff">7.59<div class="bar"><i style="width:96%;background:#a259ff"></i></div></td>
+          <td class="num">20</td><td class="num">0</td></tr><tr><td class="rank">🥈</td>
+          <td class="model"><span class="dot" style="background:#d97757"></span><b>Claude</b></td>
+          <td class="num big" style="color:#d97757">7.56<div class="bar"><i style="width:96%;background:#d97757"></i></div></td>
+          <td class="num">20</td><td class="num">0</td></tr><tr><td class="rank">🥉</td>
+          <td class="model"><span class="dot" style="background:#ff5c5c"></span><b>Kimi</b></td>
+          <td class="num big" style="color:#ff5c5c">7.50<div class="bar"><i style="width:95%;background:#ff5c5c"></i></div></td>
+          <td class="num">20</td><td class="num">0</td></tr><tr><td class="rank">4</td>
+          <td class="model"><span class="dot" style="background:#7b3fe4"></span><b>Qwen</b></td>
+          <td class="num big" style="color:#7b3fe4">7.35<div class="bar"><i style="width:94%;background:#7b3fe4"></i></div></td>
+          <td class="num">20</td><td class="num">0</td></tr><tr><td class="rank">5</td>
+          <td class="model"><span class="dot" style="background:#4d6bfe"></span><b>DeepSeek</b></td>
+          <td class="num big" style="color:#4d6bfe">7.34<div class="bar"><i style="width:93%;background:#4d6bfe"></i></div></td>
+          <td class="num">20</td><td class="num">0</td></tr><tr><td class="rank">6</td>
+          <td class="model"><span class="dot" style="background:#10a37f"></span><b>GPT</b></td>
+          <td class="num big" style="color:#10a37f">7.25<div class="bar"><i style="width:92%;background:#10a37f"></i></div></td>
+          <td class="num">20</td><td class="num">0</td></tr></tbody></table>
+<h2>2 · C's per-dimension means <span class="zh" style="display:inline;margin-left:6px">六维度均分 (mean ± SD) · 高亮 = C 给的最高分</span></h2>
+<table><thead><tr><th>Model</th><th>Mechanism accuracy<span class='zh'>机制解释准确性</span></th><th>Risk-driver identification<span class='zh'>风险驱动因素识别</span></th><th>Treatment rationale<span class='zh'>治疗建议合理性</span></th><th>Safety-flag quality<span class='zh'>安全标记质量</span></th><th>Hallucination (reverse)<span class='zh'>幻觉/错误推断</span></th><th>Clinical readability<span class='zh'>临床可读性</span></th></tr></thead><tbody><tr><td class='model'><span class='dot' style='background:#a259ff'></span>Gemini</td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell win'><b>2.00</b><span class='sd'>±0.00</span></td><td class='cell'><b>1.90</b><span class='sd'>±0.30</span></td><td class='cell'><b>1.90</b><span class='sd'>±0.30</span></td><td class='cell'><b>0.05</b><span class='sd'>±0.22</span></td><td class='cell win'><b>1.80</b><span class='sd'>±0.40</span></td></tr><tr><td class='model'><span class='dot' style='background:#d97757'></span>Claude</td><td class='cell'><b>2.00</b><span class='sd'>±0.00</span></td><td class='cell'><b>2.00</b><span class='sd'>±0.00</span></td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell'><b>1.70</b><span class='sd'>±0.46</span></td><td class='cell win'><b>0.00</b><span class='sd'>±0.00</span></td><td class='cell'><b>1.80</b><span class='sd'>±0.40</span></td></tr><tr><td class='model'><span class='dot' style='background:#ff5c5c'></span>Kimi</td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell win'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell win'><b>1.90</b><span class='sd'>±0.30</span></td><td class='cell'><b>0.10</b><span class='sd'>±0.30</span></td><td class='cell'><b>1.75</b><span class='sd'>±0.43</span></td></tr><tr><td class='model'><span class='dot' style='background:#7b3fe4'></span>Qwen</td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell'><b>1.90</b><span class='sd'>±0.30</span></td><td class='cell'><b>1.90</b><span class='sd'>±0.30</span></td><td class='cell'><b>1.80</b><span class='sd'>±0.40</span></td><td class='cell'><b>0.05</b><span class='sd'>±0.22</span></td><td class='cell'><b>1.70</b><span class='sd'>±0.56</span></td></tr><tr><td class='model'><span class='dot' style='background:#4d6bfe'></span>DeepSeek</td><td class='cell win'><b>2.00</b><span class='sd'>±0.00</span></td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell'><b>1.85</b><span class='sd'>±0.36</span></td><td class='cell'><b>1.80</b><span class='sd'>±0.40</span></td><td class='cell'><b>0.10</b><span class='sd'>±0.30</span></td><td class='cell'><b>1.70</b><span class='sd'>±0.46</span></td></tr><tr><td class='model'><span class='dot' style='background:#10a37f'></span>GPT</td><td class='cell'><b>1.95</b><span class='sd'>±0.22</span></td><td class='cell'><b>1.85</b><span class='sd'>±0.36</span></td><td class='cell'><b>1.85</b><span class='sd'>±0.36</span></td><td class='cell'><b>1.90</b><span class='sd'>±0.30</span></td><td class='cell'><b>0.15</b><span class='sd'>±0.36</span></td><td class='cell'><b>1.70</b><span class='sd'>±0.46</span></td></tr></tbody></table>
+<p class="sub" style="font-size:12.5px;margin-top:8px">Items 0–2, higher = better, except <b>Hallucination</b> (reverse-scored, lower = better).</p>
+
+<h2>3 · How these numbers are computed <span class="zh" style="display:inline;margin-left:6px">数字是怎么算出来的（用 C 的真实数据举例）</span></h2>
+<div class="note"><h3>Step 0 — the raw input</h3>
+<p>Every cell C rated is <b>one model × one patient × one rubric item</b>, scored on an integer <b>0 / 1 / 2</b> scale
+(0 = poor, 1 = adequate, 2 = good). Hallucination is the one <b>reverse</b> item (0 = none, best; 2 = serious, worst).
+With 20 patients, each model has up to 20 points per item.</p></div>
+<div class="note"><h3>Step 1 — per-dimension mean ± SD <span class="zh" style="display:inline">（表 2 每个格子）</span></h3>
+<p>For a model+item, average C's list of 0/1/2 points; SD is the population standard deviation.</p>
+<p><b>Worked example — Gemini, Safety-flag quality:</b> C's 20 points were <code>18×2 + 2×1</code> (sum = 38).<br>
+mean = 38 ÷ 20 = <b>1.90</b> · SD = √(Σ(xᵢ−mean)²/n) = <b>0.30</b> → shown as <code>1.90 ±0.30</code>.</p></div>
+<div class="note"><h3>Step 2 — composite quality score <span class="zh" style="display:inline">（表 1 排名分，范围 −2…8）</span></h3>
+<p><code>composite = 4 × mean(5 positive item-means) − mean(hallucination)</code></p>
+<p><b>Gemini (C):</b> positive item-means = 1.95, 2.00, 1.90, 1.90, 1.80 → average 1.910;
+hallucination = 0.05. composite = 4 × 1.910 − 0.05 = <b>7.59</b> (best 8, worst −2, higher = better).
+This is the number §1 sorts on. 幻觉项反向计分，故减去。</p></div>
+<h2>4 · Definitions <span class="zh" style="display:inline;margin-left:6px">术语定义</span></h2>
+<div class="gloss"><dl style="margin:0"><div class='drow'><dt>Rubric item</dt><dd>One of the 6 quality dimensions, each scored 0 / 1 / 2 (0 = poor, 1 = adequate, 2 = good). 六项评分维度之一。</dd></div><div class='drow'><dt>Hallucination (reverse item)</dt><dd>Lower is better: 0 = none (best), 2 = serious (worst); subtracted in the composite. 反向计分项。</dd></div><div class='drow'><dt>Cell</dt><dd>One model × one patient × one rubric item, as scored by C. 单个评分格。</dd></div><div class='drow'><dt>Cells (n)</dt><dd>Number of model×patient cells C gave ≥1 score to (max 20 per model). 评分格数。</dd></div><div class='drow'><dt>mean ± SD</dt><dd>Mean of C's 0/1/2 points for that model+item across the 20 patients; SD is the population standard deviation (÷n). 均值±总体标准差。</dd></div><div class='drow'><dt>Composite</dt><dd>Single quality number, range −2…8: <code>4 × mean(5 positive item-means) − mean(hallucination)</code>. Higher = better. 综合质量分。</dd></div><div class='drow'><dt>Patient tier</dt><dd>Integrated HFpEF risk tier from the pipeline: LOW / MODERATE / HIGH / CRITICAL. 风险分层。</dd></div><div class='drow'><dt>Blinding</dt><dd>During rating each model appeared as a random letter A–F (a different mapping per patient); these numbers are un-blinded with C's saved map. 盲法/揭盲。</dd></div></dl></div>
+<div class="foot">Generated 2026-07-09 11:46 · source: <code>ratings_C.json</code> un-blinded with <code>ratings/blinding/C.json</code>.<br>
+Single-rater data — not statistically pooled.</div>
+</div></body></html>

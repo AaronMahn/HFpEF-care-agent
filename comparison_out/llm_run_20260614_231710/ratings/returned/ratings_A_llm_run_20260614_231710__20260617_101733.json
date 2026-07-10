@@ -1,0 +1,1007 @@
+{
+  "doctor": "A",
+  "sheet_id": "llm_run_20260614_231710__20260617_101733",
+  "saved_at": "2026-07-01T01:47:13.179Z",
+  "ratings": {
+    "P-01": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 2,
+        "clinical_readability": 1
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 2,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 2
+      }
+    },
+    "P-02": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-03": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-04": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 2,
+        "clinical_readability": 2
+      }
+    },
+    "P-05": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      }
+    },
+    "P-06": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1
+      }
+    },
+    "P-07": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-08": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-09": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-10": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-11": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-12": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-13": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-14": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-15": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 1,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 1
+      }
+    },
+    "P-16": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-17": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 1
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-18": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-19": {
+      "A": {
+        "mechanism_accuracy": 1,
+        "risk_driver_id": 2,
+        "treatment_rationale": 1,
+        "safety_flag_quality": 0,
+        "hallucination": 1,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    },
+    "P-20": {
+      "A": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "B": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "C": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 0,
+        "safety_flag_quality": 0,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "D": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "E": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 2,
+        "hallucination": 0,
+        "clinical_readability": 2
+      },
+      "F": {
+        "mechanism_accuracy": 2,
+        "risk_driver_id": 2,
+        "treatment_rationale": 2,
+        "safety_flag_quality": 1,
+        "hallucination": 0,
+        "clinical_readability": 2
+      }
+    }
+  }
+}

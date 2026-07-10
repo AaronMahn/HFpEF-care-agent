@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CARE-Agent · Human-Rater Leaderboard</title>
+<style>
+  :root {
+    --bg:#fbfaf7; --fg:#1f2330; --muted:#5a6072; --line:#e3e0d8;
+    --accent:#7a3e1d; --accent-soft:#f0e6db;
+    --font-zh:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    --font-en:"Charter","Source Serif Pro",Georgia,serif;
+    --font-mono:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--fg)}
+  body{font-family:var(--font-en);font-size:14.5px}
+  body.lang-zh{font-family:var(--font-zh)}
+  .wrap{max-width:1280px;margin:0 auto;padding:24px 18px 80px}
+  header.bar{position:sticky;top:0;z-index:10;background:rgba(251,250,247,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+            display:flex;justify-content:space-between;align-items:center;padding:12px 22px;flex-wrap:wrap;gap:10px}
+  .lang-toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:#fff;overflow:hidden}
+  .lang-toggle button{border:0;background:transparent;padding:5px 14px;cursor:pointer;font:inherit;font-size:12.5px;color:var(--muted)}
+  .lang-toggle button.active{background:var(--accent);color:#fff}
+  h1{font-size:24px;margin:6px 0 4px}
+  h2{font-size:17px;margin:24px 0 8px;color:var(--accent)}
+  .chips{margin:6px 0 12px}
+  .chip{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12px;color:var(--muted);margin-right:6px}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;background:#fff}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f0ece2;font-weight:700;font-size:11.5px}
+  td.num{text-align:right;font-family:var(--font-mono);white-space:nowrap}
+  td.rank{font-weight:800;font-family:var(--font-mono);color:var(--accent)}
+  .vd{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+  .vendor{font-weight:700}
+  .model{font-size:11px;color:var(--muted);margin-top:2px}
+  .cellv{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:12.5px}
+  .cellv .sd{color:var(--muted);font-size:11px;margin-left:4px}
+  .bar{height:4px;background:#f0ece2;border-radius:3px;margin-top:3px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--accent);border-radius:3px}
+  /* Reverse-scored dimension: bar is inverted (longer = better) and tinted a
+     different colour as a hint that this column's value should be read with
+     care (raw value still shows; the bar already shows the "effective good"). */
+  .bar.reverse .fill{background:#8a8a85}
+  .rev-badge{font-size:10px;margin-left:4px;opacity:.75;cursor:help}
+  /* Cross-preset table rank cells */
+  td.rank{font-family:var(--font-mono);font-weight:700;text-align:center;color:var(--muted)}
+  td.rank.top{color:var(--accent);background:#fff4e8}
+  td.rank.top2{background:#e5f3ec;color:#1b6a4a;font-weight:700}
+  footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;text-align:center}
+  :not(body).lang-en, :not(body).lang-zh { display:none }
+  body.lang-en .lang-en { display:block }
+  body.lang-zh .lang-zh { display:block }
+  body.lang-en span.lang-en { display:inline }
+  body.lang-zh span.lang-zh { display:inline }
+  body.lang-en th .lang-en, body.lang-en th span.lang-en { display:inline }
+  body.lang-zh th .lang-zh, body.lang-zh th span.lang-zh { display:inline }
+</style></head>
+<body class="lang-zh">
+<header class="bar">
+  <div>
+    <div style="font-weight:700">
+      <span class="lang-en">CARE-Agent · Human-Rater Leaderboard</span>
+      <span class="lang-zh">CARE-Agent · 人工评分排行榜</span>
+    </div>
+    <div style="font-size:12px;color:var(--muted)">2026-07-09 11:46</div>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-en" type="button">English</button>
+    <button id="btn-zh" type="button">中文</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="chips">
+    <span class="chip">
+      <span class="lang-en">Doctors: 3</span>
+      <span class="lang-zh">医生：3</span>
+    </span>
+    <span class="chip">
+      <span class="lang-en">Patients: 20</span>
+      <span class="lang-zh">患者：20</span>
+    </span>
+    <span class="chip">
+      <span class="lang-en">Models: 6</span>
+      <span class="lang-zh">模型：6</span>
+    </span>
+    <span class="chip">
+      <span class="lang-en">Total ratings: 360</span>
+      <span class="lang-zh">评分总数：360</span>
+    </span>
+  </div>
+
+  <h2><span class="lang-en">Total Mark leaderboard</span><span class="lang-zh">总分排行榜</span></h2>
+  <div style="color:var(--muted);font-size:12.5px;margin-bottom:6px;line-height:1.6">
+    <span class="lang-en"><b>Total Mark</b> = α · quality + β · speed + γ · economy, all normalised to [0, 1].
+      <code>quality = (composite+2)/10</code>;
+      <code>speed = max(0, 1 − latency_s / 120s)</code>;
+      <code>economy = max(0, 1 − tokens / 10,000)</code>.<br>
+      <b>Composite</b> (kept as a column for transparency) = 4 × mean(5 positive dims) − mean(hallucination). Range −2 … 8.<br>
+      <b>Preset</b>: <code>research</code>  ·  <b>Weights</b>: α (quality) = 0.70, β (speed) = 0.15, γ (economy) = 0.15</span>
+    <span class="lang-zh"><b>总分</b> = α · 质量 + β · 速度 + γ · 经济性，三者均归一化到 [0, 1]。
+      <code>质量 = (综合分+2)/10</code>；
+      <code>速度 = max(0, 1 − 延迟秒 / 120s)</code>；
+      <code>经济 = max(0, 1 − tokens / 10,000)</code>。<br>
+      <b>综合分</b>（保留以便核查）= 4 × 5 个正向维度均值 − 幻觉均值。范围 −2 … 8。<br>
+      <b>预设</b>：<code>research</code>  ·  <b>权重</b>：α（质量）= 0.70，β（速度）= 0.15，γ（经济）= 0.15</span>
+  </div>
+  <table>
+    <thead><tr>
+      <th><span class="lang-en">Rank</span><span class="lang-zh">排名</span></th>
+      <th><span class="lang-en">Model</span><span class="lang-zh">模型</span></th>
+      <th title="weighted blend of quality + speed + economy">
+        <span class="lang-en">Total Mark</span><span class="lang-zh">总分</span></th>
+      <th><span class="lang-en">Composite</span><span class="lang-zh">综合分</span></th>
+      <th><span class="lang-en">Latency</span><span class="lang-zh">延迟</span></th>
+      <th><span class="lang-en">Tokens</span><span class="lang-zh">Tokens</span></th>
+      <th><span class="lang-en">N</span><span class="lang-zh">样本</span></th>
+      <th title="mechanism_accuracy"><span class="lang-en">Mechanism accuracy</span><span class="lang-zh">机制解释准确性</span></th><th title="risk_driver_id"><span class="lang-en">Risk driver identification</span><span class="lang-zh">风险驱动因素识别</span></th><th title="treatment_rationale"><span class="lang-en">Treatment rationale</span><span class="lang-zh">治疗建议合理性</span></th><th title="safety_flag_quality"><span class="lang-en">Safety-flag quality</span><span class="lang-zh">安全标记质量</span></th><th title="hallucination"><span class="lang-en">Hallucination (reverse) 🔁</span><span class="lang-zh">幻觉/错误推断 🔁</span></th><th title="clinical_readability"><span class="lang-en">Clinical readability</span><span class="lang-zh">临床可读性</span></th>
+    </tr></thead>
+    <tbody><tr><td class="rank">#1</td><td><span class="vd" style="background:#d97706"></span><span class="vendor">Claude</span><div class="model"><code>anthropic/claude-opus-4.7</code></div></td><td class="num" title="quality 0.87  ·  speed 0.70  ·  economy 0.55"><b>0.796</b></td><td class="num">6.69</td><td class="num">36.44s</td><td class="num">4485</td><td class="num">60</td><td><div class="cellv">1.80<span class="sd">±0.40</span></div><div class="bar"><div class="fill" style="width:90.0%"></div></div></td><td><div class="cellv">1.78<span class="sd">±0.45</span></div><div class="bar"><div class="fill" style="width:89.1%"></div></div></td><td><div class="cellv">1.62<span class="sd">±0.61</span></div><div class="bar"><div class="fill" style="width:80.8%"></div></div></td><td><div class="cellv">1.67<span class="sd">±0.51</span></div><div class="bar"><div class="fill" style="width:83.4%"></div></div></td><td><div class="cellv">0.20 <span class="rev-badge" title="reverse-scored">🔁</span><span class="sd">±0.44</span></div><div class="bar reverse"><div class="fill" style="width:90.0%"></div></div></td><td><div class="cellv">1.75<span class="sd">±0.43</span></div><div class="bar"><div class="fill" style="width:87.5%"></div></div></td></tr><tr><td class="rank">#2</td><td><span class="vd" style="background:#16a34a"></span><span class="vendor">GPT</span><div class="model"><code>openai/gpt-5.5</code></div></td><td class="num" title="quality 0.81  ·  speed 0.68  ·  economy 0.59"><b>0.758</b></td><td class="num">6.12</td><td class="num">38.4s</td><td class="num">4130</td><td class="num">60</td><td><div class="cellv">1.57<span class="sd">±0.56</span></div><div class="bar"><div class="fill" style="width:78.3%"></div></div></td><td><div class="cellv">1.58<span class="sd">±0.59</span></div><div class="bar"><div class="fill" style="width:79.1%"></div></div></td><td><div class="cellv">1.62<span class="sd">±0.61</span></div><div class="bar"><div class="fill" style="width:80.8%"></div></div></td><td><div class="cellv">1.67<span class="sd">±0.51</span></div><div class="bar"><div class="fill" style="width:83.4%"></div></div></td><td><div class="cellv">0.28 <span class="rev-badge" title="reverse-scored">🔁</span><span class="sd">±0.49</span></div><div class="bar reverse"><div class="fill" style="width:85.9%"></div></div></td><td><div class="cellv">1.57<span class="sd">±0.53</span></div><div class="bar"><div class="fill" style="width:78.3%"></div></div></td></tr><tr><td class="rank">#3</td><td><span class="vd" style="background:#7c3aed"></span><span class="vendor">DeepSeek</span><div class="model"><code>deepseek/deepseek-v4-pro</code></div></td><td class="num" title="quality 0.75  ·  speed 0.64  ·  economy 0.60"><b>0.707</b></td><td class="num">5.47</td><td class="num">43.65s</td><td class="num">4042</td><td class="num">60</td><td><div class="cellv">1.63<span class="sd">±0.48</span></div><div class="bar"><div class="fill" style="width:81.7%"></div></div></td><td><div class="cellv">1.55<span class="sd">±0.62</span></div><div class="bar"><div class="fill" style="width:77.5%"></div></div></td><td><div class="cellv">1.47<span class="sd">±0.67</span></div><div class="bar"><div class="fill" style="width:73.4%"></div></div></td><td><div class="cellv">1.20<span class="sd">±0.79</span></div><div class="bar"><div class="fill" style="width:60.0%"></div></div></td><td><div class="cellv">0.40 <span class="rev-badge" title="reverse-scored">🔁</span><span class="sd">±0.61</span></div><div class="bar reverse"><div class="fill" style="width:80.0%"></div></div></td><td><div class="cellv">1.48<span class="sd">±0.59</span></div><div class="bar"><div class="fill" style="width:74.2%"></div></div></td></tr><tr><td class="rank">#4</td><td><span class="vd" style="background:#2563eb"></span><span class="vendor">Gemini</span><div class="model"><code>google/gemini-3.1-pro-preview</code></div></td><td class="num" title="quality 0.79  ·  speed 0.61  ·  economy 0.35"><b>0.698</b></td><td class="num">5.91</td><td class="num">46.45s</td><td class="num">6530</td><td class="num">60</td><td><div class="cellv">1.63<span class="sd">±0.52</span></div><div class="bar"><div class="fill" style="width:81.7%"></div></div></td><td><div class="cellv">1.60<span class="sd">±0.64</span></div><div class="bar"><div class="fill" style="width:80.0%"></div></div></td><td><div class="cellv">1.55<span class="sd">±0.64</span></div><div class="bar"><div class="fill" style="width:77.5%"></div></div></td><td><div class="cellv">1.40<span class="sd">±0.61</span></div><div class="bar"><div class="fill" style="width:70.0%"></div></div></td><td><div class="cellv">0.32 <span class="rev-badge" title="reverse-scored">🔁</span><span class="sd">±0.53</span></div><div class="bar reverse"><div class="fill" style="width:84.2%"></div></div></td><td><div class="cellv">1.60<span class="sd">±0.55</span></div><div class="bar"><div class="fill" style="width:80.0%"></div></div></td></tr><tr><td class="rank">#5</td><td><span class="vd" style="background:#0891b2"></span><span class="vendor">Qwen</span><div class="model"><code>qwen/qwen3-max</code></div></td><td class="num" title="quality 0.60  ·  speed 0.93  ·  economy 0.86"><b>0.691</b></td><td class="num">4.05</td><td class="num">8.92s</td><td class="num">1383</td><td class="num">60</td><td><div class="cellv">1.37<span class="sd">±0.58</span></div><div class="bar"><div class="fill" style="width:68.3%"></div></div></td><td><div class="cellv">1.27<span class="sd">±0.79</span></div><div class="bar"><div class="fill" style="width:63.3%"></div></div></td><td><div class="cellv">1.28<span class="sd">±0.80</span></div><div class="bar"><div class="fill" style="width:64.1%"></div></div></td><td><div class="cellv">0.85<span class="sd">±0.89</span></div><div class="bar"><div class="fill" style="width:42.5%"></div></div></td><td><div class="cellv">0.70 <span class="rev-badge" title="reverse-scored">🔁</span><span class="sd">±0.82</span></div><div class="bar reverse"><div class="fill" style="width:65.0%"></div></div></td><td><div class="cellv">1.17<span class="sd">±0.78</span></div><div class="bar"><div class="fill" style="width:58.4%"></div></div></td></tr><tr><td class="rank">#6</td><td><span class="vd" style="background:#db2777"></span><span class="vendor">Kimi</span><div class="model"><code>moonshotai/kimi-k2.6</code></div></td><td class="num" title="quality 0.84  ·  speed 0.00  ·  economy 0.01"><b>0.589</b></td><td class="num">6.38</td><td class="num">312.85s</td><td class="num">9848</td><td class="num">60</td><td><div class="cellv">1.73<span class="sd">±0.44</span></div><div class="bar"><div class="fill" style="width:86.7%"></div></div></td><td><div class="cellv">1.70<span class="sd">±0.56</span></div><div class="bar"><div class="fill" style="width:85.0%"></div></div></td><td><div class="cellv">1.53<span class="sd">±0.65</span></div><div class="bar"><div class="fill" style="width:76.6%"></div></div></td><td><div class="cellv">1.63<span class="sd">±0.58</span></div><div class="bar"><div class="fill" style="width:81.7%"></div></div></td><td><div class="cellv">0.30 <span class="rev-badge" title="reverse-scored">🔁</span><span class="sd">±0.56</span></div><div class="bar reverse"><div class="fill" style="width:85.0%"></div></div></td><td><div class="cellv">1.75<span class="sd">±0.47</span></div><div class="bar"><div class="fill" style="width:87.5%"></div></div></td></tr></tbody>
+  </table>
+
+  <h2><span class="lang-en">Cross-preset ranking</span><span class="lang-zh">三种预设场景下的排名对比</span></h2>
+  <div style="color:var(--muted);font-size:12.5px;margin-bottom:6px;line-height:1.6">
+    <span class="lang-en">Each preset weights quality/speed/economy differently. <b>Rank #1</b> in any preset is highlighted; <b>green</b> = the preset where this model performs best.</span>
+    <span class="lang-zh">三种预设对"质量／速度／成本"的权重不同。任一预设中的 <b>#1</b> 会加深；<b>绿色</b>底色表示这是该模型表现最好的预设。</span>
+  </div>
+  <table style="max-width:780px">
+    <thead>
+      <tr><th rowspan="2"><span class="lang-en">Model</span><span class="lang-zh">模型</span></th><th colspan="2" title="research"><span class="lang-en">Research<br><small style="font-weight:normal;color:var(--muted)">α=0.70 β=0.15 γ=0.15</small></span><span class="lang-zh">研究<br><small style="font-weight:normal;color:var(--muted)">α=0.70 β=0.15 γ=0.15</small></span></th><th colspan="2" title="bedside"><span class="lang-en">Bedside<br><small style="font-weight:normal;color:var(--muted)">α=0.50 β=0.40 γ=0.10</small></span><span class="lang-zh">床旁<br><small style="font-weight:normal;color:var(--muted)">α=0.50 β=0.40 γ=0.10</small></span></th><th colspan="2" title="economy"><span class="lang-en">Economy<br><small style="font-weight:normal;color:var(--muted)">α=0.50 β=0.20 γ=0.30</small></span><span class="lang-zh">经济<br><small style="font-weight:normal;color:var(--muted)">α=0.50 β=0.20 γ=0.30</small></span></th></tr>
+      <tr><th><span class="lang-en">Rank</span><span class="lang-zh">排名</span></th><th><span class="lang-en">Score</span><span class="lang-zh">分数</span></th><th><span class="lang-en">Rank</span><span class="lang-zh">排名</span></th><th><span class="lang-en">Score</span><span class="lang-zh">分数</span></th><th><span class="lang-en">Rank</span><span class="lang-zh">排名</span></th><th><span class="lang-en">Score</span><span class="lang-zh">分数</span></th></tr>
+    </thead>
+    <tbody><tr><td><span class="vd" style="background:#d97706"></span><span class="vendor">Claude</span></td><td class="rank top">#1</td><td class="num">0.796</td><td class="rank top">#1</td><td class="num">0.768</td><td class="rank">#2</td><td class="num">0.739</td></tr><tr><td><span class="vd" style="background:#7c3aed"></span><span class="vendor">DeepSeek</span></td><td class="rank top2">#3</td><td class="num">0.707</td><td class="rank">#4</td><td class="num">0.687</td><td class="rank">#4</td><td class="num">0.679</td></tr><tr><td><span class="vd" style="background:#16a34a"></span><span class="vendor">GPT</span></td><td class="rank top2">#2</td><td class="num">0.758</td><td class="rank">#3</td><td class="num">0.737</td><td class="rank">#3</td><td class="num">0.718</td></tr><tr><td><span class="vd" style="background:#2563eb"></span><span class="vendor">Gemini</span></td><td class="rank top2">#4</td><td class="num">0.698</td><td class="rank">#5</td><td class="num">0.675</td><td class="rank">#5</td><td class="num">0.622</td></tr><tr><td><span class="vd" style="background:#db2777"></span><span class="vendor">Kimi</span></td><td class="rank top2">#6</td><td class="num">0.589</td><td class="rank top2">#6</td><td class="num">0.420</td><td class="rank top2">#6</td><td class="num">0.424</td></tr><tr><td><span class="vd" style="background:#0891b2"></span><span class="vendor">Qwen</span></td><td class="rank">#5</td><td class="num">0.691</td><td class="rank">#2</td><td class="num">0.759</td><td class="rank top">#1</td><td class="num">0.746</td></tr></tbody>
+  </table>
+
+  <h2><span class="lang-en">Inter-rater reliability</span><span class="lang-zh">评估者间一致性</span></h2>
+  <div style="color:var(--muted);font-size:12.5px;margin-bottom:6px">
+    <span class="lang-en">ICC(2,k) = two-way random, average-measures. &gt;0.75 excellent, 0.6–0.75 good, 0.4–0.6 moderate, &lt;0.4 poor.</span>
+    <span class="lang-zh">ICC(2,k) = 两因素随机效应、平均测量。&gt;0.75 极好；0.6–0.75 良好；0.4–0.6 中等；&lt;0.4 较差。</span>
+  </div>
+  <table style="max-width:680px">
+    <thead><tr>
+      <th><span class="lang-en">Dimension</span><span class="lang-zh">维度</span></th>
+      <th>ICC(2,k)</th>
+      <th><span class="lang-en">Mean Spearman ρ</span><span class="lang-zh">平均 Spearman ρ</span></th>
+    </tr></thead>
+    <tbody><tr><td><span class="lang-en">Mechanism accuracy</span><span class="lang-zh">机制解释准确性</span></td><td class="num">0.082</td><td class="num">0.01</td></tr><tr><td><span class="lang-en">Risk driver identification</span><span class="lang-zh">风险驱动因素识别</span></td><td class="num">0.138</td><td class="num">0.116</td></tr><tr><td><span class="lang-en">Treatment rationale</span><span class="lang-zh">治疗建议合理性</span></td><td class="num">-0.051</td><td class="num">-0.044</td></tr><tr><td><span class="lang-en">Safety-flag quality</span><span class="lang-zh">安全标记质量</span></td><td class="num">0.366</td><td class="num">0.143</td></tr><tr><td><span class="lang-en">Hallucination (reverse)</span><span class="lang-zh">幻觉/错误推断</span></td><td class="num">0.089</td><td class="num">0.018</td></tr><tr><td><span class="lang-en">Clinical readability</span><span class="lang-zh">临床可读性</span></td><td class="num">0.206</td><td class="num">0.113</td></tr></tbody>
+  </table>
+  <footer>Generated by aggregate_human_ratings.py · simulation study, not for clinical use.</footer>
+</div>
+<script>
+(function(){
+  var K='careAgentRatingLBLang';
+  function apply(l){
+    if(l!=='en') l='zh';
+    document.body.classList.toggle('lang-en', l==='en');
+    document.body.classList.toggle('lang-zh', l==='zh');
+    document.getElementById('btn-en').classList.toggle('active', l==='en');
+    document.getElementById('btn-zh').classList.toggle('active', l==='zh');
+    document.documentElement.setAttribute('lang', l==='zh'?'zh-CN':'en');
+    try{localStorage.setItem(K, l);}catch(e){}
+  }
+  var s=null; try{s=localStorage.getItem(K);}catch(e){}
+  apply(s || 'zh');
+  document.getElementById('btn-en').onclick=function(){apply('en');};
+  document.getElementById('btn-zh').onclick=function(){apply('zh');};
+})();
+</script>
+</body></html>

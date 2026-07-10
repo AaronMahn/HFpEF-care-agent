@@ -1,0 +1,282 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CARE-Agent · Cross-LLM Human-Rating Benchmark</title>
+<style>
+:root{--bg:#0f1115;--card:#181b22;--card2:#1f232c;--line:#2a2f3a;--tx:#e7e9ee;--mut:#9aa3b2;--acc:#d97757;}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0c0e12,#12151b);color:var(--tx);font:15px/1.55 -apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:38px 22px 70px}
+h1{font-size:27px;margin:0 0 4px} h2{font-size:19px;margin:38px 0 12px}
+.sub{color:var(--mut);margin:0 0 4px}
+.zh{display:block;font-size:11px;color:var(--mut);font-weight:400;margin-top:2px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:5px 13px;font-size:12.5px;color:var(--mut)}
+.chip b{color:var(--tx)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:18px 0 6px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi .t{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.kpi .v{font-size:23px;font-weight:700;margin-top:6px}
+.kpi .v small{font-size:13px;font-weight:500;color:var(--mut)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:13.5px}
+th,td{padding:10px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--card2);font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.rank{font-size:18px;text-align:center;width:44px}
+.model{white-space:nowrap} .mid{display:block;font-size:11px;color:var(--mut)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+td.big{font-weight:700;font-size:15px}
+.bar{height:5px;background:#262b34;border-radius:4px;margin-top:5px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px}
+.cell{text-align:right;font-variant-numeric:tabular-nums}
+.cell .sd{color:var(--mut);font-size:11px;margin-left:3px}
+.cell.win{background:rgba(217,119,87,.12)}
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-weight:700}
+.pill.poor{background:#3a1d1d;color:#ff8f8f} .pill.fair{background:#3a2f1a;color:#ffcf7a}
+.pill.mod{background:#1f3540;color:#7fd7ff} .pill.good{background:#173a25;color:#8be0a4}
+.pill.exc{background:#173a25;color:#8be0a4} .pill.na{background:#2a2f3a;color:#9aa3b2}
+.lab{color:var(--mut);font-size:12.5px}
+.note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:10px;padding:14px 18px;margin:14px 0;color:var(--tx)}
+.note.warn{border-left-color:#ffcf7a}
+.note h3{margin:0 0 6px;font-size:14px} .note p{margin:6px 0;color:var(--mut);font-size:13.5px}
+.foot{color:var(--mut);font-size:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:14px}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:14px 0}
+.scard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.scard.hi{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.scard h3{margin:0 0 2px;font-size:15px}
+.scard h3 .zh{margin-top:3px}
+.scard .def{font-size:10px;background:var(--acc);color:#151515;border-radius:8px;padding:1px 7px;margin-left:7px;vertical-align:middle;font-weight:700}
+.sdesc{color:var(--mut);font-size:12px;margin:6px 0 12px}
+.srow{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--line)}
+.srank{width:22px;text-align:center;font-size:15px}
+.sdot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.sname{font-weight:600;font-size:13.5px}
+.mv{font-size:11px;font-weight:700;padding:0 5px;border-radius:6px}
+.mv.up{color:#8be0a4} .mv.dn{color:#ff8f8f} .mv.flat{color:var(--mut)}
+.stot{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:700;font-size:13.5px}
+.sbar{flex:0 0 70px;height:5px;background:#262b34;border-radius:4px;overflow:hidden}
+.sbar i{display:block;height:100%;border-radius:4px}
+ul{margin:6px 0;padding-left:20px;color:var(--mut);font-size:13.5px} li{margin:3px 0}
+code{background:#22262f;padding:1px 6px;border-radius:5px;font-size:12px}
+.gloss{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px}
+.drow{display:grid;grid-template-columns:190px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line)}
+.drow:first-child{border-top:none}
+.drow dt{font-weight:700;font-size:13.5px;color:var(--tx);margin:0}
+.drow dd{margin:0;color:var(--mut);font-size:13px}
+@media(max-width:640px){.drow{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<h1>CARE-Agent · Cross-LLM Human-Rating Benchmark</h1>
+<p class="sub">HFpEF integrated-report quality, rated blind by 3 clinicians · 六模型盲评基准（三位临床医生）</p>
+<div class="meta">
+  <span class="chip">Run <b>llm_run_20260614_231710</b></span>
+  <span class="chip"><b>6</b> models</span>
+  <span class="chip"><b>20</b> patients</span>
+  <span class="chip"><b>3</b> blind raters (A · B · C)</span>
+  <span class="chip"><b>360</b>/360 cells rated <span style="opacity:.7">(360 complete)</span></span>
+  <span class="chip">6-item rubric · 0–2 scale</span>
+  <span class="chip">Preset <b>research</b> (Q .70 / S .15 / E .15)</span>
+</div>
+<div class="cards">
+  <div class="kpi"><div class="t">🥇 Top Total Mark</div><div class="v" style="color:#d97757">Claude <small>0.796</small></div></div>
+  <div class="kpi"><div class="t">Highest clinical quality</div><div class="v">Claude <small>composite 6.69</small></div></div>
+  <div class="kpi"><div class="t">Fastest</div><div class="v">Qwen <small>8.9s / patient</small></div></div>
+  <div class="kpi"><div class="t">Most economical</div><div class="v">Qwen <small>1,383 tok</small></div></div>
+</div>
+<h2>1 · Leaderboard <span class="zh" style="display:inline;margin-left:6px">总榜 · sorted by Total Mark</span></h2>
+<table><thead><tr><th class="rank">#</th><th>Model</th><th class="num">Total Mark</th><th class="num">Composite</th><th class="num">Quality</th><th class="num">Speed</th><th class="num">Economy</th><th class="num">Latency</th><th class="num">Tokens</th><th class="num">n</th></tr></thead>
+<tbody>
+    <tr><td class="rank">🥇</td>
+      <td class="model"><span class="dot" style="background:#d97757"></span><b>Claude</b><span class="mid">anthropic/claude-opus-4.7</span></td>
+      <td class="num big" style="color:#d97757">0.796<div class="bar"><i style="width:100%;background:#d97757"></i></div></td>
+      <td class="num">6.69</td><td class="num">86.9%</td>
+      <td class="num">69.6%</td><td class="num">55.1%</td>
+      <td class="num">36.4s</td><td class="num">4,485</td><td class="num">60</td></tr>
+    <tr><td class="rank">🥈</td>
+      <td class="model"><span class="dot" style="background:#10a37f"></span><b>GPT</b><span class="mid">openai/gpt-5.5</span></td>
+      <td class="num big" style="color:#10a37f">0.758<div class="bar"><i style="width:95%;background:#10a37f"></i></div></td>
+      <td class="num">6.12</td><td class="num">81.2%</td>
+      <td class="num">68.0%</td><td class="num">58.7%</td>
+      <td class="num">38.4s</td><td class="num">4,130</td><td class="num">60</td></tr>
+    <tr><td class="rank">🥉</td>
+      <td class="model"><span class="dot" style="background:#4d6bfe"></span><b>DeepSeek</b><span class="mid">deepseek/deepseek-v4-pro</span></td>
+      <td class="num big" style="color:#4d6bfe">0.707<div class="bar"><i style="width:89%;background:#4d6bfe"></i></div></td>
+      <td class="num">5.47</td><td class="num">74.7%</td>
+      <td class="num">63.6%</td><td class="num">59.6%</td>
+      <td class="num">43.6s</td><td class="num">4,042</td><td class="num">60</td></tr>
+    <tr><td class="rank">4</td>
+      <td class="model"><span class="dot" style="background:#a259ff"></span><b>Gemini</b><span class="mid">google/gemini-3.1-pro-preview</span></td>
+      <td class="num big" style="color:#a259ff">0.698<div class="bar"><i style="width:88%;background:#a259ff"></i></div></td>
+      <td class="num">5.91</td><td class="num">79.1%</td>
+      <td class="num">61.3%</td><td class="num">34.7%</td>
+      <td class="num">46.5s</td><td class="num">6,530</td><td class="num">60</td></tr>
+    <tr><td class="rank">5</td>
+      <td class="model"><span class="dot" style="background:#7b3fe4"></span><b>Qwen</b><span class="mid">qwen/qwen3-max</span></td>
+      <td class="num big" style="color:#7b3fe4">0.691<div class="bar"><i style="width:87%;background:#7b3fe4"></i></div></td>
+      <td class="num">4.05</td><td class="num">60.5%</td>
+      <td class="num">92.6%</td><td class="num">86.2%</td>
+      <td class="num">8.9s</td><td class="num">1,383</td><td class="num">60</td></tr>
+    <tr><td class="rank">6</td>
+      <td class="model"><span class="dot" style="background:#ff5c5c"></span><b>Kimi</b><span class="mid">moonshotai/kimi-k2.6</span></td>
+      <td class="num big" style="color:#ff5c5c">0.589<div class="bar"><i style="width:74%;background:#ff5c5c"></i></div></td>
+      <td class="num">6.38</td><td class="num">83.8%</td>
+      <td class="num">0.0%</td><td class="num">1.5%</td>
+      <td class="num">312.9s</td><td class="num">9,848</td><td class="num">60</td></tr></tbody></table>
+<div class="note"><h3>How the marks are built</h3>
+<p><b>Composite</b> (clinical quality, range −2…8) = 4 × mean of the 5 positive rubric items − mean(hallucination). <b>Total Mark</b> (0–1) = 0.70·Quality + 0.15·Speed + 0.15·Economy, where Quality is the composite rescaled to 0–1, Speed = 1 − latency/120s, Economy = 1 − tokens/10 000. 质量为主的科研权重预设。</p></div>
+
+<h2>2 · Standings by deployment scenario <span class="zh" style="display:inline;margin-left:6px">不同应用场景下的排名（改变质量/速度/成本权重）</span></h2>
+<p class="sub" style="font-size:13px;margin-bottom:4px">Same six models, same scores — only the <b>weighting of quality vs. speed vs. token-cost</b> changes. Arrows show movement versus the default <b>research</b> ranking. 权重改变，排名随之改变。</p>
+<div class="scen"><div class="scard hi">
+      <h3>Research <span class='def'>default</span><span class="zh">科研对照 · weights Q/S/E = 0.70 / 0.15 / 0.15</span></h3>
+      <p class="sdesc">Careful offline comparison — clinical quality is what matters.</p>
+      <div class="srow">
+          <span class="srank">🥇</span>
+          <span class="sdot" style="background:#d97757"></span>
+          <span class="sname">Claude</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#d97757">0.796</span>
+          <span class="sbar"><i style="width:100%;background:#d97757"></i></span></div><div class="srow">
+          <span class="srank">🥈</span>
+          <span class="sdot" style="background:#10a37f"></span>
+          <span class="sname">GPT</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#10a37f">0.758</span>
+          <span class="sbar"><i style="width:95%;background:#10a37f"></i></span></div><div class="srow">
+          <span class="srank">🥉</span>
+          <span class="sdot" style="background:#4d6bfe"></span>
+          <span class="sname">DeepSeek</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#4d6bfe">0.707</span>
+          <span class="sbar"><i style="width:89%;background:#4d6bfe"></i></span></div><div class="srow">
+          <span class="srank">4</span>
+          <span class="sdot" style="background:#a259ff"></span>
+          <span class="sname">Gemini</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#a259ff">0.698</span>
+          <span class="sbar"><i style="width:88%;background:#a259ff"></i></span></div><div class="srow">
+          <span class="srank">5</span>
+          <span class="sdot" style="background:#7b3fe4"></span>
+          <span class="sname">Qwen</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#7b3fe4">0.691</span>
+          <span class="sbar"><i style="width:87%;background:#7b3fe4"></i></span></div><div class="srow">
+          <span class="srank">6</span>
+          <span class="sdot" style="background:#ff5c5c"></span>
+          <span class="sname">Kimi</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#ff5c5c">0.589</span>
+          <span class="sbar"><i style="width:74%;background:#ff5c5c"></i></span></div></div><div class="scard">
+      <h3>Bedside<span class="zh">床旁实时 · weights Q/S/E = 0.50 / 0.40 / 0.10</span></h3>
+      <p class="sdesc">Real-time point-of-care — a fast answer beats a marginally better one.</p>
+      <div class="srow">
+          <span class="srank">🥇</span>
+          <span class="sdot" style="background:#d97757"></span>
+          <span class="sname">Claude</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#d97757">0.768</span>
+          <span class="sbar"><i style="width:100%;background:#d97757"></i></span></div><div class="srow">
+          <span class="srank">🥈</span>
+          <span class="sdot" style="background:#7b3fe4"></span>
+          <span class="sname">Qwen</span><span class='mv up'>▲3</span>
+          <span class="stot" style="color:#7b3fe4">0.759</span>
+          <span class="sbar"><i style="width:99%;background:#7b3fe4"></i></span></div><div class="srow">
+          <span class="srank">🥉</span>
+          <span class="sdot" style="background:#10a37f"></span>
+          <span class="sname">GPT</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#10a37f">0.737</span>
+          <span class="sbar"><i style="width:96%;background:#10a37f"></i></span></div><div class="srow">
+          <span class="srank">4</span>
+          <span class="sdot" style="background:#4d6bfe"></span>
+          <span class="sname">DeepSeek</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#4d6bfe">0.687</span>
+          <span class="sbar"><i style="width:89%;background:#4d6bfe"></i></span></div><div class="srow">
+          <span class="srank">5</span>
+          <span class="sdot" style="background:#a259ff"></span>
+          <span class="sname">Gemini</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#a259ff">0.675</span>
+          <span class="sbar"><i style="width:88%;background:#a259ff"></i></span></div><div class="srow">
+          <span class="srank">6</span>
+          <span class="sdot" style="background:#ff5c5c"></span>
+          <span class="sname">Kimi</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#ff5c5c">0.420</span>
+          <span class="sbar"><i style="width:55%;background:#ff5c5c"></i></span></div></div><div class="scard">
+      <h3>Economy<span class="zh">规模部署 · weights Q/S/E = 0.50 / 0.20 / 0.30</span></h3>
+      <p class="sdesc">High-volume deployment — token cost dominates the bill.</p>
+      <div class="srow">
+          <span class="srank">🥇</span>
+          <span class="sdot" style="background:#7b3fe4"></span>
+          <span class="sname">Qwen</span><span class='mv up'>▲4</span>
+          <span class="stot" style="color:#7b3fe4">0.746</span>
+          <span class="sbar"><i style="width:100%;background:#7b3fe4"></i></span></div><div class="srow">
+          <span class="srank">🥈</span>
+          <span class="sdot" style="background:#d97757"></span>
+          <span class="sname">Claude</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#d97757">0.739</span>
+          <span class="sbar"><i style="width:99%;background:#d97757"></i></span></div><div class="srow">
+          <span class="srank">🥉</span>
+          <span class="sdot" style="background:#10a37f"></span>
+          <span class="sname">GPT</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#10a37f">0.718</span>
+          <span class="sbar"><i style="width:96%;background:#10a37f"></i></span></div><div class="srow">
+          <span class="srank">4</span>
+          <span class="sdot" style="background:#4d6bfe"></span>
+          <span class="sname">DeepSeek</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#4d6bfe">0.679</span>
+          <span class="sbar"><i style="width:91%;background:#4d6bfe"></i></span></div><div class="srow">
+          <span class="srank">5</span>
+          <span class="sdot" style="background:#a259ff"></span>
+          <span class="sname">Gemini</span><span class='mv dn'>▼1</span>
+          <span class="stot" style="color:#a259ff">0.622</span>
+          <span class="sbar"><i style="width:83%;background:#a259ff"></i></span></div><div class="srow">
+          <span class="srank">6</span>
+          <span class="sdot" style="background:#ff5c5c"></span>
+          <span class="sname">Kimi</span><span class='mv flat'>—</span>
+          <span class="stot" style="color:#ff5c5c">0.424</span>
+          <span class="sbar"><i style="width:57%;background:#ff5c5c"></i></span></div></div></div>
+<div class="note"><p><b>Reading it:</b> Claude leads under research and stays strong everywhere. <b>Qwen</b> — fastest &amp; cheapest — climbs to the top tier once speed or cost is weighted (bedside/economy). <b>Kimi</b>, despite the best raw report quality, sinks further as speed/cost matter more (312s latency). This is a weighting choice, not new data — pick the preset that matches how the agent would actually be deployed.</p></div>
+
+<h2>3 · Per-dimension detail <span class="zh" style="display:inline;margin-left:6px">六维度均分 (mean ± SD) · ★ = best</span></h2>
+<table><thead><tr><th>Model</th><th>Mechanism accuracy<span class='zh'>机制解释准确性</span></th><th>Risk-driver identification<span class='zh'>风险驱动因素识别</span></th><th>Treatment rationale<span class='zh'>治疗建议合理性</span></th><th>Safety-flag quality<span class='zh'>安全标记质量</span></th><th>Hallucination (reverse)<span class='zh'>幻觉/错误推断</span></th><th>Clinical readability<span class='zh'>临床可读性</span></th></tr></thead><tbody><tr><td class='model'><span class='dot' style='background:#d97757'></span>Claude</td><td class='cell win'><b>1.80</b><span class='sd'>±0.40</span> ★</td><td class='cell win'><b>1.78</b><span class='sd'>±0.45</span> ★</td><td class='cell'><b>1.62</b><span class='sd'>±0.61</span></td><td class='cell'><b>1.67</b><span class='sd'>±0.51</span></td><td class='cell win'><b>0.20</b><span class='sd'>±0.44</span> ★</td><td class='cell'><b>1.75</b><span class='sd'>±0.43</span></td></tr><tr><td class='model'><span class='dot' style='background:#10a37f'></span>GPT</td><td class='cell'><b>1.57</b><span class='sd'>±0.56</span></td><td class='cell'><b>1.58</b><span class='sd'>±0.59</span></td><td class='cell win'><b>1.62</b><span class='sd'>±0.61</span> ★</td><td class='cell win'><b>1.67</b><span class='sd'>±0.51</span> ★</td><td class='cell'><b>0.28</b><span class='sd'>±0.49</span></td><td class='cell'><b>1.57</b><span class='sd'>±0.53</span></td></tr><tr><td class='model'><span class='dot' style='background:#4d6bfe'></span>DeepSeek</td><td class='cell'><b>1.63</b><span class='sd'>±0.48</span></td><td class='cell'><b>1.55</b><span class='sd'>±0.62</span></td><td class='cell'><b>1.47</b><span class='sd'>±0.67</span></td><td class='cell'><b>1.20</b><span class='sd'>±0.79</span></td><td class='cell'><b>0.40</b><span class='sd'>±0.61</span></td><td class='cell'><b>1.48</b><span class='sd'>±0.59</span></td></tr><tr><td class='model'><span class='dot' style='background:#a259ff'></span>Gemini</td><td class='cell'><b>1.63</b><span class='sd'>±0.52</span></td><td class='cell'><b>1.60</b><span class='sd'>±0.64</span></td><td class='cell'><b>1.55</b><span class='sd'>±0.64</span></td><td class='cell'><b>1.40</b><span class='sd'>±0.61</span></td><td class='cell'><b>0.32</b><span class='sd'>±0.53</span></td><td class='cell'><b>1.60</b><span class='sd'>±0.55</span></td></tr><tr><td class='model'><span class='dot' style='background:#7b3fe4'></span>Qwen</td><td class='cell'><b>1.37</b><span class='sd'>±0.58</span></td><td class='cell'><b>1.27</b><span class='sd'>±0.79</span></td><td class='cell'><b>1.28</b><span class='sd'>±0.80</span></td><td class='cell'><b>0.85</b><span class='sd'>±0.89</span></td><td class='cell'><b>0.70</b><span class='sd'>±0.82</span></td><td class='cell'><b>1.17</b><span class='sd'>±0.78</span></td></tr><tr><td class='model'><span class='dot' style='background:#ff5c5c'></span>Kimi</td><td class='cell'><b>1.73</b><span class='sd'>±0.44</span></td><td class='cell'><b>1.70</b><span class='sd'>±0.56</span></td><td class='cell'><b>1.53</b><span class='sd'>±0.65</span></td><td class='cell'><b>1.63</b><span class='sd'>±0.58</span></td><td class='cell'><b>0.30</b><span class='sd'>±0.56</span></td><td class='cell win'><b>1.75</b><span class='sd'>±0.47</span> ★</td></tr></tbody></table>
+<p class="sub" style="font-size:12.5px;margin-top:8px">All items 0–2 (higher = better) except <b>Hallucination</b>, reverse-scored (lower = better). 幻觉项为反向计分。</p>
+<h2>4 · Inter-rater reliability <span class="zh" style="display:inline;margin-left:6px">评分者间一致性 · ICC(2,k) &amp; mean Spearman ρ</span></h2>
+<table><thead><tr><th>Dimension</th><th class="num">ICC(2,k)</th><th class="num">Spearman ρ</th><th>Agreement</th></tr></thead><tbody><tr><td class='model'>Mechanism accuracy<span class='zh'>机制解释准确性</span></td><td class='num'><span class='pill poor'>0.082</span></td><td class='num'>+0.010</td><td class='lab'>poor / 差</td></tr><tr><td class='model'>Risk-driver identification<span class='zh'>风险驱动因素识别</span></td><td class='num'><span class='pill poor'>0.138</span></td><td class='num'>+0.116</td><td class='lab'>poor / 差</td></tr><tr><td class='model'>Treatment rationale<span class='zh'>治疗建议合理性</span></td><td class='num'><span class='pill poor'>-0.051</span></td><td class='num'>-0.044</td><td class='lab'>poor / 差</td></tr><tr><td class='model'>Safety-flag quality<span class='zh'>安全标记质量</span></td><td class='num'><span class='pill fair'>0.366</span></td><td class='num'>+0.143</td><td class='lab'>fair / 一般</td></tr><tr><td class='model'>Hallucination (reverse)<span class='zh'>幻觉/错误推断</span></td><td class='num'><span class='pill poor'>0.089</span></td><td class='num'>+0.018</td><td class='lab'>poor / 差</td></tr><tr><td class='model'>Clinical readability<span class='zh'>临床可读性</span></td><td class='num'><span class='pill fair'>0.206</span></td><td class='num'>+0.113</td><td class='lab'>fair / 一般</td></tr></tbody></table>
+<div class="note warn"><h3>⚠︎ Read the leaderboard with caution</h3>
+<p>Inter-rater agreement is <b>weak</b> across the board (ICC 2k from -0.05 to 0.37). Only <b>safety-flag quality</b> reaches the "fair" band; <b>treatment rationale</b> is essentially zero. With 3 raters on a compressed 0–2 scale this is expected, but it means <b>small composite gaps between adjacent models are not reliable</b> — the robust signal is the broad tier separation, not the exact ranking.</p>
+<p>三位评分者一致性整体偏低，相邻模型之间的细小差距不具统计稳健性；可信的是大的层级差异（如 Claude/GPT 与 Qwen 的差距、Kimi 的速度劣势）。</p></div>
+<h2>5 · What the numbers say <span class="zh" style="display:inline;margin-left:6px">结论</span></h2>
+<div class="note"><ul>
+<li><b>Claude Opus 4.7 leads overall</b> (Total 0.796): strong quality and moderate latency/cost — the best all-round profile.</li>
+<li><b>Kimi K2.6 writes the best reports on raw quality</b> (composite 6.69) but is <b>crippled by speed</b> (313s/patient) and token cost, dropping it to last on the research preset. It would rank far higher under a pure-quality weighting.</li>
+<li><b>Qwen3-Max is the efficiency play</b>: fastest (8.9s) and cheapest, but clinical quality is the weakest (composite 4.05, weak safety flags). Good for high-throughput drafts, not final reads.</li>
+<li><b>GPT-5.5 and Gemini 3.1 Pro sit in the upper-middle tier</b> — solid quality, no standout weakness; Gemini is heavier on tokens.</li>
+<li><b>Safety-flag quality</b> is where models diverge most (Claude/GPT/Kimi ~1.65 vs DeepSeek 1.20, Qwen 0.85) — the dimension that matters most clinically.</li>
+</ul></div>
+
+<h2>6 · How every number is computed <span class="zh" style="display:inline;margin-left:6px">每个数字的算法（用 Claude 的真实数据举例）</span></h2>
+<div class="note"><h3>Step 0 — the raw input</h3>
+<p>Each rated cell is <b>one model × one patient × one rubric item</b>, scored <b>0 / 1 / 2</b> by each of the
+3 clinicians (0 = poor, 1 = adequate, 2 = good). Hallucination is <b>reverse-scored</b> (0 = none, best; 2 = serious, worst).
+Across 20 patients × 3 raters, each model has up to 60 points per item.</p></div>
+<div class="note"><h3>Step 1 — per-dimension mean ± SD <span class="zh" style="display:inline">（表 2 每个格子）</span></h3>
+<p>Pool all 0/1/2 points for that model+item across every rater and patient, then take the mean; SD is the population SD.
+E.g. Claude's mechanism-accuracy mean = <b>1.80</b> ±0.40.</p></div>
+<div class="note"><h3>Step 2 — composite (clinical quality, −2…8)</h3>
+<p><code>composite = 4 × mean(5 positive item-means) − mean(hallucination)</code></p>
+<p><b>Claude:</b> positive item-means = 1.80, 1.78, 1.62, 1.67, 1.75 → average 1.723;
+hallucination = 0.20. composite = 4 × 1.723 − 0.20 = <b>6.69</b>
+(best 8, worst −2).</p></div>
+<div class="note"><h3>Step 3 — the three 0–1 sub-scores</h3>
+<p><code>Quality = (composite − (−2)) / (8 − (−2))</code> &nbsp;→&nbsp; Claude: (6.69+2)/10 = <b>0.869</b><br>
+<code>Speed  = 1 − latency / 120s</code> &nbsp;→&nbsp; 1 − 36.4/120 = <b>0.696</b><br>
+<code>Economy = 1 − tokens / 10,000</code> &nbsp;→&nbsp; 1 − 4,485/10,000 = <b>0.551</b></p>
+<p>Speed and Economy are floored at 0 (a model slower than 120s or above 10,000 tokens scores 0).</p></div>
+<div class="note"><h3>Step 4 — Total Mark (the ranking number)</h3>
+<p><code>Total = 0.70·Quality + 0.15·Speed + 0.15·Economy</code> &nbsp;(the <b>research</b> preset weights).</p>
+<p><b>Claude:</b> 0.70×0.869 + 0.15×0.696 + 0.15×0.551 ≈ 0.795
+→ shown as <b>0.796</b> in §1 (the leaderboard computes it from full-precision sub-scores, so the last
+digit differs slightly from this rounded-input version). Change the weights and the order changes — e.g. a speed-heavy
+"bedside" preset lifts Qwen and sinks Kimi.</p></div>
+<div class="note"><h3>Step 5 — inter-rater reliability (§3)</h3>
+<p><b>ICC(2,k)</b> is a two-way random-effects, average-measures intraclass correlation computed per dimension over the
+120 model×patient subjects rated by all 3 clinicians: it asks how much of the score
+variance is real between-report differences vs. rater disagreement (1 = perfect agreement, 0 = none). <b>Mean Spearman ρ</b>
+is the average rank-correlation across the three rater pairs — a simpler sanity check. Both are computed on raw points, not the means.</p></div>
+
+<h2>7 · Definitions <span class="zh" style="display:inline;margin-left:6px">术语定义（每个指标的确切含义）</span></h2>
+<div class="gloss"><dl style="margin:0"><div class='drow'><dt>Rubric item</dt><dd>One of the 6 quality dimensions a clinician scored. Each is an integer 0 / 1 / 2 (0 = poor, 1 = adequate, 2 = good). 六项评分维度之一。</dd></div><div class='drow'><dt>Hallucination (reverse item)</dt><dd>The one item where lower is better: 0 = no fabricated/incorrect inference (best), 2 = serious hallucination (worst). It is subtracted in the composite. 反向计分项。</dd></div><div class='drow'><dt>Cell / rating</dt><dd>One model × one patient × one rubric item, scored by one clinician. 20 patients × 6 models × 3 raters = 360 possible cells per item. 单个评分格。</dd></div><div class='drow'><dt>n</dt><dd>Number of rated cells behind a model's row = model × patient × rater combinations that received ≥1 score (max 60 = 20 patients × 3 raters). 参与计算的评分数。</dd></div><div class='drow'><dt>mean ± SD</dt><dd>Arithmetic mean of the 0/1/2 points for that model+item, pooled over all raters and patients; SD is the population standard deviation (÷n). 均值±总体标准差。</dd></div><div class='drow'><dt>Composite</dt><dd>Single clinical-quality number, range −2…8: <code>4 × mean(5 positive item-means) − mean(hallucination)</code>. Higher = better. 综合质量分。</dd></div><div class='drow'><dt>Quality score</dt><dd>Composite rescaled to 0–1: <code>(composite + 2) / 10</code>. 质量分（0–1）。</dd></div><div class='drow'><dt>Speed score</dt><dd><code>max(0, 1 − latency / 120 s)</code> using mean per-patient latency; 0 at ≥120 s. 速度分。</dd></div><div class='drow'><dt>Economy score</dt><dd><code>max(0, 1 − tokens / 10 000)</code> using mean per-patient total tokens; 0 at ≥10 000. 经济性分。</dd></div><div class='drow'><dt>Total Mark</dt><dd>Weighted blend <code>w_Q·Quality + w_S·Speed + w_E·Economy</code>; the <b>research</b> preset uses 0.70 / 0.15 / 0.15. 总分。</dd></div><div class='drow'><dt>Preset</dt><dd>A named weighting of Quality/Speed/Economy — research (0.70/0.15/0.15), bedside (0.50/0.40/0.10), economy (0.50/0.20/0.30). 权重预设。</dd></div><div class='drow'><dt>Latency</dt><dd>Mean wall-clock seconds per patient for the model's reasoning + safety calls (objective, from the generation run — not rated by clinicians). 每例平均耗时。</dd></div><div class='drow'><dt>Tokens</dt><dd>Mean total tokens (prompt + completion) per patient (objective, from the generation run). 每例平均 token 数。</dd></div><div class='drow'><dt>ICC(2,k)</dt><dd>Intraclass correlation, two-way random-effects, average-measures — agreement among the 3 raters on a dimension (1 = perfect, 0 = none, may go slightly negative). 评分者间一致性。</dd></div><div class='drow'><dt>Spearman ρ</dt><dd>Mean rank-correlation across the 3 rater pairs — a simpler agreement check. 秩相关。</dd></div><div class='drow'><dt>Patient tier</dt><dd>Integrated HFpEF risk tier assigned by the pipeline: LOW / MODERATE / HIGH / CRITICAL. 风险分层。</dd></div><div class='drow'><dt>Blinding / un-blinding</dt><dd>Each rater saw models as random letters A–F (a different mapping per patient); numbers here are un-blinded with each rater's saved map. 盲法/揭盲。</dd></div></dl></div>
+<div class="foot">Generated 2026-07-09 11:46 · source: <code>aggregate_20260709_114620/irr.json</code> · pipeline: <code>aggregate_human_ratings.py</code><br>
+Data completeness: of 360 possible model-cells (20 patients × 6 models × 3 raters), <b>all 360 are complete on all 6 items</b> — every model×patient×rater combination was fully rated (no partial or blank cells). Rater B added free-text comments (not scored). Latency &amp; tokens are objective measurements from the generation run.</div>
+</div></body></html>
