@@ -153,7 +153,9 @@ in the patient report as “Cox features imputed: …”.
 #### 3.1.3 From the model to a probability
 
 The model is a `lifelines.CoxPHFitter` loaded from `cox_model.pkl`
-(apparent C‑index 0.741 (optimism-corrected 0.579) on the validation cohort).
+(apparent C‑index 0.741, optimism-corrected 0.579, in the 395-patient development
+cohort — the model is used as a fixed risk-ranking component and has not been
+externally validated).
 
 ```python
 cum_haz = self._cox.predict_cumulative_hazard(df, times=[18])    # 18 months
