@@ -3,15 +3,20 @@
 with overlaid crude composite endpoint proportions. Reproduces the published legend."""
 import os as _os, sys, io, contextlib, json
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
-_ROOT = _os.path.abspath(_os.path.join(_HERE, "..", "..", ".."))
-CODE = _os.path.join(_ROOT, "03_Code", "HFpEF-care-agent")
-PAPER = _os.path.join(_ROOT, "02_Manuscript_Development", "CARE-Agent-Paper")
-REAL = _os.path.join(PAPER, "Data", "3RA数据.xlsx")
+REPO = _os.path.abspath(_os.path.join(_HERE, "..", ".."))
+CODE = REPO
+OUT = _os.path.join(REPO, "figures")
+# The 395-patient clinical dataset is NOT part of this public release (see the
+# Data Availability statement in the manuscript). Set CARE_AGENT_DATA to a copy
+# of the restricted dataset to reproduce the published figure; otherwise the
+# bundled 4-record demo file is used and the output will differ.
+REAL = _os.environ.get("CARE_AGENT_DATA", _os.path.join(REPO, "data", "basic_data.xlsx"))
+SHEET = _os.environ.get("CARE_AGENT_SHEET", 0)
 import pandas as pd, numpy as np
 _os.chdir(CODE); sys.path.insert(0, CODE)
 
 LABS = ["LOW", "MODERATE", "HIGH", "CRITICAL"]
-df = pd.read_excel(REAL, sheet_name="395全量HFpEF数据")
+df = pd.read_excel(REAL, sheet_name=SHEET)
 df.columns = [str(c).strip() for c in df.columns]
 ev = pd.to_numeric(df["event_all"], errors="coerce").values
 ckd = pd.to_numeric(df["ckd"], errors="coerce").values
