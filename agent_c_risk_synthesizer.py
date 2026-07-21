@@ -197,7 +197,7 @@ class RiskSynthesizerAgent:
         print(f"[Agent C] Loading Cox model from: {cox_model_path}")
         with open(cox_model_path, "rb") as f:
             self._cox = pickle.load(f)
-        print("[Agent C] Cox model loaded — C-index 0.741 (validation cohort).")
+        print("[Agent C] Cox model loaded (fixed risk-ranking component; apparent within-cohort C-index 0.741, development cohort — not externally validated).")
 
     # ── Main entry point ───────────────────────────────────────────────────────
     def synthesise(
