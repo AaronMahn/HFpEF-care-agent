@@ -129,7 +129,7 @@ def build_patient_record(agent_c, snap, ra) -> Optional[dict]:
         print(f"[stratify] WARN synthesise(zh) failed for {snap.patient_id}: {e}")
         rep_zh = rep_en   # fall back to EN so the structure stays consistent
 
-    is_male = str(snap.sex).strip().lower() in ("male", "m", "男", "1")
+    is_male = str(snap.sex).strip().lower() in ("male", "m", "男")
 
     return {
         "patient_id":           snap.patient_id,
