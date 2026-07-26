@@ -173,7 +173,7 @@ def original_report(agent_c, snap, ra, lang: str) -> dict:
 
 
 def snapshot_brief(snap) -> dict:
-    is_male = str(snap.sex).strip().lower() in ("male", "m", "男", "1")
+    is_male = str(snap.sex).strip().lower() in ("male", "m", "男")
     return {
         "age": int(snap.age) if snap.age is not None else None,
         "sex": "Male" if is_male else "Female",

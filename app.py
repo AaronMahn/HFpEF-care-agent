@@ -217,7 +217,7 @@ def render_report_card(snap, ra_report, risk_rep, is_zh: bool):
     tier_color, tier_bg = TIER_COLORS.get(tier, TIER_COLORS["UNKNOWN"])
     tier_emoji = TIER_EMOJI.get(tier, "⚪")
     tier_label = RISK_TIER_ZH.get(tier, tier) if is_zh else tier
-    is_male    = str(snap.sex).strip().lower() in ("male", "m", "男", "1")
+    is_male    = str(snap.sex).strip().lower() in ("male", "m", "男")
     prob_str   = f"{risk_rep.cox_2yr_event_prob:.1%}" if risk_rep.cox_2yr_event_prob is not None else "N/A"
 
     ra_fn      = ra_report.overall_ra_function
@@ -491,7 +491,7 @@ with st.sidebar:
 |---|---|---|
 | `name` | text | Patient identifier |
 | `age` | integer | Age in years |
-| `sex` | 0 / 1 | 0 = Female, 1 = Male |
+| `sex` | 0 / 1 | 1 = Female, 0 = Male |
 | `egfr` | decimal | eGFR (mL/min/1.73m²) |
 | `ntprobnp` | decimal | NT-proBNP (pg/mL) |
 | `logntprobnp` | decimal | log(NT-proBNP) |

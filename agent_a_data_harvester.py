@@ -252,7 +252,7 @@ class DataHarvesterAgent:
 
     def _populate_demographics(self, snap, row):
         snap.age = self._get(row, 'age')
-        snap.sex = 'Male' if self._get(row, 'sex') == 1 else 'Female'
+        snap.sex = 'Female' if self._get(row, 'sex') == 1 else 'Male'  # dataset coding: 1=Female, 0=Male
         snap.bmi = self._get(row, 'bmi')
         snap.bsa = self._get(row, 'bsa')
         snap.sbp = self._get(row, 'sbp')

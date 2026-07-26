@@ -232,10 +232,10 @@ class RiskSynthesizerAgent:
 
     # ── Step 1: Cox model prediction ───────────────────────────────────────────
     def _run_cox(self, report: ClinicalRiskReport, snap: PatientSnapshot):
-        # Convert sex string to numeric (Female=0, Male=1)
+        # Convert sex label back to the dataset's numeric coding (1=Female, 0=Male)
         sex_numeric = None
         if snap.sex is not None:
-            sex_numeric = 1 if str(snap.sex).strip().lower() in ("male", "男", "1") else 0
+            sex_numeric = 1 if str(snap.sex).strip().lower() in ("female", "女") else 0
 
         feature_map = {
             "age":         snap.age,
@@ -393,7 +393,7 @@ class RiskSynthesizerAgent:
         # ── Shared helpers ──────────────────────────────────────────────────────
         # snap.sex is "Male"/"Female" (set by Agent A); normalise robustly so the
         # report never silently defaults to the wrong sex.
-        is_male = str(snap.sex).strip().lower() in ("male", "m", "男", "1")
+        is_male = str(snap.sex).strip().lower() in ("male", "m", "男")
         age_sex = (
             f"{int(snap.age)}-year-old {'male' if is_male else 'female'}"
             if snap.age is not None else "patient"
@@ -461,7 +461,7 @@ class RiskSynthesizerAgent:
         if snap.cad == 1:         comorbid_zh_parts.append("冠状动脉疾病")
         comorbid_zh = "、".join(comorbid_zh_parts) if comorbid_zh_parts else "无主要合并症"
 
-        sex_zh = "男" if str(snap.sex).strip().lower() in ("male", "m", "男", "1") else "女"
+        sex_zh = "男" if str(snap.sex).strip().lower() in ("male", "m", "男") else "女"
         nyha_zh = str(int(snap.nyha_class)) if snap.nyha_class else "未知"
         age_zh = str(int(snap.age)) if snap.age is not None else "未知"
 
