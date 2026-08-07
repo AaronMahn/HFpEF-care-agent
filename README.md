@@ -48,6 +48,19 @@ provide your own at runtime via any of:
 
 The core Agent A → B → C pipeline runs without any API key.
 
+## Authors
+
+This project is developed and maintained by:
+
+- **Aaron Mah** ([@AaronMahn](https://github.com/AaronMahn)) — lead author. Multi-agent
+  pipeline design and implementation, Cox survival modelling, LLM benchmarking
+  harness, and the public de-identified release.
+- **[@ljj33jj](https://github.com/ljj33jj)** — co-author. Clinical dataset
+  preparation and curation, and review of the risk-stratification outputs.
+
+Both authors contributed to the study this repository accompanies. Contributions
+are also recorded in the repository's commit history.
+
 ## Disclaimer
 
 Research software only. Not a medical device and not for clinical use.
