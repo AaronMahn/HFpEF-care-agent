@@ -48,6 +48,14 @@ provide your own at runtime via any of:
 
 The core Agent A → B → C pipeline runs without any API key.
 
+## License
+
+The original CARE-Agent source code and project-authored documentation are
+available under the [PolyForm Noncommercial License 1.0.0](LICENSE.md).
+Permitted noncommercial use is free; commercial use outside the license's
+permitted purposes requires a separate written license. See
+[licensing details and commercial contact](LICENSING.md).
+
 ## Disclaimer
 
 Research software only. Not a medical device and not for clinical use.
